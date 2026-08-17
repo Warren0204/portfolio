@@ -1,0 +1,220 @@
+/* Every @keyframes in the project. Nothing here runs under
+   prefers-reduced-motion — see css/utilities/motion.css. */
+
+/* Status dots: a gentle 2s breath, staggered by animation-delay. */
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.35;
+  }
+}
+
+/* Chapter transitions. Forward slides left, back slides right. */
+@keyframes chapter-in-forward {
+  from {
+    opacity: 0;
+    transform: translateX(56px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes chapter-out-forward {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(-28px);
+  }
+}
+
+@keyframes chapter-in-back {
+  from {
+    opacity: 0;
+    transform: translateX(-56px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes chapter-out-back {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(28px);
+  }
+}
+
+/* Panels and cards entering. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Preloader: the welcome line reveals by mask-slide, then the curtain wipes
+   upward off the top of the screen. */
+@keyframes mask-slide-up {
+  from {
+    transform: translateY(135%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* The loading screen breaks apart down the middle. Two halves, each moving off
+   its own edge, so the page is revealed through a widening seam. */
+@keyframes split-up {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-101%);
+  }
+}
+
+@keyframes split-down {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(101%);
+  }
+}
+
+/* The words pull away from the seam as their halves leave, so the sentence
+   visibly comes apart rather than only riding the panels off screen. */
+@keyframes tear-up {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-30px);
+  }
+}
+
+@keyframes tear-down {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(30px);
+  }
+}
+
+@keyframes intro-word {
+  0% {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  26%,
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Typewriter caret. */
+@keyframes caret-blink {
+  0%,
+  45% {
+    opacity: 1;
+  }
+
+  55%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Modals and the certificate zoom. */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* Bottom sheet, rising from the edge it will return to. */
+@keyframes sheet-up {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes zoom-in {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Credentials track tree: the lit branch draws down, then the node pops. */
+@keyframes draw-down {
+  from {
+    transform: scaleY(0);
+  }
+
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes node-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale(1.35);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

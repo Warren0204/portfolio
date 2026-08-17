@@ -1,0 +1,25 @@
+/* Reduced motion kills all of it: no preloader, no typing, no pulses, no
+   slides. JavaScript checks the same query at the source — see
+   js/core/motion.js — so animations are never started, not just neutralised. */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    /* Delays have to go too. Neutralising only the duration leaves staggered
+       elements holding their "from" state for the length of the delay, which
+       reads as content that is missing rather than content that is still. */
+    animation-delay: 0.001ms !important;
+    scroll-behavior: auto !important;
+    transition-delay: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  /* Hover lift is motion too. Keep the border and background feedback. */
+  .card:hover,
+  .card:focus-visible {
+    transform: none;
+  }
+}

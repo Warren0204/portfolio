@@ -1,0 +1,27 @@
+/* The looping hero line. Reserves its own height so the headline below it
+   never shifts as the text types and deletes. */
+
+.typewriter {
+  display: flex;
+  align-items: center;
+  min-height: 1.6em;
+  color: var(--accent-ink);
+  font-family: var(--font-mono);
+  font-size: clamp(12px, 1.5vw, 14px);
+  letter-spacing: 0.1em;
+}
+
+.typewriter__caret {
+  display: inline-block;
+  width: 2px;
+  height: 1.05em;
+  margin-left: var(--space-1);
+  background: var(--accent-ink);
+  animation: caret-blink 1s steps(1, end) infinite;
+}
+
+/* With motion reduced the line is printed, so a blinking caret would be a
+   distraction with nothing to explain it. */
+.typewriter--static .typewriter__caret {
+  display: none;
+}

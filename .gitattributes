@@ -1,0 +1,18 @@
+# Prettier is configured for LF and the repo is edited on Windows. Normalise on
+# commit and check out LF everywhere so format:check cannot fail on line endings.
+* text=auto eol=lf
+
+# PowerShell tooling stays CRLF, matching .editorconfig.
+*.ps1 text eol=crlf
+
+# Binary assets must never be line-ending converted.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.pdf binary
+*.woff2 binary
+*.ico binary
+
+# The prototype is a vendored artefact; keep it byte-identical to the export.
+reference/prototype.html -text

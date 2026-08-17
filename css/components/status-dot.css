@@ -1,0 +1,19 @@
+/* Pulsing semantic indicator. Green means in production or earned. */
+
+.status-dot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  animation: pulse var(--duration-pulse) ease-in-out infinite;
+}
+
+.status-dot--ok {
+  background: var(--ok-dot);
+  box-shadow: 0 0 8px var(--ok-glow);
+}
+
+.status-dot--accent {
+  background: var(--accent-dot);
+  box-shadow: 0 0 8px var(--accent-glow);
+}

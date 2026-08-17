@@ -1,0 +1,29 @@
+/* A dot and a line of prose. */
+
+.bullet-list {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.bullet-list__item {
+  display: grid;
+  grid-template-columns: 5px minmax(0, 1fr);
+  gap: 13px;
+  align-items: start;
+}
+
+.bullet-list__dot {
+  width: 5px;
+  height: 5px;
+  margin-top: 9px;
+  border-radius: 50%;
+  background: var(--accent-ink);
+}
+
+.bullet-list__text {
+  color: var(--chip-text);
+  font-size: var(--text-body);
+  line-height: 1.62;
+  text-wrap: pretty;
+}

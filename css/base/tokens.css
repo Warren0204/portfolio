@@ -1,0 +1,143 @@
+/* Design tokens. Every colour, radius, duration, and z-index in the project
+   resolves here — no hex codes or raw millisecond values live anywhere else.
+   Light is the default theme and is defined on :root so a document with no
+   data-theme attribute still renders correctly.
+
+   Colour channels are stored as comma-separated triplets so borders and tints
+   can be built with alpha at the point of use: rgba(var(--line-rgb), 0.1). */
+
+:root {
+  /* Surfaces and text — light. Soft blue-grey, never white. */
+  --bg: #e8eef6;
+  --surface: #f5f8fc;
+  --raised: #dbe4ef;
+  --text: #0f1822;
+  --muted: #37455a;
+  --dim: #4a5765;
+  --chip-text: #212c37;
+
+  /* Blue is the working accent. */
+  --accent-ink: #14548f;
+  --accent-ink-hover: #0e4174;
+  --accent-dot: #1a63a8;
+
+  /* Green is semantic only — "in production", "earned". Never decorative. */
+  --ok-ink: #0b6b4f;
+  --ok-dot: #0f7f5c;
+
+  /* Planned or not-yet-earned states. */
+  --plan-ink: #4a5765;
+
+  /* Channel triplets, for borders and tints built with alpha. */
+  --line-rgb: 16, 30, 46;
+  --accent-rgb: 20, 84, 143;
+  --ok-rgb: 11, 107, 79;
+  --plan-rgb: 74, 87, 101;
+
+  /* Call to action. */
+  --on-accent: #ffffff;
+  --cta-bg: #14548f;
+  --cta-hover: #0e4174;
+
+  /* Dot halos, derived from the semantic channels. */
+  --ok-glow: rgba(var(--ok-rgb), 0.24);
+  --accent-glow: rgba(var(--accent-rgb), 0.22);
+
+  /* Scrims that must stay opaque enough to hide what is beneath them. */
+  --menu-overlay-bg: rgba(232, 238, 246, 0.97);
+  --edge-bg: rgba(245, 248, 252, 0.94);
+  --modal-scrim: rgba(3, 10, 20, 0.62);
+
+  /* Borders. The project's single border recipe. */
+  --line: 1px solid rgba(var(--line-rgb), 0.1);
+  --line-soft: 1px solid rgba(var(--line-rgb), 0.08);
+  --line-strong: 1px solid rgba(var(--line-rgb), 0.18);
+  --line-accent: 1px solid rgba(var(--accent-rgb), 0.45);
+
+  /* Radii. 3-8px, never pill except sticky closes and status strips. */
+  --radius-xs: 3px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-pill: 999px;
+
+  /* Spacing scale. */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 22px;
+  --space-6: 30px;
+  --space-7: 44px;
+  --space-8: 60px;
+
+  /* Motion. Durations are referenced from CSS and mirrored in
+     js/core/constants.js for the transitions JavaScript has to time. */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-curtain: cubic-bezier(0.76, 0, 0.24, 1);
+  --duration-fast: 160ms;
+  --duration-base: 200ms;
+  --duration-slow: 340ms;
+  --duration-chapter: 350ms;
+  --duration-pulse: 2s;
+  /* Mirrors DURATIONS.introExit minus its 120ms lead-in. */
+  --duration-intro-split: 800ms;
+
+  /* Layering. Every z-index in the project is one of these. */
+  --z-stage: 1;
+  --z-chapter-active: 2;
+  --z-sticky: 6;
+  --z-tab-bar: 7;
+  --z-chapter-nav: 12;
+  --z-menu: 15;
+  --z-header: 20;
+  --z-modal: 90;
+  --z-zoom: 120;
+  --z-preloader: 200;
+
+  /* Shell. The phone bar is shorter, and its navigation moves to the bottom. */
+  --header-height: 64px;
+  --header-height-phone: 56px;
+  --tab-bar-height: 58px;
+  --content-max: 1140px;
+
+  color-scheme: light;
+}
+
+[data-theme='dark'] {
+  --bg: #0b1219;
+  --surface: #131c26;
+  --raised: #1c2734;
+  --text: #f1f5f9;
+  --muted: #b4c1cd;
+  --dim: #98a6b3;
+  --chip-text: #dbe3ea;
+
+  --accent-ink: #84c2f7;
+  --accent-ink-hover: #aedafc;
+  --accent-dot: #62a9e8;
+
+  --ok-ink: #5ad0a6;
+  --ok-dot: #48c79a;
+
+  --plan-ink: #8996a3;
+
+  --line-rgb: 255, 255, 255;
+  --accent-rgb: 132, 194, 247;
+  --ok-rgb: 90, 208, 166;
+  --plan-rgb: 137, 150, 163;
+
+  --on-accent: #08111a;
+  --cta-bg: #84c2f7;
+  --cta-hover: #aedafc;
+
+  /* Dark needs a stronger halo to read against the deep background. */
+  --ok-glow: rgba(var(--ok-rgb), 0.45);
+  --accent-glow: rgba(var(--accent-rgb), 0.42);
+
+  --menu-overlay-bg: rgba(12, 18, 24, 0.98);
+  --edge-bg: rgba(19, 27, 36, 0.92);
+
+  color-scheme: dark;
+}

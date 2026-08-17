@@ -1,0 +1,17 @@
+{
+  "name": "Warren Villagonzalo Gallardo",
+  "short_name": "W. Gallardo",
+  "description": "Power Platform developer and data analyst in Cebu City.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#E8EEF6",
+  "theme_color": "#14548F",
+  "icons": [
+    {
+      "src": "/assets/favicon/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

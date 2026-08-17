@@ -141,3 +141,6 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+
+# Generated from reference/prototype.html by reference/unbundle.ps1
+reference/extracted/

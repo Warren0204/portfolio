@@ -1,0 +1,83 @@
+/* The project's one surface panel. */
+
+.card {
+  display: block;
+  padding: clamp(20px, 3vw, 30px);
+  border: var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  color: inherit;
+  text-align: left;
+}
+
+.card--interactive {
+  cursor: pointer;
+  transition:
+    transform var(--duration-base) var(--ease-out),
+    background var(--duration-base),
+    border-color var(--duration-base),
+    box-shadow var(--duration-base);
+}
+
+.card--interactive:hover,
+.card--interactive:focus-visible {
+  border-color: rgba(var(--accent-rgb), 0.4);
+  background: var(--raised);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.16);
+  transform: translateY(-3px);
+}
+
+.card--explore {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: var(--space-4) 18px;
+}
+
+.card--system {
+  display: flex;
+  flex-direction: column;
+  min-height: 250px;
+  padding: clamp(18px, 2.4vw, 24px);
+}
+
+.card--track {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  align-items: flex-start;
+  padding: var(--space-4) var(--space-4) 15px;
+  animation: rise 420ms var(--ease-out) both;
+}
+
+.card--track-selected {
+  border-color: rgba(var(--accent-rgb), 0.55);
+  background: var(--raised);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+.card--skill {
+  padding: 20px;
+}
+
+.card--certificate {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 300px);
+  gap: var(--space-5);
+  align-items: start;
+  padding: 20px;
+}
+
+.card--certificate-compact {
+  display: grid;
+  gap: 6px;
+  align-content: start;
+  padding: 18px 20px;
+}
+
+@media (width < 800px) {
+  .card--certificate {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

@@ -1,0 +1,41 @@
+/* Buttons and link-buttons. Hover brightens or shifts the border; it never
+   changes a colour in a way that drops contrast. */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 26px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  text-decoration: none;
+}
+
+.button--primary {
+  background: var(--cta-bg);
+  color: var(--on-accent);
+  font-weight: 600;
+  transition: background var(--duration-base);
+}
+
+.button--primary:hover,
+.button--primary:focus-visible {
+  background: var(--cta-hover);
+  color: var(--on-accent);
+}
+
+.button--outline {
+  border: var(--line-strong);
+  color: var(--text);
+  font-weight: 500;
+  transition:
+    border-color var(--duration-base),
+    color var(--duration-base);
+}
+
+.button--outline:hover,
+.button--outline:focus-visible {
+  border-color: rgba(var(--accent-rgb), 0.5);
+  color: var(--accent-ink);
+}

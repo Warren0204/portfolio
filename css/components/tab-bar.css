@@ -1,0 +1,90 @@
+/* Bottom navigation, phones only. Sits in the thumb arc, stays visible, and
+   carries the home-indicator inset so it never sits under the system bar. */
+
+.tab-bar {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: var(--z-header);
+  display: none;
+  border-top: var(--line);
+  background: var(--bg);
+  /* The bar's own height plus whatever the device reserves below it. */
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+.tab-bar__tab {
+  position: relative;
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  gap: 3px;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  height: var(--tab-bar-height);
+  padding: 0 2px;
+  color: var(--dim);
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* The lit rail above the current tab, the way a native tab bar marks place. */
+.tab-bar__marker {
+  position: absolute;
+  top: -1px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  border-radius: 0 0 var(--radius-xs) var(--radius-xs);
+  background: var(--accent-ink);
+  transform: translateX(-50%);
+  transition:
+    width var(--duration-base) var(--ease-out),
+    opacity var(--duration-base);
+  opacity: 0;
+}
+
+.tab-bar__tab--current .tab-bar__marker {
+  width: 60%;
+  opacity: 1;
+}
+
+.tab-bar__index {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  opacity: 0.75;
+}
+
+.tab-bar__label {
+  max-width: 100%;
+  overflow: hidden;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tab-bar__tab--current {
+  color: var(--accent-ink);
+}
+
+.tab-bar__tab--current .tab-bar__label {
+  font-weight: 600;
+}
+
+/* Touch has no hover, so the press itself has to answer. */
+.tab-bar__tab:active {
+  background: var(--raised);
+}
+
+@media (width < 800px) {
+  .tab-bar {
+    display: flex;
+  }
+}

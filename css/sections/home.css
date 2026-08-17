@@ -1,0 +1,278 @@
+/* Home.
+
+   Two layouts from one DOM.
+
+   On a phone the hero is normal flow and the portrait floats right, so the
+   summary runs beside it and then continues underneath. A grid column put the
+   image next to a nine-line, twenty-four-character paragraph — a stamp glued
+   to a wall of text, which is what made it read as orphaned. Floating it means
+   the image is on the right without the text paying for it.
+
+   From 800px the portrait leaves the reading order entirely and takes its own
+   column beside the whole text stack.
+
+   Portrait size is bounded by the source. portrait.webp is 400x400; filling a
+   4:5 frame keeps 320x400 of real pixels, so the sharpest CSS width is 320px
+   at 1x, 160px at 2x and 106px at 3x. 140px on a phone is about 1.3x on a 3x
+   screen, which a photograph carries; a larger source is what would buy more. */
+
+.home__lead {
+  display: block;
+}
+
+/* A short stagger down the stack, so the chapter assembles rather than
+   appearing all at once. Killed wholesale under reduced motion. */
+.home__lead > * {
+  animation: rise 600ms var(--ease-out) both;
+}
+
+.home__lead > :nth-child(2) {
+  animation-delay: 50ms;
+}
+
+.home__lead > :nth-child(3) {
+  animation-delay: 100ms;
+}
+
+/* The portrait and the summary are one block, so they arrive together. */
+.home__lead > :nth-child(4),
+.home__lead > :nth-child(5) {
+  animation-delay: 150ms;
+}
+
+.home__lead > :nth-child(6) {
+  animation-delay: 200ms;
+}
+
+.home__lead > :nth-child(7) {
+  animation-delay: 250ms;
+}
+
+/* The preloader covers the page for its first two seconds, which is long
+   enough for these to finish unseen. Hold them until the screen opens. */
+.is-preloading .home__lead > * {
+  animation-play-state: paused;
+}
+
+.home__availability {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 7px 10px;
+  align-items: center;
+  margin-top: var(--space-3);
+  padding: 7px 13px;
+  border: 1px solid rgba(var(--ok-rgb), 0.35);
+  /* One of the two shapes allowed to be a pill: a status strip. */
+  border-radius: var(--radius-pill);
+  background: rgba(var(--ok-rgb), 0.08);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+}
+
+.home__availability-status {
+  color: var(--ok-ink);
+  font-weight: 600;
+}
+
+.home__availability-detail {
+  color: var(--muted);
+}
+
+.home__headline {
+  margin-top: var(--space-3);
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: clamp(29px, 4.6vw, 58px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.06;
+  text-wrap: pretty;
+}
+
+.home .image-frame {
+  float: right;
+  width: 40%;
+  max-width: 140px;
+  margin: 6px 0 var(--space-3) var(--space-4);
+}
+
+/* The pill directly above already says Cebu City; repeating it under a 140px
+   image only costs two wrapped lines. */
+.home .image-frame__caption {
+  display: none;
+}
+
+.home__summary {
+  max-width: 58ch;
+  margin-top: var(--space-4);
+  color: var(--muted);
+  font-size: var(--text-body);
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+.home__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  /* Never sit beside the floated portrait. */
+  clear: both;
+  margin-top: var(--space-5);
+}
+
+.home__tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  clear: both;
+  margin-top: var(--space-4);
+}
+
+/* The tool chips are supporting evidence, not a headline. At full size they
+   filled four rows and pushed the calls to action off a phone screen. */
+.home__tools .chip--md {
+  padding: 3px 9px 3px 4px;
+  font-size: 11px;
+}
+
+.home__tools .chip--md .chip__logo {
+  width: 20px;
+  height: 20px;
+}
+
+.home__explore {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(215px, 100%), 1fr));
+  gap: 12px;
+  margin-top: var(--space-5);
+  transition:
+    opacity 640ms var(--ease-out),
+    transform 640ms var(--ease-out);
+}
+
+/* Applied from JavaScript only, and removed as the cards scroll into view.
+   Never set here as a default: without script the cards must stay visible. */
+.home__explore--pending {
+  opacity: 0;
+  transform: translateY(18px);
+}
+
+.home__explore-head {
+  display: flex;
+  gap: var(--space-2);
+  align-items: baseline;
+}
+
+.home__explore-title {
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.home__explore-arrow {
+  margin-left: auto;
+  color: var(--accent-ink);
+  font-family: var(--font-mono);
+  font-size: var(--text-meta);
+}
+
+.home__explore-hook {
+  color: var(--muted);
+  font-size: var(--text-small);
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+/* Phones: full-width primary over two secondaries, so every target is a
+   comfortable thumb size instead of three buttons wrapping unevenly. */
+@media (width < 560px) {
+  .home__actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .home__actions .button {
+    justify-content: center;
+    padding: 0 var(--space-3);
+  }
+
+  .home__actions .button--primary {
+    grid-column: 1 / -1;
+  }
+}
+
+/* From 800px the portrait leaves the reading order and takes its own column,
+   centred against the full height of the text stack. */
+@media (width >= 800px) {
+  .home__lead {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) clamp(168px, 18vw, 208px);
+    grid-template-areas:
+      'line     portrait'
+      'status   portrait'
+      'headline portrait'
+      'summary  portrait'
+      'actions  portrait'
+      'tools    portrait';
+    column-gap: clamp(24px, 4vw, 56px);
+    align-content: center;
+  }
+
+  .home .typewriter {
+    grid-area: line;
+  }
+
+  .home__availability {
+    grid-area: status;
+    justify-self: start;
+    padding: var(--space-2) 14px;
+    font-size: 11.5px;
+    letter-spacing: 0.1em;
+  }
+
+  .home__headline {
+    grid-area: headline;
+  }
+
+  .home .image-frame {
+    grid-area: portrait;
+    align-self: center;
+    float: none;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+  }
+
+  .home .image-frame__caption {
+    display: flex;
+  }
+
+  .home__summary {
+    grid-area: summary;
+    font-size: var(--text-body-lg);
+    line-height: 1.58;
+  }
+
+  .home__actions {
+    grid-area: actions;
+    gap: 14px;
+  }
+
+  .home__tools {
+    grid-area: tools;
+    gap: var(--space-2);
+  }
+
+  .home__tools .chip--md {
+    padding: 5px 13px 5px 6px;
+    font-size: 12px;
+  }
+
+  .home__tools .chip--md .chip__logo {
+    width: 26px;
+    height: 26px;
+  }
+}

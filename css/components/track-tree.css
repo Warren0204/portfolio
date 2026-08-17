@@ -1,0 +1,237 @@
+/* The credentials connector tree: an apex statement, a spine across the track
+   cards, and a lit branch from the apex down to the selected card. The
+   horizontal positions come from inline left/right values computed in
+   js/sections/credentialsTree.js, because they depend on the card count. */
+
+.track-tree__apex {
+  max-width: 620px;
+  margin: var(--space-5) auto 0;
+  padding: 18px var(--space-5);
+  border: 1px solid rgba(var(--accent-rgb), 0.28);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  text-align: center;
+}
+
+.track-tree__statement {
+  margin-top: var(--space-2);
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: clamp(17px, 2vw, 21px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+  text-wrap: pretty;
+}
+
+.track-tree__stem {
+  width: 2px;
+  height: 20px;
+  margin: 0 auto;
+  background: var(--accent-ink);
+}
+
+.track-tree__spine {
+  position: relative;
+  height: 22px;
+}
+
+.track-tree__spine-base {
+  position: absolute;
+  top: 0;
+  right: 12.5%;
+  left: 12.5%;
+  height: 1px;
+  background: rgba(var(--line-rgb), 0.18);
+}
+
+.track-tree__spine-lit {
+  position: absolute;
+  top: 0;
+  height: 2px;
+  margin-top: -0.5px;
+  background: var(--accent-ink);
+  transition:
+    left 260ms var(--ease-out),
+    right 260ms var(--ease-out);
+}
+
+.track-tree__stub {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  margin-left: -0.5px;
+  background: rgba(var(--line-rgb), 0.18);
+}
+
+.track-tree__stub-lit {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  margin-left: -1px;
+  background: var(--accent-ink);
+  transform-origin: top center;
+  animation: draw-down 200ms var(--ease-out) 180ms both;
+  transition: left 260ms var(--ease-out);
+}
+
+.track-tree__drop {
+  position: relative;
+  height: 20px;
+}
+
+.track-tree__drop-lit {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  margin-left: -1px;
+  background: var(--accent-ink);
+  transform-origin: top center;
+  animation: draw-down 200ms var(--ease-out) 380ms both;
+  transition: left 260ms var(--ease-out);
+}
+
+.track-tree__drop-cap {
+  position: absolute;
+  bottom: 0;
+  width: 7px;
+  height: 7px;
+  margin-left: -3.5px;
+  border-radius: 50%;
+  background: var(--accent-ink);
+  animation: node-pop 240ms var(--ease-out) 560ms both;
+  transition: left 260ms var(--ease-out);
+}
+
+.track-tree__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.track-tree__fallback {
+  display: none;
+  margin: 20px 0 var(--space-3);
+}
+
+.track__kicker {
+  color: var(--dim);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: var(--tracking-mono);
+}
+
+.card--track-selected .track__kicker {
+  color: var(--accent-ink);
+}
+
+.track__name {
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: var(--leading-tight);
+  text-wrap: pretty;
+}
+
+.track__count {
+  margin-top: auto;
+  color: var(--dim);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+}
+
+.track-tree__detail {
+  margin-top: var(--space-2);
+  animation: rise var(--duration-slow) var(--ease-out) both;
+}
+
+.track-detail {
+  overflow: hidden;
+  border: 1px solid rgba(var(--accent-rgb), 0.3);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+
+.track-detail__head {
+  padding: 15px 20px;
+  border-bottom: var(--line-soft);
+}
+
+.track-detail__name {
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  text-wrap: pretty;
+}
+
+.track-detail__summary {
+  max-width: 78ch;
+  margin-top: 7px;
+  color: var(--muted);
+  font-size: 15px;
+  text-wrap: pretty;
+}
+
+.track-detail__block {
+  padding: 18px 20px;
+  border-bottom: var(--line-soft);
+}
+
+.track-detail__block:last-child {
+  border-bottom: none;
+}
+
+.track-detail__block .eyebrow {
+  margin-bottom: var(--space-3);
+}
+
+.track-detail__note {
+  max-width: 74ch;
+  margin-top: var(--space-3);
+  color: var(--dim);
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+
+.track-detail__why {
+  max-width: 70ch;
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: var(--line-soft);
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.track-detail__block .certificate__title,
+.track-detail__block .certificate__issuer {
+  margin-top: 5px;
+}
+
+.track-detail__block .badge {
+  margin-top: var(--space-3);
+}
+
+/* Below 892px the spine has nowhere to read, so it is removed rather than
+   hidden — its geometry assumes four columns, and the grid reflows here. */
+.track-tree--flat .track-tree__stem,
+.track-tree--flat .track-tree__spine,
+.track-tree--flat .track-tree__drop {
+  display: none;
+}
+
+.track-tree--flat .track-tree__fallback {
+  display: block;
+}
+
+.track-tree--flat .track-tree__grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(190px, 100%), 1fr));
+}

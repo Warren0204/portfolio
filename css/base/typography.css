@@ -1,0 +1,73 @@
+/* Type scale and the three families. Sora carries headings and the wordmark,
+   Hanken Grotesk carries body at 15.5px minimum, IBM Plex Mono carries every
+   machine-voice label: eyebrows, tags, counts, timestamps. Instrument Serif
+   appears only as the italic tail of a headline, at most once per chapter. */
+
+:root {
+  --font-display: 'Sora', sans-serif;
+  --font-body: 'Hanken Grotesk', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --font-serif: 'Instrument Serif', serif;
+
+  --text-body: 15.5px;
+  --text-body-lg: 17px;
+  --text-lead: 16.5px;
+  --text-small: 14.5px;
+  --text-meta: 11px;
+  --text-eyebrow: 10px;
+
+  --leading-body: 1.6;
+  --leading-tight: 1.25;
+  --tracking-mono: 0.14em;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  font-weight: 400;
+  line-height: var(--leading-body);
+}
+
+/* Machine voice: uppercase, tracked out, never larger than body. */
+.mono {
+  font-family: var(--font-mono);
+  font-size: var(--text-meta);
+  letter-spacing: var(--tracking-mono);
+}
+
+/* Chapter heading and its lead paragraph. */
+.section__heading {
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: clamp(30px, 3.6vw, 44px);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+}
+
+.section__lead {
+  max-width: 72ch;
+  margin-top: 14px;
+  color: var(--muted);
+  font-size: var(--text-lead);
+  text-wrap: pretty;
+}
+
+/* Body copy inside a card or panel. */
+.prose {
+  max-width: 74ch;
+  color: var(--chip-text);
+  font-size: var(--text-body);
+  line-height: 1.68;
+  text-wrap: pretty;
+}
+
+/* The one emphasised phrase a chapter is allowed. */
+.serif-tail {
+  color: var(--accent-ink);
+  font-family: var(--font-serif);
+  font-size: 1.07em;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}

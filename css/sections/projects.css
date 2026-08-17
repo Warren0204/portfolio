@@ -1,0 +1,62 @@
+/* Projects chapter. */
+
+.projects__list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 26px;
+}
+
+.projects__case {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* Problem and solution beside what was built; one column when it will not fit. */
+.projects__split {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+  gap: 18px;
+}
+
+.projects__split .eyebrow {
+  margin-bottom: var(--space-3);
+}
+
+.projects__split .prose + .eyebrow {
+  margin-top: 26px;
+}
+
+.projects__surface {
+  margin-top: 14px;
+}
+
+.projects__surface-caption {
+  color: var(--dim);
+  font-family: var(--font-mono);
+  font-size: var(--text-meta);
+  letter-spacing: 0.08em;
+}
+
+.projects__surface-list {
+  margin-top: 14px;
+}
+
+.projects__stack {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(230px, 100%), 1fr));
+  gap: var(--space-5);
+  margin-top: 18px;
+}
+
+.projects__stack-group .eyebrow {
+  margin-bottom: 10px;
+}
+
+.projects__status {
+  display: flex;
+  gap: 9px;
+  align-items: baseline;
+  margin-top: var(--space-3);
+}

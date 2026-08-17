@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <!-- viewport-fit=cover lets the shell paint into the notch and home-indicator
+         areas; the header and tab bar re-inset themselves with env(). -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#E8EEF6" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0B1219" media="(prefers-color-scheme: dark)" />
+
+    <title>Warren Villagonzalo Gallardo — Power Platform Developer and Data Analyst</title>
+    <meta
+      name="description"
+      content="Power Platform developer and data analyst in Cebu City. I put automation and reporting into live operations, then document and hand them over so they keep running."
+    />
+    <link rel="canonical" href="https://portfolio-beta-coral-24.vercel.app/" />
+
+    <meta property="og:type" content="profile" />
+    <meta property="og:url" content="https://portfolio-beta-coral-24.vercel.app/" />
+    <meta property="og:site_name" content="Warren Villagonzalo Gallardo" />
+    <meta
+      property="og:title"
+      content="Warren Villagonzalo Gallardo — Power Platform Developer and Data Analyst"
+    />
+    <meta
+      property="og:description"
+      content="Power Platform developer and data analyst in Cebu City. Automation and reporting shipped into live operations, documented, and handed over."
+    />
+    <meta name="twitter:card" content="summary" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@1&family=Sora:wght@600;700&display=swap"
+    />
+    <link rel="stylesheet" href="/css/main.css" />
+
+    <link rel="icon" href="/assets/favicon/favicon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Warren Villagonzalo Gallardo",
+        "url": "https://portfolio-beta-coral-24.vercel.app/",
+        "email": "mailto:warrengallardo0204@gmail.com",
+        "telephone": "+63 968 725 6022",
+        "jobTitle": "Power Platform Developer and Data Analyst",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Cebu City",
+          "addressCountry": "PH"
+        },
+        "alumniOf": {
+          "@type": "CollegeOrUniversity",
+          "name": "University of Cebu, Banilad Campus"
+        },
+        "sameAs": [
+          "https://github.com/Warren0204",
+          "https://www.linkedin.com/in/warren-gallardo/"
+        ]
+      }
+    </script>
+
+    <script>
+      // Runs before first paint so a dark-theme visitor never sees a light flash.
+      // Module scripts are deferred, so main.js is too late to set this.
+      // Mirrors STORAGE_KEYS.theme in js/core/constants.js.
+      (function () {
+        try {
+          var stored = localStorage.getItem('nc-theme');
+          if (stored === 'dark' || stored === 'light') {
+            document.documentElement.dataset.theme = stored;
+          }
+        } catch (error) {
+          // Private-mode storage denial is not worth failing the page over.
+        }
+      })();
+
+      // The intro is markup now, so a returning visitor would see it flash
+      // before main.js could remove it. Decide before first paint instead.
+      (function () {
+        try {
+          if (sessionStorage.getItem('nc-intro-v2')) {
+            document.documentElement.classList.add('is-intro-seen');
+          }
+        } catch (error) {
+          // Storage denied: showing the intro again is the harmless outcome.
+        }
+      })();
+    </script>
+
+    <!-- Without script the intro can never be dismissed, so it must not show. -->
+    <noscript>
+      <style>
+        .preloader {
+          display: none;
+        }
+      </style>
+    </noscript>
+  </head>
+
+  <body>
+    <!-- The loading screen is markup, not script, so it paints with the first
+         byte instead of waiting for the module graph. It is the one piece of
+         copy that lives in the shell: it has to exist before js/data/ has
+         loaded, so this is its single source of truth. -->
+    <div id="intro" class="preloader" aria-hidden="true">
+      <span class="preloader__half preloader__half--top">
+        <span class="preloader__mask"><span class="preloader__line">Welcome to</span></span>
+      </span>
+      <span class="preloader__half preloader__half--bottom">
+        <span class="preloader__mask">
+          <span class="preloader__line preloader__line--delayed">my portfolio.</span>
+        </span>
+        <div class="preloader__footer">
+          <p class="preloader__signature">WARREN GALLARDO · CEBU CITY</p>
+          <p class="preloader__count">0</p>
+        </div>
+        <div class="preloader__track"><div class="preloader__bar"></div></div>
+      </span>
+    </div>
+
+    <a class="skip-link" href="#stage">Skip to content</a>
+    <header id="site-header" class="header"></header>
+    <main id="stage" class="stage"></main>
+    <!-- Loaded first and kept tiny, so the loading screen starts counting
+         without waiting for the whole application graph. -->
+    <script type="module" src="/js/intro.js"></script>
+    <script type="module" src="/js/main.js"></script>
+  </body>
+</html>

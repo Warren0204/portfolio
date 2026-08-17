@@ -1,0 +1,79 @@
+/* Previous and next chapter buttons at the lower edges of the stage. They only
+   appear on wide screens; below that the header nav and swipe already cover it
+   and the edges are too tight to hold them without crowding the content. */
+
+.chapter-nav {
+  position: absolute;
+  bottom: 20px;
+  z-index: var(--z-chapter-nav);
+  display: none;
+  gap: 10px;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 var(--space-4);
+  border: 1px solid rgba(var(--line-rgb), 0.22);
+  border-radius: var(--radius-md);
+  background: var(--raised);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.18);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: var(--text-meta);
+  letter-spacing: 0.12em;
+  transition:
+    transform var(--duration-fast) var(--ease-out),
+    background var(--duration-fast),
+    border-color var(--duration-fast),
+    box-shadow var(--duration-fast);
+}
+
+.chapter-nav:hover,
+.chapter-nav:focus-visible {
+  border-color: rgba(var(--accent-rgb), 0.55);
+  background: var(--surface);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.24);
+  transform: translateY(-2px);
+}
+
+.chapter-nav--prev {
+  left: 18px;
+}
+
+.chapter-nav--next {
+  right: 18px;
+}
+
+.chapter-nav__arrow {
+  color: var(--accent-ink);
+  font-size: 14px;
+  line-height: 1;
+}
+
+.chapter-nav__labels {
+  display: block;
+}
+
+.chapter-nav--prev .chapter-nav__labels {
+  text-align: left;
+}
+
+.chapter-nav--next .chapter-nav__labels {
+  text-align: right;
+}
+
+.chapter-nav__caption {
+  display: block;
+  margin-bottom: 2px;
+  color: var(--dim);
+  font-size: 9.5px;
+  letter-spacing: var(--tracking-mono);
+}
+
+.chapter-nav__name {
+  display: block;
+}
+
+@media (width >= 1440px) {
+  .chapter-nav:not([hidden]) {
+    display: inline-flex;
+  }
+}

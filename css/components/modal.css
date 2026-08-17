@@ -1,0 +1,160 @@
+/* One dialog, two variants: the system detail panel and the certificate zoom. */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(12px, 3vw, 40px);
+  background: var(--modal-scrim);
+  backdrop-filter: blur(6px);
+  animation: fade-in var(--duration-base) ease both;
+}
+
+.modal__dialog {
+  display: flex;
+  flex-direction: column;
+  width: min(1000px, 100%);
+  max-height: 88vh;
+  overflow: hidden;
+  border: 1px solid rgba(var(--line-rgb), 0.16);
+  border-radius: var(--radius-xl);
+  background: var(--bg);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+  animation: zoom-in 280ms var(--ease-out) both;
+}
+
+.modal__header {
+  flex: none;
+  border-bottom: var(--line);
+  background: var(--surface);
+}
+
+.modal__bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+  padding: clamp(18px, 2.4vw, 24px) clamp(20px, 3vw, 30px);
+}
+
+.modal__body {
+  overflow-y: auto;
+  padding: clamp(20px, 3vw, 30px);
+}
+
+.modal__close {
+  display: inline-flex;
+  gap: var(--space-2);
+  align-items: center;
+  min-height: 44px;
+  margin-left: auto;
+  padding: 0 var(--space-4);
+  border: 1px solid rgba(var(--line-rgb), 0.2);
+  border-radius: var(--radius-pill);
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: var(--tracking-mono);
+  transition:
+    background var(--duration-fast),
+    color var(--duration-fast);
+}
+
+.modal__close:hover,
+.modal__close:focus-visible {
+  background: var(--raised);
+  color: var(--text);
+}
+
+/* The zoom fills the screen against a near-black ground so the certificate
+   itself is the only thing lit. */
+.modal--zoom {
+  padding: 0;
+  background: #080c11;
+  backdrop-filter: none;
+}
+
+.modal__dialog--zoom {
+  width: 100%;
+  max-width: none;
+  max-height: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.modal__dialog--zoom .modal__header {
+  border-bottom: none;
+  background: transparent;
+}
+
+/* The ground around the certificate dismisses on click, so it says so. */
+.modal__dialog--zoom .modal__body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  padding: 0 20px 24px;
+  cursor: zoom-out;
+}
+
+/* The certificate itself is not a dismiss target. */
+.modal__dialog--zoom .modal__body > * {
+  cursor: default;
+}
+
+/* Scroll is locked behind an open dialog. */
+.is-modal-open {
+  overflow: hidden;
+}
+
+/* On phones the detail dialog becomes a bottom sheet: it rises from the edge
+   the thumb is already near, keeps a strip of the page visible above it so the
+   context is not lost, and is dismissed by tapping that strip. A centred box
+   floating in the middle of a phone screen is a desktop dialog in disguise. */
+@media (width < 800px) {
+  .modal--panel {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  .modal__dialog--panel {
+    width: 100%;
+    max-height: 92vh;
+    max-height: 92svh;
+    border-right: none;
+    border-bottom: none;
+    border-left: none;
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    animation: sheet-up var(--duration-slow) var(--ease-out) both;
+  }
+
+  /* The grab handle that says "this came from the bottom and goes back". */
+  .modal__dialog--panel .modal__header::before {
+    display: block;
+    width: 38px;
+    height: 4px;
+    margin: 10px auto 2px;
+    border-radius: var(--radius-pill);
+    background: rgba(var(--line-rgb), 0.28);
+    content: '';
+  }
+
+  .modal__dialog--panel .modal__bar {
+    padding-top: var(--space-3);
+  }
+
+  /* Clear of the home indicator. */
+  .modal__dialog--panel .modal__body {
+    padding-bottom: calc(var(--space-6) + env(safe-area-inset-bottom, 0));
+  }
+
+  .modal__dialog--zoom .modal__header {
+    padding-top: env(safe-area-inset-top, 0);
+  }
+}

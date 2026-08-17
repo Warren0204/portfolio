@@ -1,0 +1,54 @@
+/* Mono tag chip, plus the logo variant that carries a product mark. */
+
+.chip {
+  display: inline-flex;
+  gap: var(--space-2);
+  align-items: center;
+  padding: 5px 10px;
+  border: var(--line);
+  border-radius: var(--radius-xs);
+  color: var(--chip-text);
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+}
+
+.chip--logo {
+  padding: 4px 10px 4px 5px;
+}
+
+.chip--role {
+  background: var(--raised);
+  font-size: var(--text-meta);
+  letter-spacing: 0.06em;
+}
+
+.chip__logo {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  border-radius: var(--radius-sm);
+  /* The marks are full-colour product logos drawn for a white ground, so they
+     keep one in both themes rather than washing out on the dark surface. */
+  background: #ffffff;
+  box-shadow: 0 0 0 1px rgba(var(--line-rgb), 0.1);
+  object-fit: contain;
+  padding: 3px;
+}
+
+.chip--md {
+  padding: 5px 13px 5px 6px;
+  font-size: 12px;
+}
+
+.chip--md .chip__logo {
+  width: 26px;
+  height: 26px;
+  border-radius: 5px;
+}
+
+/* A wrapping row of chips. */
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}

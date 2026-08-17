@@ -1,0 +1,27 @@
+/* Content wells. Every chapter's readable column resolves to one of these. */
+
+.well {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: clamp(32px, 5vh, 60px) clamp(20px, 5vw, 48px) 110px;
+}
+
+/* Home is the one chapter that must fit a single screen on desktop, so it
+   carries less vertical padding than the scrolling chapters. */
+.well--home {
+  padding: clamp(22px, 3.4vh, 40px) clamp(20px, 5vw, 48px) clamp(28px, 4vh, 44px);
+}
+
+/* The 110px tail exists to clear the edge chapter buttons, which only appear
+   from 1440px. Below that it is dead space at the bottom of every chapter. */
+@media (width < 1440px) {
+  .well {
+    padding-bottom: var(--space-8);
+  }
+}
+
+@media (width < 800px) {
+  .well {
+    padding-bottom: var(--space-7);
+  }
+}

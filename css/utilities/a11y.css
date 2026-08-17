@@ -1,0 +1,45 @@
+/* Accessibility utilities. Focus is never removed without a replacement. */
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent-ink);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: absolute;
+  top: var(--space-2);
+  left: var(--space-2);
+  z-index: var(--z-preloader);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-sm);
+  background: var(--cta-bg);
+  color: var(--on-accent);
+  font-family: var(--font-mono);
+  font-size: var(--text-meta);
+  letter-spacing: var(--tracking-mono);
+  transform: translateY(calc(-100% - var(--space-4)));
+  transition: transform var(--duration-fast);
+}
+
+.skip-link:focus-visible {
+  color: var(--on-accent);
+  transform: translateY(0);
+}
+
+/* Interactive targets clear 44px, per the accessibility floor. */
+.target {
+  min-width: 44px;
+  min-height: 44px;
+}

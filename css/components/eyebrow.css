@@ -1,0 +1,20 @@
+/* The mono label above a block. Uppercase, tracked out, never larger than body. */
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+}
+
+.eyebrow--dim {
+  color: var(--dim);
+}
+
+.eyebrow--muted {
+  color: var(--muted);
+}
+
+.eyebrow--accent {
+  color: var(--accent-ink);
+}

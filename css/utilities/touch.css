@@ -1,0 +1,75 @@
+/* Touch input has no hover, but a browser leaves :hover applied to the last
+   thing tapped until something else is tapped. Every hover affordance in the
+   project therefore has to be neutralised on touch, and answered instead by a
+   press state that responds the instant a finger lands. Without this, tapping
+   a card leaves it stuck in its lifted state for as long as you look at it. */
+
+@media (hover: none) {
+  .card--interactive:hover,
+  .certificate__thumb:hover,
+  .chapter-nav:hover,
+  .sticky-close__button:hover {
+    box-shadow: none;
+    transform: none;
+  }
+
+  .card--interactive:hover {
+    border-color: rgba(var(--line-rgb), 0.12);
+    background: var(--surface);
+  }
+
+  /* The selected track keeps its lift: that is state, not hover. */
+  .card--track-selected:hover {
+    border-color: rgba(var(--accent-rgb), 0.55);
+    background: var(--raised);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+  }
+
+  .accordion__header:hover,
+  .header__theme:hover {
+    background: none;
+  }
+
+  .header__link:hover {
+    background: none;
+    color: var(--muted);
+  }
+}
+
+/* The press itself. Scale rather than colour, so it reads the same in both
+   themes and never drops contrast on the label it is confirming. */
+.button:active,
+.card--interactive:active,
+.accordion__control:active,
+.tabs__tab:active,
+.certificate__thumb:active,
+.sticky-close__button:active,
+.modal__close:active {
+  transform: scale(0.985);
+}
+
+.accordion__header:active,
+.card--interactive:active {
+  background: var(--raised);
+}
+
+/* The grey flash Android paints over a tap is not part of this design. */
+a,
+button,
+[role='tab'] {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* A press is feedback, so it goes when motion is reduced. */
+@media (prefers-reduced-motion: reduce) {
+  .button:active,
+  .card--interactive:active,
+  .accordion__control:active,
+  .tabs__tab:active,
+  .certificate__thumb:active,
+  .sticky-close__button:active,
+  .modal__close:active {
+    transform: none;
+  }
+}

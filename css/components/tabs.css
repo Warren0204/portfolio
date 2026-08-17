@@ -1,0 +1,43 @@
+/* One tab bar: credentials views and project surfaces. */
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.tabs__tab {
+  min-height: 40px;
+  padding: 9px 15px;
+  border: 1px solid rgba(var(--line-rgb), 0.14);
+  border-radius: var(--radius-sm);
+  color: var(--dim);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  transition:
+    color var(--duration-fast),
+    border-color var(--duration-fast),
+    background var(--duration-fast);
+}
+
+.tabs__tab:hover {
+  border-color: rgba(var(--accent-rgb), 0.45);
+  color: var(--accent-ink);
+}
+
+.tabs__tab--selected {
+  border-color: rgba(var(--accent-rgb), 0.45);
+  background: rgba(var(--accent-rgb), 0.08);
+  color: var(--accent-ink);
+}
+
+/* Inline variant sits inside a card rather than above a chapter. */
+.tabs--inline .tabs__tab {
+  border-color: rgba(var(--line-rgb), 0.12);
+  font-size: var(--text-meta);
+}
+
+.tabs--inline .tabs__tab--selected {
+  background: var(--raised);
+}

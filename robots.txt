@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /reference/
+
+Sitemap: https://portfolio-beta-coral-24.vercel.app/sitemap.xml
