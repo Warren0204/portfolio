@@ -1,12 +1,16 @@
 <!doctype html>
-<html lang="en" data-theme="light">
+<!-- data-theme is dark here as the static fallback; the inline script below
+     overrides it with a stored choice before first paint. -->
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="utf-8" />
     <!-- viewport-fit=cover lets the shell paint into the notch and home-indicator
          areas; the header and tab bar re-inset themselves with env(). -->
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" content="#E8EEF6" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#0B1219" media="(prefers-color-scheme: dark)" />
+    <!-- One value, matching the site's own default. Keying these to
+         prefers-color-scheme tinted the browser chrome light for anyone on a
+         light OS while the page itself opened dark. -->
+    <meta name="theme-color" content="#0B1219" />
 
     <title>Warren Villagonzalo Gallardo — Power Platform Developer and Data Analyst</title>
     <meta
@@ -69,11 +73,11 @@
     </script>
 
     <script>
-      // Runs before first paint so a dark-theme visitor never sees a light
-      // flash. Module scripts are deferred, so main.js is too late to set this.
+      // Runs before first paint, so nobody sees the wrong theme flash past.
+      // Module scripts are deferred, so main.js is too late to set this.
       // Mirrors readStoredTheme() in js/components/themeToggle.js and
       // STORAGE_KEYS.theme in js/core/constants.js: an explicit choice wins,
-      // and until there is one the system preference decides.
+      // and until there is one the site opens dark. Change one, change both.
       (function () {
         var stored = null;
         try {
@@ -82,11 +86,7 @@
           // Private-mode storage denial is not worth failing the page over.
         }
 
-        if (stored !== 'dark' && stored !== 'light') {
-          stored = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-        }
-
-        document.documentElement.dataset.theme = stored;
+        document.documentElement.dataset.theme = stored === 'light' ? 'light' : 'dark';
       })();
 
       // The intro is markup now, so a returning visitor would see it flash

@@ -1,30 +1,30 @@
 /* The theme switch.
 
-   Precedence: an explicit choice always wins, and until one is made the
-   visitor's system preference decides. Previously light was hard-coded as the
-   default and the system was ignored entirely, so someone whose whole machine
-   is dark was handed a bright page and had to fix it by hand.
+   Precedence: an explicit choice always wins, and until one is made the site
+   opens dark.
 
-   The choice is only written on an actual click. Persisting on every apply —
-   which the first version did — would save the system-derived value on the
-   first page load and freeze it, making the preference a one-time reading
-   rather than something that keeps following the system. */
+   Dark is the default by decision, not by detection. The site was built
+   dark-first — the ambient wash, the brand glow behind the portrait, and the
+   diagram draw-on were all composed against the deep ground — and that is the
+   version a first-time visitor should meet. The previous behaviour followed
+   `prefers-color-scheme`, which meant roughly half of all arrivals saw the
+   weaker of the two designs before they saw the better one.
+
+   The trade-off is real and worth naming: a visitor who has set their whole
+   machine to light gets dark anyway. The switch is in the header on every
+   screen size, and the moment they touch it their choice is stored and
+   outranks this default forever after. */
 
 import { el } from '../core/dom.js';
 import { local } from '../core/storage.js';
 import { STORAGE_KEYS, THEMES } from '../core/constants.js';
 import { profile } from '../data/profile.js';
 
-/** @returns {string} the visitor's system preference. */
-function systemTheme() {
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? THEMES.dark : THEMES.light;
-}
-
-/** @returns {string} the persisted choice, or the system preference. */
+/** @returns {string} the persisted choice, or dark on a first visit. */
 export function readStoredTheme() {
   const stored = local.read(STORAGE_KEYS.theme);
   if (stored === THEMES.dark || stored === THEMES.light) return stored;
-  return systemTheme();
+  return THEMES.dark;
 }
 
 /** Apply a theme to the document. Does not persist — see persistTheme. */
@@ -36,23 +36,6 @@ export function applyTheme(theme) {
    click is the only moment a preference has actually been expressed. */
 function persistTheme(theme) {
   local.write(STORAGE_KEYS.theme, theme);
-}
-
-/**
- * Follow the system while the visitor has never chosen. Someone who switches
- * their machine to dark at sunset should not have to reload this page.
- *
- * @param {(theme: string) => void} onChange
- * @returns {() => void} unsubscribe
- */
-export function onSystemThemeChange(onChange) {
-  const query = window.matchMedia('(prefers-color-scheme: dark)');
-  const handler = () => {
-    if (local.read(STORAGE_KEYS.theme)) return;
-    onChange(systemTheme());
-  };
-  query.addEventListener('change', handler);
-  return () => query.removeEventListener('change', handler);
 }
 
 /**

@@ -1,0 +1,10 @@
+/* Inline SVG icons. They take their colour from whatever contains them, so a
+   theme change needs no icon-specific rule anywhere. */
+
+.icon {
+  display: block;
+  flex: none;
+  width: 18px;
+  height: 18px;
+  fill: currentcolor;
+}

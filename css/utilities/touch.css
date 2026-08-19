@@ -33,10 +33,6 @@
     background: none;
     color: var(--muted);
   }
-
-  .contact__link:hover {
-    color: var(--muted);
-  }
 }
 
 /* The press itself. Scale rather than colour, so it reads the same in both

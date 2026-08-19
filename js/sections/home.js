@@ -14,19 +14,13 @@ import { createImageFrame } from '../components/imageFrame.js';
 import { parallax, revealNow, revealOnScroll } from '../core/animate.js';
 import { profile } from '../data/profile.js';
 import { heroTools } from '../data/skills.js';
-import {
-  createActions,
-  createAvailabilityStrip,
-  createHeadline,
-  createStats,
-} from './homeIntro.js';
+import { createActions, createHeadline, createStats } from './homeIntro.js';
 
 /**
  * @returns {{ element: HTMLElement, armReveal: () => void, destroy: () => void }}
  */
 export function createHomeSection() {
   const typewriter = createTypewriter({ phrases: profile.heroPhrases });
-  const availability = createAvailabilityStrip();
   const headline = createHeadline();
   const summary = el('p', { class: 'home__summary', text: profile.summary });
   const actions = createActions();
@@ -66,7 +60,7 @@ export function createHomeSection() {
      neither layout is the accidental by-product of the other. */
   const element = el('div', { class: 'well well--home home' }, [
     el('div', { class: 'home__hero' }, [
-      el('div', { class: 'home__intro' }, [typewriter.element, availability, headline.element]),
+      el('div', { class: 'home__intro' }, [typewriter.element, headline.element]),
       el('div', { class: 'home__portrait' }, portrait),
       el('div', { class: 'home__body' }, [summary, actions, tools]),
     ]),
@@ -88,7 +82,7 @@ export function createHomeSection() {
         // first and tightly staggered: the headline should read as one line
         // assembling, not as thirteen separate arrivals.
         revealNow(headline.words, { y: 34, stagger: 0.035, duration: 0.7 }),
-        revealNow([typewriter.element, availability], { delay: 0.1, y: 14 }),
+        revealNow(typewriter.element, { delay: 0.1, y: 14 }),
         revealNow([summary, actions, tools], { delay: 0.35, stagger: 0.1 }),
         revealNow(portrait, { delay: 0.2, y: 40, duration: 1 }),
         parallax(portrait, 50),

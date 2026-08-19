@@ -2,7 +2,7 @@
 
 .eyebrow {
   font-family: var(--font-mono);
-  font-size: 10.5px;
+  font-size: 11px;
   letter-spacing: var(--tracking-mono);
   text-transform: uppercase;
 }

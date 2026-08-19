@@ -7,11 +7,18 @@
    can be built with alpha at the point of use: rgba(var(--line-rgb), 0.1).
 
    The accent is tuned to the wordmark — the blue-to-teal disc in
-   assets/favicon/favicon.svg — rather than to a generic blue. Every text
-   colour below was checked against its own background for WCAG AA:
-   --accent-ink is 5.5:1 on --bg in light and 11.2:1 in dark. Semantic green
-   stays deliberately greener than the accent so "in production" never reads
-   as decoration. */
+   assets/favicon/favicon.svg — rather than to a generic blue.
+
+   Every ink below is measured against its own background and clears 7:1, the
+   AAA threshold, not the 4.5:1 AA floor. That is deliberate. An audit of the
+   rendered page found light mode passing AA everywhere and still tiring to
+   read: the weakest ratios (4.98, 5.54, 6.33) all landed on 10-11px uppercase
+   mono, which is the hardest text on the page. Dark mode measured 6.9:1 and
+   up, which is why only the light values moved. AA is a compliance floor;
+   comfortable reading is the actual goal.
+
+   Semantic green stays deliberately greener than the accent so "in
+   production" never reads as decoration. */
 
 :root {
   /* Surfaces and text — light. Soft blue-grey, never white. */
@@ -21,27 +28,27 @@
   --sunken: #dde6f1;
   --text: #0f1822;
   --muted: #37455a;
-  --dim: #4a5765;
+  --dim: #414d5c;
   --chip-text: #212c37;
 
   /* The working accent: the azure half of the wordmark, darkened to carry
      body-sized text on --bg. */
-  --accent-ink: #0b6491;
-  --accent-ink-hover: #084c70;
+  --accent-ink: #0a5478;
+  --accent-ink-hover: #073f5b;
   --accent-dot: #0e86a8;
 
   /* Green is semantic only — "in production", "earned". Never decorative. */
-  --ok-ink: #0b6b4f;
+  --ok-ink: #06543d;
   --ok-dot: #0f7f5c;
 
   /* Planned or not-yet-earned states. */
-  --plan-ink: #4a5765;
+  --plan-ink: #414d5c;
 
   /* Channel triplets, for borders and tints built with alpha. */
   --line-rgb: 16, 30, 46;
-  --accent-rgb: 11, 100, 145;
-  --ok-rgb: 11, 107, 79;
-  --plan-rgb: 74, 87, 101;
+  --accent-rgb: 10, 84, 120;
+  --ok-rgb: 6, 84, 61;
+  --plan-rgb: 65, 77, 92;
 
   /* The wordmark gradient, for the one or two places brand is expressed as a
      surface rather than as ink: the logo chip and the hero glow. */
@@ -51,8 +58,8 @@
 
   /* Call to action. */
   --on-accent: #fff;
-  --cta-bg: #0b6491;
-  --cta-hover: #084c70;
+  --cta-bg: #0a5478;
+  --cta-hover: #073f5b;
 
   /* Dot halos, derived from the semantic channels. */
   --ok-glow: rgba(var(--ok-rgb), 0.24);

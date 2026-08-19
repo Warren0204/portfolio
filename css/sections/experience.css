@@ -63,6 +63,23 @@
   margin-top: var(--space-4);
 }
 
+/* The NDA note. Bordered on one edge rather than boxed: it is context for the
+   summary above it, not a warning. */
+.experience__disclosure {
+  margin-top: var(--space-5);
+  padding-left: var(--space-4);
+  border-left: 2px solid rgba(var(--accent-rgb), 0.4);
+}
+
+.experience__disclosure-body {
+  margin-top: 8px;
+  max-width: 74ch;
+  color: var(--muted);
+  font-size: var(--text-small);
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
 .experience__role-tags {
   margin-top: var(--space-5);
   padding-top: var(--space-4);

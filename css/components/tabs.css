@@ -13,7 +13,7 @@
   border-radius: var(--radius-sm);
   color: var(--dim);
   font-family: var(--font-mono);
-  font-size: 10.5px;
+  font-size: 11px;
   letter-spacing: 0.12em;
   transition:
     color var(--duration-fast),

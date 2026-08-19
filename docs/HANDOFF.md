@@ -130,6 +130,7 @@ Read newest first. Use these as the pattern for anything new.
 
 | Message                    | What it covered                                                                                                 |
 | -------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| `Readability and contact`  | Light-theme ink re-tuned to 7:1, 11px type floor, dark by default, Contact routes rebuilt, NDA note added       |
 | `Dedupe contact copy`      | Removed repeated timezone, work arrangement, and contact details inside the Contact section                     |
 | `Prune dead code`          | Removed exports, modules, and CSS orphaned by the redesign; Home's third CTA now scrolls to Contact             |
 | `Optimize images`          | Logos and the certificate re-encoded to WebP, 1.73 MB down to 235 KB                                            |

@@ -137,11 +137,26 @@ in its lifted state.
 
 ## Theme
 
-An explicit choice always wins; until one is made, the system preference
-decides. The choice is written to storage only on an actual click, so a
-system-derived value is never frozen in as though the visitor had picked it.
-The pre-paint bootstrap in `index.html` mirrors `readStoredTheme()` exactly —
-change one and you must change the other, or dark visitors get a light flash.
+An explicit choice always wins; until one is made, the site opens **dark**.
+
+Dark is a decision, not a detection. The design was composed dark-first — the
+ambient wash, the brand glow behind the portrait, and the diagram draw-on were
+all built against the deep ground — so that is the version a first-time visitor
+should meet. Reading `prefers-color-scheme` instead meant roughly half of all
+arrivals saw the weaker of the two designs first. The cost is real and worth
+naming: someone whose machine is set to light gets dark anyway, and has to
+touch the switch. The switch is in the header at every width, and their choice
+is stored the moment they use it.
+
+The choice is written to storage only on an actual click, so the default is
+never frozen in as though the visitor had picked it. The pre-paint bootstrap in
+`index.html` mirrors `readStoredTheme()` exactly — change one and you must
+change the other, or the wrong theme flashes past on load.
+
+Both palettes are measured, not eyeballed. Every ink clears 7:1 against its own
+background; the weakest text on the page is 6.8:1 and the smallest is 11px. An
+earlier pass passed WCAG AA everywhere and was still tiring to read in light
+mode, because AA's 4.5:1 floor was being met by 10px uppercase mono at 4.98:1.
 
 ## Where new content goes
 

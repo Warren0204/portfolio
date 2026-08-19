@@ -1,9 +1,12 @@
-/* The pieces of the Home hero: availability, headline, calls to action, and
-   the evidence strip. Kept beside home.js so that module stays an assembly of
-   parts rather than a wall of construction. */
+/* The pieces of the Home hero: headline, calls to action, and the evidence
+   strip. Kept beside home.js so that module stays an assembly of parts rather
+   than a wall of construction.
+
+   The availability pill used to live here too. It now appears once, in
+   Contact — two identical status strips on one page read as an oversight
+   rather than as emphasis. */
 
 import { el } from '../core/dom.js';
-import { createStatusDot } from '../components/statusDot.js';
 import { chapterById } from '../data/navigation.js';
 import { profile } from '../data/profile.js';
 
@@ -26,15 +29,6 @@ function splitWords(value, className) {
     const span = el('span', { class: className, text: word });
     return index === words.length - 1 ? [span] : [span, ' '];
   });
-}
-
-/** @returns {HTMLElement} */
-export function createAvailabilityStrip() {
-  return el('p', { class: 'home__availability' }, [
-    createStatusDot({ tone: 'ok' }),
-    el('span', { class: 'home__availability-status', text: profile.availability.status }),
-    el('span', { class: 'home__availability-detail', text: profile.availability.detail }),
-  ]);
 }
 
 /**

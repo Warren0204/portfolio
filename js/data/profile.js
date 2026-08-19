@@ -8,18 +8,25 @@ export const profile = Object.freeze({
      enough to sit beside the nav and the theme switch. */
   shortName: 'Warren Gallardo',
   role: 'Power Platform Developer and Data Analyst',
-  location: 'Cebu City, Philippines',
+  /* The portrait caption. The other addresses live in contact.routes, which is
+     their single source — keeping copies up here meant two places to forget. */
   locationCaption: 'CEBU CITY, PHILIPPINES',
-  timezone: 'GMT+8',
 
+  /* Still needed outside contact.routes: contactForm falls back to a mailto
+     link when a send fails. */
   email: 'warrengallardo0204@gmail.com',
-  phone: '+63 968 725 6022',
-  github: 'https://github.com/Warren0204',
-  linkedin: 'https://www.linkedin.com/in/warren-gallardo/',
 
+  /* Stated once, in Contact. It used to sit in the hero as well, which meant a
+     reader met the same five words twice on one page.
+
+     The work arrangement is not repeated here — the Contact paragraph says
+     "remote, hybrid, or onsite" — and neither is the location, which the
+     footer carries. What is left is the part that changes: am I looking, and
+     how fast will you hear back. */
   availability: Object.freeze({
     status: 'OPEN TO WORK',
-    detail: 'CEBU CITY · REMOTE, HYBRID, OR ONSITE',
+    response: 'Replies within a day',
+    window: 'GMT+8',
   }),
 
   /* Typewriter line above the headline. */
@@ -44,7 +51,9 @@ export const profile = Object.freeze({
     Object.freeze({
       value: '9',
       label: 'CLOUD FLOWS',
-      detail: 'In production at Benchmark365',
+      /* The client is deliberately unnamed here and everywhere else on this
+         page. See the disclosure note in js/data/experience.js. */
+      detail: 'Scheduled, self maintaining, in production',
     }),
     Object.freeze({
       value: '3',
@@ -57,9 +66,12 @@ export const profile = Object.freeze({
       detail: 'On a scheduled daily refresh',
     }),
     Object.freeze({
-      value: '2',
-      label: 'SURFACES BUILT',
-      detail: 'Web and mobile, one platform',
+      value: '1',
+      label: 'PROJECT VALIDATED',
+      /* "Surfaces built" counted an implementation detail. Validation by the
+         office that would actually use it is the harder thing and the one
+         worth claiming. */
+      detail: 'TranspiraFund, with its sponsor user',
     }),
   ]),
 
@@ -85,29 +97,12 @@ export const profile = Object.freeze({
        promising a mail client and not opening one is a small lie, and on a
        phone with no mail app configured a mailto is a dead end. */
     getInTouch: 'Get in touch',
-    github: 'GitHub',
-    linkedin: 'LinkedIn',
   }),
 
-  /* Each line here says one thing, once.
-
-     This section used to state GMT+8 three times (strip, eyebrow, footer),
-     "remote, hybrid, or onsite" twice (strip and the paragraph below it), and
-     the email and phone twice (footer, and the link column directly above it)
-     — all inside a single screenful. Repetition across sections a whole page
-     apart is fine; repetition a reader can see all at once reads as an
-     oversight.
-
-     So the division of labour is: the strip carries status, the paragraph
-     carries what the roles are, the link column carries the addresses, and
-     the footer carries identity. */
+  /* Each line here says one thing, once. Every element has one job: the
+     availability card carries status, the paragraph carries what the roles
+     are, the routes carry the addresses, and the footer carries identity. */
   contact: Object.freeze({
-    /* Status, at the moment someone is deciding whether to write: still
-       looking, and how long an answer takes. The work arrangement is not
-       repeated here — the paragraph below states it. */
-    strip: 'OPEN TO WORK · REPLIES WITHIN A DAY',
-    /* The timezone belongs to the strip, which is the only place it now
-       appears in this section. */
     eyebrow: 'CONTACT',
     heading: 'Let’s talk',
     /* Addressed to someone hiring, which is who reads this section, and named
@@ -119,8 +114,52 @@ export const profile = Object.freeze({
     details: 'Warren Villagonzalo Gallardo · Cebu City, Philippines',
 
     /* Direct routes, for the visitor who would rather not fill anything in.
-       Offered beside the form, never instead of it. */
-    directEyebrow: 'OR REACH ME DIRECTLY',
+       Offered beside the form, never instead of it — the form cannot attach a
+       job description, CC a colleague, or land in someone's ATS thread, and a
+       recruiter who needs any of those will just leave if there is no address.
+
+       Ordered by how likely each is to be wanted. */
+    routesEyebrow: 'OR REACH ME DIRECTLY',
+    routes: Object.freeze([
+      Object.freeze({
+        id: 'email',
+        icon: 'email',
+        label: 'Email',
+        value: 'warrengallardo0204@gmail.com',
+        href: 'mailto:warrengallardo0204@gmail.com',
+      }),
+      Object.freeze({
+        id: 'linkedin',
+        icon: 'linkedin',
+        label: 'LinkedIn',
+        value: 'warren-gallardo',
+        href: 'https://www.linkedin.com/in/warren-gallardo/',
+        external: true,
+      }),
+      Object.freeze({
+        id: 'github',
+        icon: 'github',
+        label: 'GitHub',
+        value: 'Warren0204',
+        href: 'https://github.com/Warren0204',
+        external: true,
+      }),
+      /* Deliberately not a tel: link, and deliberately last.
+
+         An unscheduled call from an unknown number does not get answered, so
+         a tap-to-call button would send people to a dead end and make me look
+         unresponsive. Stating the preference positively — text first, calls
+         arranged by email — tells someone how to succeed rather than
+         advertising what I distrust. The number stays selectable text so it
+         can still be copied. */
+      Object.freeze({
+        id: 'phone',
+        icon: 'message',
+        label: 'Phone',
+        value: '+63 968 725 6022',
+        note: 'Text me here. I arrange calls by email first.',
+      }),
+    ]),
   }),
 
   /* The contact form. Three fields, because three is what it takes to reply to

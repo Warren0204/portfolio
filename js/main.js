@@ -7,7 +7,7 @@ import { createRouter } from './core/router.js';
 import { onSectionChange } from './core/animate.js';
 import { createHeader } from './components/header.js';
 import { createTabBar } from './components/tabBar.js';
-import { applyTheme, onSystemThemeChange, readStoredTheme } from './components/themeToggle.js';
+import { applyTheme, readStoredTheme } from './components/themeToggle.js';
 import { introComplete } from './intro.js';
 import { chapters, indexForRoute } from './data/navigation.js';
 import { createHomeSection } from './sections/home.js';
@@ -35,9 +35,6 @@ function boot() {
   store.subscribe((state, changedKeys) => {
     if (changedKeys.includes('theme')) applyTheme(state.theme);
   });
-
-  // Until the visitor makes a choice of their own, follow their system.
-  onSystemThemeChange((theme) => store.set({ theme }));
 
   const builders = {
     home: createHomeSection,

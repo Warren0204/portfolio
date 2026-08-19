@@ -23,7 +23,7 @@ One page, five sections, read top to bottom:
 Everything is written in plain HTML, CSS, and JavaScript — no framework and no
 build step. The one runtime dependency is GSAP, which drives the scroll
 animation, and it is committed to the repo rather than installed. Light and dark
-themes, following your system until you say otherwise, and built for a phone as
+themes — it opens dark, and remembers if you switch — and built for a phone as
 much as a desktop.
 
 The three process diagrams in Experience are not images. They are node-and-edge

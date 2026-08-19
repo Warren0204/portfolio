@@ -45,32 +45,6 @@
   min-width: 0;
 }
 
-.home__availability {
-  display: inline-flex;
-  flex-wrap: wrap;
-  gap: 7px 10px;
-  align-items: center;
-  margin-top: var(--space-3);
-  padding: 7px 13px;
-  border: 1px solid rgba(var(--ok-rgb), 0.35);
-
-  /* One of the two shapes allowed to be a pill: a status strip. */
-  border-radius: var(--radius-pill);
-  background: rgba(var(--ok-rgb), 0.08);
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  letter-spacing: 0.08em;
-}
-
-.home__availability-status {
-  color: var(--ok-ink);
-  font-weight: 600;
-}
-
-.home__availability-detail {
-  color: var(--muted);
-}
-
 .home__headline {
   margin-top: var(--space-4);
   color: var(--text);

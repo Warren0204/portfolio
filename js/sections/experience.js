@@ -38,6 +38,12 @@ function createRoleCard(role) {
     el('h3', { class: 'experience__role-title', text: role.title }),
     el('p', { class: 'experience__role-org', text: role.organisation }),
     el('p', { class: 'prose experience__role-summary', text: role.summary }),
+    role.disclosure
+      ? el('aside', { class: 'experience__disclosure' }, [
+          createSectionEyebrow({ text: role.disclosure.eyebrow, tone: 'accent' }),
+          el('p', { class: 'experience__disclosure-body', text: role.disclosure.body }),
+        ])
+      : null,
     el('div', { class: 'experience__role-tags' }, [
       createSectionEyebrow({ text: eyebrows.role, tone: 'accent' }),
       el(

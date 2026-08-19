@@ -4,8 +4,8 @@
   "description": "Power Platform developer and data analyst in Cebu City.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#E8EEF6",
-  "theme_color": "#14548F",
+  "background_color": "#0B1219",
+  "theme_color": "#0B1219",
   "icons": [
     {
       "src": "/assets/favicon/favicon.svg",

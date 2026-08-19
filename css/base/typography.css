@@ -13,8 +13,12 @@
   --text-body-lg: 17px;
   --text-lead: 16.5px;
   --text-small: 14.5px;
-  --text-meta: 11px;
-  --text-eyebrow: 10px;
+  --text-meta: 11.5px;
+
+  /* The floor. Mono, uppercase and tracked out is the least legible
+     setting on the page, so it does not go below 11px however tempting
+     the density is. */
+  --text-eyebrow: 11px;
 
   --leading-body: 1.6;
   --leading-tight: 1.25;

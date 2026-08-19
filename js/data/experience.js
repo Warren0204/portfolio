@@ -17,6 +17,18 @@ export const roles = Object.freeze([
     summary:
       'As the company’s first IT intern, I worked with the People and Culture team to find where manual HR and admin work was eating time, then built the systems to remove it. Nine cloud flows, a canvas app, and a four page Power BI report went into production. I owned both sides of that work: the developer who built the automation, and the analyst who modelled the data, defined the measures, and decided what HR actually needed to see. I documented every build and handed the suite to a company service account, so it keeps running now that the internship has ended.',
 
+    /* Stated up front, before any of the detail below it.
+
+       A reader who reaches three systems with process diagrams and no
+       screenshots will otherwise wonder why. Saying so first turns an apparent
+       gap into what it actually is — a signed agreement being kept — and
+       respecting a confidentiality term is itself a thing worth demonstrating
+       to whoever reads this next. */
+    disclosure: Object.freeze({
+      eyebrow: 'ON WHAT IS SHOWN HERE',
+      body: 'In respect of the non-disclosure agreement signed for this internship, what follows is the architecture of each system and its process flow only. No screenshots, records, data, or working copies of the systems themselves are shown anywhere on this site.',
+    }),
+
     systems: Object.freeze([
       Object.freeze({
         id: 'contract-studio',
