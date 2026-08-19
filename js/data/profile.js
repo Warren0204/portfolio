@@ -89,14 +89,34 @@ export const profile = Object.freeze({
     linkedin: 'LinkedIn',
   }),
 
+  /* Each line here says one thing, once.
+
+     This section used to state GMT+8 three times (strip, eyebrow, footer),
+     "remote, hybrid, or onsite" twice (strip and the paragraph below it), and
+     the email and phone twice (footer, and the link column directly above it)
+     — all inside a single screenful. Repetition across sections a whole page
+     apart is fine; repetition a reader can see all at once reads as an
+     oversight.
+
+     So the division of labour is: the strip carries status, the paragraph
+     carries what the roles are, the link column carries the addresses, and
+     the footer carries identity. */
   contact: Object.freeze({
-    strip: 'OPEN TO WORK · REMOTE, HYBRID, OR ONSITE',
-    eyebrow: 'CONTACT · GMT+8',
+    /* Status, at the moment someone is deciding whether to write: still
+       looking, and how long an answer takes. The work arrangement is not
+       repeated here — the paragraph below states it. */
+    strip: 'OPEN TO WORK · REPLIES WITHIN A DAY',
+    /* The timezone belongs to the strip, which is the only place it now
+       appears in this section. */
+    eyebrow: 'CONTACT',
     heading: 'Let’s talk',
     /* Addressed to someone hiring, which is who reads this section, and named
-       with the same three tracks the sentence goes on to list. */
+       with the same three tracks the sentence goes on to list. The only place
+       the work arrangement is stated. */
     body: 'I am open to three kinds of role: Microsoft Power Platform and automation development, data analytics and business intelligence, and project management or coordination. Remote, hybrid, or onsite.',
-    details: 'warrengallardo0204@gmail.com · +63 968 725 6022 · replies within a day · GMT+8',
+    /* The contentinfo landmark. It carries who and where, because the email,
+       the phone, and the timezone are all already on screen above it. */
+    details: 'Warren Villagonzalo Gallardo · Cebu City, Philippines',
 
     /* Direct routes, for the visitor who would rather not fill anything in.
        Offered beside the form, never instead of it. */

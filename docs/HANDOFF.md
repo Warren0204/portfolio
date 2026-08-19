@@ -116,8 +116,35 @@ _is_ the right tool for overflow itself — the header's scrollbar collision at
 
 ## Git conventions
 
-Commit messages are short — two or three words. **Do not add `Co-Authored-By`
-or any assistant attribution.**
+Commit messages are **two or three words**, and they name what changed rather
+than what was touched. No scope prefixes, no conventional-commit types, no
+trailing punctuation. **Do not add `Co-Authored-By` or any assistant
+attribution** — every commit here is authored by Warren.
+
+Two or three words is a real constraint, not a style note: if a message needs
+more, the commit is doing more than one thing and should be split.
+
+### The log so far
+
+Read newest first. Use these as the pattern for anything new.
+
+| Message                    | What it covered                                                                                                 |
+| -------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| `Dedupe contact copy`      | Removed repeated timezone, work arrangement, and contact details inside the Contact section                     |
+| `Prune dead code`          | Removed exports, modules, and CSS orphaned by the redesign; Home's third CTA now scrolls to Contact             |
+| `Optimize images`          | Logos and the certificate re-encoded to WebP, 1.73 MB down to 235 KB                                            |
+| `Document domain decision` | Recorded that the site stays on the vercel.app URL, so it stops reading as unfinished work                      |
+| `Phase 2 redesign`         | Five sliding chapters became one scrolling page: GSAP motion, scroll-drawn diagrams, contact form, new wordmark |
+| `Phase 1 portfolio`        | The original build                                                                                              |
+| `Initial commit`           | Repository created                                                                                              |
+
+Verbs that fit the shape: `Add`, `Fix`, `Remove`, `Prune`, `Optimize`,
+`Dedupe`, `Document`, `Rename`, `Restore`. A bare noun phrase is fine too when
+the change is a thing rather than an action — `Phase 2 redesign`.
+
+Messages that would be wrong here: `fix: resolve contact section duplication`
+(prefix, too long), `Updated files` (says nothing), `Various improvements`
+(hides a commit that should have been several).
 
 Pushes to `main` deploy to production automatically; pull requests get preview
 deployments.
