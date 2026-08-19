@@ -73,7 +73,7 @@
 }
 
 .diagram__edge-labels {
-  fill: var(--dim);
+  fill: var(--muted);
   font-size: 12.5px;
 
   /* Painting the stroke first knocks a halo of background out from behind the

@@ -112,7 +112,7 @@
 }
 
 .preloader__signature {
-  color: var(--dim);
+  color: var(--muted);
   font-family: var(--font-mono);
   font-size: clamp(9.5px, 1.2vw, 11px);
   letter-spacing: 0.22em;
@@ -120,7 +120,7 @@
 }
 
 .preloader__count {
-  color: var(--dim);
+  color: var(--muted);
   font-family: var(--font-mono);
   font-size: clamp(12px, 1.6vw, 15px);
   font-variant-numeric: tabular-nums;

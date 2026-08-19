@@ -21,7 +21,7 @@
   .card--track-selected:hover {
     border-color: rgba(var(--accent-rgb), 0.55);
     background: var(--raised);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--shadow-md);
     transform: translateY(-2px);
   }
 

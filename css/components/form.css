@@ -40,7 +40,7 @@
 }
 
 .field__hint {
-  color: var(--dim);
+  color: var(--muted);
   font-size: 13px;
 }
 
@@ -71,7 +71,7 @@
 }
 
 .field__control::placeholder {
-  color: var(--dim);
+  color: var(--muted);
 }
 
 .field__control:hover {
@@ -85,24 +85,16 @@
 }
 
 .field--invalid .field__control {
-  border-color: rgba(190, 40, 40, 0.75);
-}
-
-[data-theme='dark'] .field--invalid .field__control {
-  border-color: rgba(255, 138, 128, 0.8);
+  border-color: rgba(var(--error-rgb), 0.75);
 }
 
 .field__error {
   display: flex;
   gap: 6px;
   align-items: flex-start;
-  color: #a1231d;
+  color: var(--error-ink);
   font-size: 13px;
   line-height: 1.45;
-}
-
-[data-theme='dark'] .field__error {
-  color: #ff9d94;
 }
 
 /* Colour is never the only signal that something is wrong. */
@@ -149,9 +141,9 @@
 
 .contact-form__status--error {
   padding: var(--space-3) var(--space-4);
-  border: 1px solid rgba(190, 40, 40, 0.4);
+  border: 1px solid rgba(var(--error-rgb), 0.4);
   border-radius: var(--radius-lg);
-  background: rgba(190, 40, 40, 0.07);
+  background: rgba(var(--error-rgb), 0.07);
   color: var(--text);
 }
 

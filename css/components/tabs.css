@@ -11,7 +11,7 @@
   padding: 9px 15px;
   border: 1px solid rgba(var(--line-rgb), 0.14);
   border-radius: var(--radius-sm);
-  color: var(--dim);
+  color: var(--muted);
   font-family: var(--font-mono);
   font-size: 11px;
   letter-spacing: 0.12em;

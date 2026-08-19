@@ -216,7 +216,7 @@ a.route:focus-visible {
 }
 
 .route__label {
-  color: var(--dim);
+  color: var(--muted);
   font-family: var(--font-mono);
   font-size: var(--text-eyebrow);
   letter-spacing: var(--tracking-mono);
@@ -237,7 +237,7 @@ a.route .route__value {
 /* Says how to succeed, rather than what I distrust. */
 .route__note {
   margin-top: 2px;
-  color: var(--dim);
+  color: var(--muted);
   font-size: 13px;
   line-height: 1.45;
   text-wrap: pretty;
@@ -252,7 +252,7 @@ a.route .route__value {
 }
 
 .contact__details {
-  color: var(--dim);
+  color: var(--muted);
   font-family: var(--font-mono);
   font-size: var(--text-eyebrow);
   letter-spacing: 0.12em;

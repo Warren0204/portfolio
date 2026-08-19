@@ -130,6 +130,9 @@ Read newest first. Use these as the pattern for anything new.
 
 | Message                                     | What it covered                                                                                                                                 |
 | ------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Consolidate colour tokens`                 | 27 ad-hoc colours retired into tokens; 4 text levels folded to 2; 10 dead tokens removed                                                        |
+| `Rebalance contact layout`                  | One grid for the whole section, routes card raised level with the heading                                                                       |
+| `Add header chip`                           | Availability chip in the header from 1080px, reading the contact section's data                                                                 |
 | `Add hCaptcha verification to contact form` | hCaptcha in front of the Web3Forms submit, rendered explicitly and lazily. Longer than the rule allows — kept because it was specified verbatim |
 | `Readability and contact`                   | Light-theme ink re-tuned to 7:1, 11px type floor, dark by default, Contact routes rebuilt, NDA note added                                       |
 | `Dedupe contact copy`                       | Removed repeated timezone, work arrangement, and contact details inside the Contact section                                                     |

@@ -23,7 +23,7 @@
 .card--interactive:focus-visible {
   border-color: rgba(var(--accent-rgb), 0.4);
   background: var(--raised);
-  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.16);
+  box-shadow: var(--shadow-md);
   transform: translateY(-3px);
 }
 
@@ -53,7 +53,7 @@
 .card--track-selected {
   border-color: rgba(var(--accent-rgb), 0.55);
   background: var(--raised);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--shadow-md);
   transform: translateY(-2px);
 }
 

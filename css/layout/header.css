@@ -140,7 +140,7 @@
 }
 
 .header__theme-label {
-  color: var(--dim);
+  color: var(--muted);
   font-family: var(--font-mono);
   font-size: var(--text-eyebrow);
   letter-spacing: 0.14em;

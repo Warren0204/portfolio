@@ -118,7 +118,7 @@
 }
 
 .track__kicker {
-  color: var(--dim);
+  color: var(--muted);
   font-family: var(--font-mono);
   font-size: 9.5px;
   letter-spacing: var(--tracking-mono);
@@ -140,7 +140,7 @@
 
 .track__count {
   margin-top: auto;
-  color: var(--dim);
+  color: var(--muted);
   font-family: var(--font-mono);
   font-size: 9.5px;
   letter-spacing: 0.12em;
@@ -196,7 +196,7 @@
 .track-detail__note {
   max-width: 74ch;
   margin-top: var(--space-3);
-  color: var(--dim);
+  color: var(--muted);
   font-size: 13.5px;
   line-height: 1.55;
 }

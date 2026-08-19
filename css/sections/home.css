@@ -167,7 +167,7 @@
 }
 
 .home__stat-detail {
-  color: var(--dim);
+  color: var(--muted);
   font-size: 13px;
   line-height: 1.45;
   text-wrap: pretty;
@@ -183,7 +183,7 @@
 }
 
 .home__cue-label {
-  color: var(--dim);
+  color: var(--muted);
   font-family: var(--font-mono);
   font-size: var(--text-eyebrow);
   letter-spacing: 0.28em;

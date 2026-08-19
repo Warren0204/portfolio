@@ -60,7 +60,7 @@ body {
 /* Body copy inside a card or panel. */
 .prose {
   max-width: 74ch;
-  color: var(--chip-text);
+  color: var(--text);
   font-size: var(--text-body);
   line-height: 1.68;
   text-wrap: pretty;

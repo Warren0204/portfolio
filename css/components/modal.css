@@ -22,7 +22,7 @@
   border: 1px solid rgba(var(--line-rgb), 0.16);
   border-radius: var(--radius-xl);
   background: var(--bg);
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+  box-shadow: var(--shadow-lg);
   animation: zoom-in 280ms var(--ease-out) both;
 }
 
@@ -49,7 +49,7 @@
    itself is the only thing lit. */
 .modal--zoom {
   padding: 0;
-  background: #080c11;
+  background: var(--zoom-bg);
   backdrop-filter: none;
 }
 

@@ -1,7 +1,27 @@
 /* Design tokens. Every colour, radius, duration, and z-index in the project
-   resolves here — no hex codes or raw millisecond values live anywhere else.
-   Light is the default theme and is defined on :root so a document with no
-   data-theme attribute still renders correctly.
+   resolves here — no hex codes or raw millisecond values live anywhere else,
+   and that is now literally true rather than aspirational: 27 ad-hoc colours
+   that had accumulated across the stylesheets were folded back into the tokens
+   below.
+
+   The site opens dark. Light lives on :root only so that a document which
+   somehow loses its data-theme attribute still renders as something readable
+   rather than as unstyled text; it is a fallback, not the default. See the
+   Theme section of docs/ARCHITECTURE.md.
+
+   ── The whole palette ───────────────────────────────────────────────────────
+
+   One neutral family, one accent, one success green, one error red. Nothing
+   else. Every hue on the page is one of those four.
+
+     neutral   bg / surface / raised, line-rgb, text, muted
+     accent    accent-ink (+hover, +dot, +rgb) — eyebrows, links, focus, CTAs
+     success   ok-ink / ok-dot / ok-rgb — availability and "in production" only
+     error     error-ink / error-rgb — form validation only
+
+   Two text levels, not four. --dim and --chip-text were a third and fourth
+   step that no reader could distinguish; folding them into --muted and --text
+   raised their contrast as a side effect.
 
    Colour channels are stored as comma-separated triplets so borders and tints
    can be built with alpha at the point of use: rgba(var(--line-rgb), 0.1).
@@ -25,49 +45,63 @@
   --bg: #e8eef6;
   --surface: #f5f8fc;
   --raised: #dbe4ef;
-  --sunken: #dde6f1;
   --text: #0f1822;
   --muted: #37455a;
-  --dim: #414d5c;
-  --chip-text: #212c37;
 
   /* The working accent: the azure half of the wordmark, darkened to carry
      body-sized text on --bg. */
   --accent-ink: #0a5478;
   --accent-ink-hover: #073f5b;
-  --accent-dot: #0e86a8;
 
-  /* Green is semantic only — "in production", "earned". Never decorative. */
+  /* Non-text, so it answers to 1.4.11's 3:1 rather than 4.5:1. Darkened from
+     #0e86a8 (3.60) purely for margin. */
+  --accent-dot: #0c6e8a;
+
+  /* Green is semantic only — availability, "in production", "earned". Never
+     decorative. */
   --ok-ink: #06543d;
   --ok-dot: #0f7f5c;
 
-  /* Planned or not-yet-earned states. */
-  --plan-ink: #414d5c;
+  /* Red is validation only. Nothing else on the page may be red. */
+  --error-ink: #a1231d;
 
   /* Channel triplets, for borders and tints built with alpha. */
   --line-rgb: 16, 30, 46;
   --accent-rgb: 10, 84, 120;
   --ok-rgb: 6, 84, 61;
-  --plan-rgb: 65, 77, 92;
+  --error-rgb: 161, 35, 29;
 
-  /* The wordmark gradient, for the one or two places brand is expressed as a
-     surface rather than as ink: the logo chip and the hero glow. */
+  /* The wordmark's own two stops. This is the ONE sanctioned place where two
+     accent stops appear together, and it is limited to exactly three uses: the
+     scroll progress bar, the logo chip, and the hero glow. Both stops are in
+     the accent family — they are the colours of the favicon disc — so this is
+     the accent expressed as a surface, not a fifth hue. Do not extend it. */
   --brand-from: #0c9ee8;
   --brand-to: #2ac0a2;
   --brand-gradient: linear-gradient(135deg, var(--brand-from), var(--brand-to));
 
-  /* Call to action. */
+  /* Text sitting on an accent fill. The fill itself is --accent-ink; there is
+     no separate CTA colour, because there never was one — --cta-bg and
+     --cta-hover were byte-identical copies of the accent pair. */
   --on-accent: #fff;
-  --cta-bg: #0a5478;
-  --cta-hover: #073f5b;
+
+  /* White that must stay white in both themes. Product logos and scanned
+     certificates are artwork drawn for a white ground; tinting it by theme
+     would put a blue cast on the Microsoft marks. */
+  --surface-logo: #fff;
+
+  /* Ink for content that always sits on a dark scrim, whatever the theme: the
+     certificate lightbox. Not theme-aware on purpose. */
+  --scrim-ink: #fff;
+  --scrim-ink-rgb: 255, 255, 255;
+  --scrim-ink-muted: rgba(var(--scrim-ink-rgb), 0.6);
+  --zoom-bg: #080c11;
 
   /* Dot halos, derived from the semantic channels. */
   --ok-glow: rgba(var(--ok-rgb), 0.24);
   --accent-glow: rgba(var(--accent-rgb), 0.22);
 
-  /* Scrims that must stay opaque enough to hide what is beneath them. */
-  --menu-overlay-bg: rgba(232, 238, 246, 0.97);
-  --edge-bg: rgba(245, 248, 252, 0.94);
+  /* The scrim behind a dialog, opaque enough to hide what is beneath it. */
   --modal-scrim: rgba(3, 10, 20, 0.62);
 
   /* The fixed header sits over live content, so it needs a backdrop that is
@@ -78,7 +112,6 @@
   --line: 1px solid rgba(var(--line-rgb), 0.1);
   --line-soft: 1px solid rgba(var(--line-rgb), 0.08);
   --line-strong: 1px solid rgba(var(--line-rgb), 0.18);
-  --line-accent: 1px solid rgba(var(--accent-rgb), 0.45);
 
   /* Elevation. Three, and no more — restraint is the whole point. */
   --shadow-sm: 0 1px 2px rgba(var(--line-rgb), 0.06);
@@ -91,7 +124,6 @@
   --radius-md: 6px;
   --radius-lg: 8px;
   --radius-xl: 12px;
-  --radius-2xl: 18px;
   --radius-pill: 999px;
 
   /* Spacing scale. 4px base — a value not on this scale is a mistake. */
@@ -104,7 +136,6 @@
   --space-7: 44px;
   --space-8: 60px;
   --space-9: 88px;
-  --space-10: 120px;
 
   /* The gap between one page section and the next, fluid so a phone does not
      pay desktop whitespace to scroll past. */
@@ -142,14 +173,13 @@
 }
 
 [data-theme='dark'] {
+  /* Dark is the reference. It measured 6.9:1 and up before this pass, so no
+     value here moved for contrast — only the redundant tokens were retired. */
   --bg: #0b1219;
   --surface: #131c26;
   --raised: #1c2734;
-  --sunken: #0e161e;
   --text: #f1f5f9;
   --muted: #b4c1cd;
-  --dim: #98a6b3;
-  --chip-text: #dbe3ea;
 
   --accent-ink: #7ed0f0;
   --accent-ink-hover: #a9e1f7;
@@ -158,23 +188,19 @@
   --ok-ink: #5ad0a6;
   --ok-dot: #48c79a;
 
-  --plan-ink: #8996a3;
+  --error-ink: #ff9d94;
 
   --line-rgb: 255, 255, 255;
   --accent-rgb: 126, 208, 240;
   --ok-rgb: 90, 208, 166;
-  --plan-rgb: 137, 150, 163;
+  --error-rgb: 255, 157, 148;
 
   --on-accent: #06131c;
-  --cta-bg: #7ed0f0;
-  --cta-hover: #a9e1f7;
 
   /* Dark needs a stronger halo to read against the deep background. */
   --ok-glow: rgba(var(--ok-rgb), 0.45);
   --accent-glow: rgba(var(--accent-rgb), 0.42);
 
-  --menu-overlay-bg: rgba(12, 18, 24, 0.98);
-  --edge-bg: rgba(19, 27, 36, 0.92);
   --header-bg: rgba(11, 18, 25, 0.82);
 
   /* A shadow built from black disappears on a dark ground; these lean on
