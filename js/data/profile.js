@@ -207,6 +207,11 @@ export const profile = Object.freeze({
        refers to are above it, and a live region is read out of place anyway. */
     invalidSummary: 'Check the highlighted fields, then send again.',
 
+    /* Says what to do, not what went wrong. "Captcha failed" would be accurate
+       and useless — the visitor has not failed anything, they have simply not
+       ticked the box yet. */
+    captchaRequired: 'Please confirm you are human before sending.',
+
     /* Honeypot. A real visitor never sees this field, so anything in it came
        from a bot filling every input it found. */
     honeypotLabel: 'Leave this field empty',

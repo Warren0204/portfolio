@@ -60,6 +60,42 @@
   }
 }
 
+/* hCaptcha widget.
+
+   The height is reserved before the iframe arrives so the submit button does
+   not jump down the page when a third-party script finishes loading. 78px is
+   hCaptcha's own widget height. */
+.contact-form__captcha {
+  min-height: 78px;
+}
+
+.contact-form__captcha:empty {
+  /* Nothing rendered — blocked, or not scrolled to yet. Claim no space. */
+  min-height: 0;
+}
+
+/* The widget is a fixed 303px iframe and cannot be told to be narrower.
+
+   The well's padding is 20px a side below 400px, so the column is
+   viewport - 40px and the iframe overflows under 343px. Scaling is the only
+   lever available; transform leaves the layout box at full height, which here
+   is a feature — centring the scaled widget in its original box keeps the
+   spacing above and below unchanged. */
+@media (width < 360px) {
+  .contact-form__captcha {
+    /* overflow goes with the transform, not instead of it. A transform changes
+       what is painted, never the layout box, so the iframe still measured
+       303px wide and pushed the document to 322px at a 320px viewport — a
+       two-pixel horizontal scroll on the whole page. Clipping the slot is what
+       actually removes it; the scale is what keeps the widget visible inside
+       the clip. hCaptcha's challenge opens in its own fixed overlay attached
+       to <body>, so nothing that matters is inside this box to clip. */
+    overflow: hidden;
+    transform: scale(0.9);
+    transform-origin: left center;
+  }
+}
+
 /* Direct routes */
 
 .contact__routes > .eyebrow {

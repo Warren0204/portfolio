@@ -17,6 +17,7 @@
 import { el, on } from '../core/dom.js';
 import { createFormField } from '../components/formField.js';
 import { createSectionEyebrow } from '../components/sectionEyebrow.js';
+import { getCaptchaResponse, renderCaptcha, resetCaptcha } from '../core/captcha.js';
 import {
   CONTACT_FORM_ACCESS_KEY,
   CONTACT_FORM_ENDPOINT,
@@ -57,6 +58,10 @@ export function createContactForm() {
     }),
   ]);
 
+  /* The widget draws itself into here. Empty until the visitor is near enough
+     to the form to need it — see armCaptcha below. */
+  const captchaSlot = el('div', { class: 'contact-form__captcha' });
+
   const submit = el('button', {
     class: 'button button--primary contact-form__submit',
     text: copy.submit,
@@ -73,6 +78,7 @@ export function createContactForm() {
   const form = el('form', { class: 'contact-form__form', attrs: { novalidate: '' } }, [
     ...ordered.map((field) => field.element),
     honeypot,
+    captchaSlot,
     submit,
     status,
   ]);
@@ -86,9 +92,53 @@ export function createContactForm() {
 
   let sending = false;
 
+  /* null until a widget exists. It stays null when the script is blocked, and
+     the submit path reads that as "no captcha available" rather than as a
+     failure — see the comment on the guard below. */
+  let widgetId = null;
+  let watcher = null;
+
   function setStatus(message, tone) {
     status.textContent = message;
     status.className = `contact-form__status${tone ? ` contact-form__status--${tone}` : ''}`;
+  }
+
+  /** Draw a fresh widget, replacing whatever was in the slot. */
+  function drawCaptcha() {
+    // hCaptcha refuses to render into a container that already holds a widget,
+    // and a re-attached iframe reloads out from under its old id. Emptying the
+    // slot first makes every render deterministic.
+    captchaSlot.replaceChildren();
+    widgetId = null;
+
+    return renderCaptcha(captchaSlot, { theme: document.documentElement.dataset.theme })
+      .then((id) => {
+        widgetId = id;
+      })
+      .catch(() => {
+        // Blocked, offline, or refused. Leave widgetId null; the form still works.
+        widgetId = null;
+      });
+  }
+
+  /* Loaded when the reader gets near the form rather than at boot. The contact
+     section is the last of five on a long scrolling page, so most visits never
+     reach it, and this is a third-party script on someone else's CDN.
+
+     rootMargin gives it a screen of warning, so the widget is drawn by the time
+     the form is actually looked at rather than popping in under the cursor. */
+  function armCaptcha() {
+    watcher = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        watcher.disconnect();
+        watcher = null;
+        drawCaptcha();
+      },
+      { rootMargin: '400px 0px' }
+    );
+
+    watcher.observe(captchaSlot);
   }
 
   /** Swap the form for a confirmation, with a way back to it. */
@@ -109,6 +159,10 @@ export function createContactForm() {
       ordered.forEach((field) => field.clear());
       setStatus('', null);
       element.replaceChild(form, panel);
+      // The form node is re-attached, not rebuilt, so its iframe has just
+      // reloaded and the spent token went with it. A fresh widget, drawn now
+      // rather than on a scroll that already happened.
+      drawCaptcha();
       fields.name.focus();
     });
 
@@ -169,6 +223,21 @@ export function createContactForm() {
 
     if (honeypot.querySelector('input').value) return;
 
+    /* Only enforced when a widget actually exists.
+
+       If the script was blocked, widgetId is null and there is nothing the
+       visitor could tick — demanding a token they cannot produce would turn a
+       failed third-party fetch into a locked form. The send goes ahead without
+       one, Web3Forms rejects it server-side, and that lands in the existing
+       failure state with the mailto fallback. Refused by the server beats
+       refused by our own UI for a reason the visitor cannot act on. */
+    const captchaToken = getCaptchaResponse(widgetId);
+    if (widgetId !== null && !captchaToken) {
+      setStatus(copy.captchaRequired, 'error');
+      captchaSlot.scrollIntoView({ block: 'nearest' });
+      return;
+    }
+
     if (!navigator.onLine) {
       showFailure(copy.offlineBody);
       return;
@@ -189,19 +258,29 @@ export function createContactForm() {
     submit.setAttribute('aria-busy', 'true');
     setStatus('', null);
 
+    const payload = {
+      access_key: CONTACT_FORM_ACCESS_KEY,
+      subject: `Portfolio message from ${fields.name.value()}`,
+      from_name: fields.name.value(),
+      name: fields.name.value(),
+      email: fields.email.value(),
+      message: fields.message.value(),
+    };
+
+    // The field name Web3Forms looks for. Omitted entirely rather than sent
+    // empty when there is no widget, so the server sees an absent token rather
+    // than a blank one.
+    if (captchaToken) payload['h-captcha-response'] = captchaToken;
+
     try {
-      await send({
-        access_key: CONTACT_FORM_ACCESS_KEY,
-        subject: `Portfolio message from ${fields.name.value()}`,
-        from_name: fields.name.value(),
-        name: fields.name.value(),
-        email: fields.email.value(),
-        message: fields.message.value(),
-      });
+      await send(payload);
       showSuccess();
     } catch {
       // Every value the visitor typed is still in the form. Retrying is one
-      // click, and nothing has to be re-entered.
+      // click, and nothing has to be re-entered — but the token is spent, and
+      // a second submit carrying the same one is rejected for a reason the
+      // visitor cannot see.
+      resetCaptcha(widgetId);
       showFailure(copy.errorBody);
     } finally {
       sending = false;
@@ -210,5 +289,14 @@ export function createContactForm() {
     }
   });
 
-  return { element, destroy: stopSubmit };
+  armCaptcha();
+
+  return {
+    element,
+    destroy() {
+      stopSubmit();
+      if (watcher) watcher.disconnect();
+      watcher = null;
+    },
+  };
 }

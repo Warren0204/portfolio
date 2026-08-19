@@ -21,6 +21,23 @@ html {
      scrolling per call; setting it globally would also animate scroll
      restoration on reload, which should be instant. */
   scroll-padding-top: calc(var(--header-height) + var(--space-5));
+
+  /* A guard against third-party markup widening the page.
+
+     hCaptcha appends its challenge container to <body>, complete with a
+     negatively positioned callout arrow and a width:100% overlay. At a 320px
+     viewport that pushed the document to 322px — a two-pixel horizontal scroll
+     across the whole site, caused by markup this project neither owns nor can
+     pin to a version.
+
+     It belongs on html, not body: html is the viewport scroller here, and a
+     rule on body left documentElement.scrollWidth untouched.
+
+     `clip`, not `hidden`: hidden on the viewport scroller would break
+     `position: sticky` on the header. `clip` refuses the overflow without
+     creating a scroll container. Nested scrollers are unaffected, so the
+     horizontal scroll on the process diagrams still works. */
+  overflow-x: clip;
 }
 
 body {

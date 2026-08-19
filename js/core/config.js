@@ -32,3 +32,16 @@ export function contactFormConfigured() {
     !CONTACT_FORM_ACCESS_KEY.startsWith('PASTE-')
   );
 }
+
+/* hCaptcha, in front of the form. The honeypot catches the bots that fill every
+   input they find; this catches the ones that read the markup first.
+
+   Web3Forms publishes this sitekey for free-plan accounts to share — it is not
+   account-specific and not a secret, and it is the one their Manual Setup docs
+   hand out. Verification happens server-side at Web3Forms: they check the token
+   against hCaptcha before mailing anything, so the browser cannot be talked out
+   of it by editing this value.
+
+   To use a sitekey of your own instead, create one at hcaptcha.com and paste it
+   here. Nothing else changes. */
+export const HCAPTCHA_SITEKEY = '50b2fe65-b00b-4b9e-ad62-3ba471098be2';

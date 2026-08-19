@@ -128,16 +128,17 @@ more, the commit is doing more than one thing and should be split.
 
 Read newest first. Use these as the pattern for anything new.
 
-| Message                    | What it covered                                                                                                 |
-| -------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| `Readability and contact`  | Light-theme ink re-tuned to 7:1, 11px type floor, dark by default, Contact routes rebuilt, NDA note added       |
-| `Dedupe contact copy`      | Removed repeated timezone, work arrangement, and contact details inside the Contact section                     |
-| `Prune dead code`          | Removed exports, modules, and CSS orphaned by the redesign; Home's third CTA now scrolls to Contact             |
-| `Optimize images`          | Logos and the certificate re-encoded to WebP, 1.73 MB down to 235 KB                                            |
-| `Document domain decision` | Recorded that the site stays on the vercel.app URL, so it stops reading as unfinished work                      |
-| `Phase 2 redesign`         | Five sliding chapters became one scrolling page: GSAP motion, scroll-drawn diagrams, contact form, new wordmark |
-| `Phase 1 portfolio`        | The original build                                                                                              |
-| `Initial commit`           | Repository created                                                                                              |
+| Message                                     | What it covered                                                                                                                                 |
+| ------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Add hCaptcha verification to contact form` | hCaptcha in front of the Web3Forms submit, rendered explicitly and lazily. Longer than the rule allows — kept because it was specified verbatim |
+| `Readability and contact`                   | Light-theme ink re-tuned to 7:1, 11px type floor, dark by default, Contact routes rebuilt, NDA note added                                       |
+| `Dedupe contact copy`                       | Removed repeated timezone, work arrangement, and contact details inside the Contact section                                                     |
+| `Prune dead code`                           | Removed exports, modules, and CSS orphaned by the redesign; Home's third CTA now scrolls to Contact                                             |
+| `Optimize images`                           | Logos and the certificate re-encoded to WebP, 1.73 MB down to 235 KB                                                                            |
+| `Document domain decision`                  | Recorded that the site stays on the vercel.app URL, so it stops reading as unfinished work                                                      |
+| `Phase 2 redesign`                          | Five sliding chapters became one scrolling page: GSAP motion, scroll-drawn diagrams, contact form, new wordmark                                 |
+| `Phase 1 portfolio`                         | The original build                                                                                                                              |
+| `Initial commit`                            | Repository created                                                                                                                              |
 
 Verbs that fit the shape: `Add`, `Fix`, `Remove`, `Prune`, `Optimize`,
 `Dedupe`, `Document`, `Rename`, `Restore`. A bare noun phrase is fine too when
