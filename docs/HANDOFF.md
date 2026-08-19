@@ -124,17 +124,25 @@ deployments.
 
 ## Still outstanding
 
-**`warrengallardo.dev` is not registered.** Once it is, add it under Vercel's
-Settings → Domains, and update the site URL in the files that hardcode it,
-because static HTML has nowhere to put a variable:
+**Image weight.** `assets/img/credentials/google-ai-professional.jpg` is 971 KB
+and the logo PNGs total roughly 800 KB. Nothing is broken, but re-encoding them
+as WebP is the single biggest performance win left on this site.
+
+## Decided, so nobody re-opens it
+
+**The site stays on `portfolio-beta-coral-24.vercel.app`.** A custom domain
+costs money and this project is deliberately on the free tier. The vercel.app
+URL is the real address, and every canonical tag, `og:url`, `og:image`, and
+sitemap entry points at it truthfully — which is the only thing that actually
+matters for search. This is a settled decision, not a gap.
+
+If a custom domain is ever bought, the whole migration is: add it under Vercel's
+**Settings → Domains**, then update the URL everywhere it is hardcoded, because
+static HTML has nowhere to put a variable:
 
 ```bash
 grep -rln 'portfolio-beta-coral-24.vercel.app' index.html robots.txt sitemap.xml
 ```
 
-Keep those truthful: a canonical tag pointing at a domain that does not resolve
-can drop the live URL out of search results.
-
-**Image weight.** `assets/img/credentials/google-ai-professional.jpg` is 971 KB
-and the logo PNGs total roughly 800 KB. Nothing is broken, but re-encoding them
-as WebP is the single biggest performance win left on this site.
+Do that in one pass. A canonical tag pointing at a domain that does not resolve
+is worse than having none — it can drop the live URL out of search results.

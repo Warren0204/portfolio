@@ -59,9 +59,13 @@ grep -rln 'portfolio-beta-coral-24.vercel.app' index.html robots.txt sitemap.xml
 Keep them truthful. A canonical tag pointing at a domain that does not resolve
 is worse than having none: it can drop the live URL out of search results.
 
-`warrengallardo.dev` is not registered yet. Registering it and adding it under
-Vercel's **Settings → Domains** is all that is needed, plus the three edits
-above.
+There is no custom domain, by choice: the project runs on Vercel's free tier and
+`portfolio-beta-coral-24.vercel.app` is the real address. Every canonical tag,
+`og:url`, `og:image`, and sitemap entry already points at it truthfully, so
+nothing here is a placeholder waiting to be filled in.
+
+If one is ever bought, adding it under Vercel's **Settings → Domains** plus the
+edits above is the entire migration.
 
 ## Checks before pushing
 
