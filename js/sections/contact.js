@@ -92,12 +92,28 @@ export function createContactSection() {
   const form = createContactForm();
   const routes = createRoutes();
 
-  const body = el('div', { class: 'contact__body' }, [form.element, routes]);
+  /* DOM order is the phone's reading order: heading, intro, status, then the
+     addresses, and the form last. Someone on a phone reaches the email and the
+     LinkedIn link without scrolling past a three-field form first.
 
-  const element = el('div', { class: 'well contact' }, [
+     Above 900px the same four children are placed by grid area — head, chip
+     and form down the left, routes card spanning the right from the very top.
+     Placement only; no CSS `order`, which would desynchronise the visual order
+     from the tab order and leave a keyboard user jumping around the section.
+
+     The consequence, accepted deliberately: on desktop the four route links
+     take focus before the form does. Four stops before the primary action is
+     the price of the phone order being right, and the phone is where this
+     section gets used. */
+  const grid = el('div', { class: 'contact__grid' }, [
     head,
     availabilityCard,
-    body,
+    routes,
+    form.element,
+  ]);
+
+  const element = el('div', { class: 'well contact' }, [
+    grid,
     // The one contentinfo landmark on the page, carrying the details a
     // visitor would otherwise hunt for in a footer.
     el(
@@ -115,7 +131,7 @@ export function createContactSection() {
     armReveal() {
       reveals = [
         revealOnScroll([...Array.from(head.children), availabilityCard], { trigger: head }),
-        revealOnScroll([form.element, routes], { trigger: body, y: 30, stagger: 0.12 }),
+        revealOnScroll([routes, form.element], { trigger: routes, y: 30, stagger: 0.12 }),
       ];
     },
 

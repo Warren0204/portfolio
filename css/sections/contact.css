@@ -3,11 +3,14 @@
 /* Availability. A card rather than the old pill — it is now the only place on
    the page that says I am looking, so it can afford to be read rather than
    glanced at. */
+
+/* No margin: the grid's row gap owns the spacing between section children now,
+   and a margin here would stack on top of it. */
 .availability {
   display: inline-flex;
   flex-direction: column;
   gap: 6px;
-  margin-top: var(--space-6);
+  justify-self: start;
   padding: var(--space-4) var(--space-5);
   border: 1px solid rgba(var(--ok-rgb), 0.32);
   border-radius: var(--radius-xl);
@@ -42,21 +45,60 @@
   opacity: 0.5;
 }
 
-/* Layout */
+/* Layout
 
-.contact__body {
+   One grid for the whole section rather than a full-width header above a
+   two-column body. The old shape left the entire right-hand side empty beside
+   the heading, the intro and the status chip — roughly 40% of the width doing
+   nothing for three elements' height — because the second column could not
+   begin until the form did.
+
+   Now the routes card starts at the top of the section, so both columns begin
+   together and the section reads as a balanced pair. */
+
+/* Below 900px this is a plain single column and the children fall back to DOM
+   order, which is already the order a phone wants: heading, intro, chip,
+   addresses, form. */
+.contact__grid {
   display: grid;
-  gap: clamp(32px, 5vw, 64px);
-  margin-top: var(--space-7);
+  gap: var(--space-6);
 }
 
-/* The form leads and the routes sit beside it. Below 900px the form comes
-   first in the DOM and stays first on screen — burying the form under a list
-   of links is how a contact section ends up unused. */
+/* The area names live with the template that defines them, inside the media
+   query, and nowhere else.
+
+   Declaring `grid-area: head` outside it looked harmless and was not: with no
+   `grid-template-areas` in scope, every named assignment resolved to the same
+   implicit cell and all four children stacked on top of each other at the same
+   coordinates on mobile. The names mean nothing without the template. */
 @media (width >= 900px) {
-  .contact__body {
-    grid-template-columns: minmax(0, 1.3fr) minmax(260px, 0.7fr);
+  .contact__grid {
+    grid-template:
+      'head routes' auto
+      'chip routes' auto
+      'form routes' 1fr
+      / minmax(0, 1.3fr) minmax(260px, 0.7fr);
+    gap: var(--space-6) clamp(32px, 5vw, 64px);
     align-items: start;
+  }
+
+  .contact__grid > .section-head {
+    grid-area: head;
+  }
+
+  .contact__grid > .availability {
+    grid-area: chip;
+  }
+
+  /* The card sizes to its contents rather than stretching down the column. */
+  .contact__grid > .contact__routes {
+    grid-area: routes;
+    align-self: start;
+  }
+
+  .contact__grid > .contact-form {
+    grid-area: form;
+    margin-top: var(--space-4);
   }
 }
 
@@ -96,7 +138,18 @@
   }
 }
 
-/* Direct routes */
+/* Direct routes.
+
+   A card, not a bare list. Now that it sits at the top of its own column
+   rather than tucked beside the form, it needs an edge of its own — otherwise
+   four links floating in whitespace read as leftovers rather than as the
+   deliberate alternative to the form. */
+.contact__routes {
+  padding: clamp(20px, 3vw, 28px);
+  border: var(--line);
+  border-radius: var(--radius-xl);
+  background: var(--surface);
+}
 
 .contact__routes > .eyebrow {
   margin-bottom: var(--space-4);
@@ -136,6 +189,8 @@ a.route:focus-visible {
   cursor: default;
 }
 
+/* --bg, not --surface: the tiles now sit on a --surface card, and a tile the
+   same colour as the card behind it is not a tile. */
 .route__icon {
   display: flex;
   flex: none;
@@ -145,7 +200,7 @@ a.route:focus-visible {
   height: 34px;
   border: var(--line);
   border-radius: var(--radius-md);
-  background: var(--surface);
+  background: var(--bg);
   color: var(--accent-ink);
 }
 
