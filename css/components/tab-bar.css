@@ -10,6 +10,7 @@
   display: none;
   border-top: var(--line);
   background: var(--bg);
+
   /* The bar's own height plus whatever the device reserves below it. */
   padding-bottom: env(safe-area-inset-bottom, 0);
 }
@@ -83,7 +84,7 @@
   background: var(--raised);
 }
 
-@media (width < 800px) {
+@media (width < 920px) {
   .tab-bar {
     display: flex;
   }

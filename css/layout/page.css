@@ -1,0 +1,124 @@
+/* The scrolling page.
+
+   This file replaces the old fixed-viewport stage. Previously the document
+   never scrolled — one chapter was absolutely positioned over the others and
+   slid horizontally — which is why the shell had to be pinned. Now the document
+   itself is the scroller: it is what the header's progress bar measures, what
+   ScrollTrigger drives every reveal from, and what the browser's own scroll
+   restoration understands. */
+
+html {
+  /* Native anchor jumps and Find-in-page both land under a fixed header
+     otherwise. The router asks for smooth scrolling explicitly per call, so
+     scroll-behavior is deliberately left alone here — declaring it globally
+     would also animate scroll restoration on reload, which should be instant. */
+  scroll-padding-top: calc(var(--header-height) + var(--space-5));
+}
+
+body {
+  background: var(--bg);
+}
+
+.stage {
+  position: relative;
+  z-index: var(--z-stage);
+}
+
+/* One ambient wash for the whole page, fixed so it stays put while the content
+   moves over it. Cheap depth: it is two gradients on a pseudo-element, not a
+   canvas or a parallax layer, and it never repaints on scroll. */
+.stage::before {
+  position: fixed;
+  z-index: -1;
+  inset: 0;
+  background:
+    radial-gradient(60vw 50vh at 82% -5%, rgba(var(--accent-rgb), 0.16), transparent 62%),
+    radial-gradient(52vw 42vh at 4% 32%, rgba(var(--ok-rgb), 0.07), transparent 66%);
+  content: '';
+  pointer-events: none;
+}
+
+.page-section {
+  position: relative;
+
+  /* Clears the fixed header when the router scrolls a section into view, so no
+     caller has to know how tall the header is. */
+  scroll-margin-top: calc(var(--header-height) + var(--space-5));
+  padding-block: var(--section-gap);
+}
+
+/* A hairline where one section ends and the next begins. On a page with no
+   page-turns left, this and the heading are the only signals that the subject
+   has changed. Drawn inside the well so it stops at the reading column rather
+   than running edge to edge. */
+.page-section + .page-section::before {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: min(var(--content-max), calc(100% - 2 * clamp(20px, 5vw, 48px)));
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(var(--line-rgb), 0.16) 18%,
+    rgba(var(--line-rgb), 0.16) 82%,
+    transparent
+  );
+  content: '';
+  transform: translateX(-50%);
+}
+
+/* Home is the landing screen: it should fill the first view without forcing a
+   scroll to see the headline. svh rather than vh so a phone's collapsing
+   address bar does not leave a gap at the bottom, and the header's own height
+   is subtracted because the sticky header sits above this in normal flow
+   rather than floating over it. */
+#home {
+  display: flex;
+  align-items: center;
+  min-height: calc(100svh - var(--header-height));
+  padding-top: var(--space-7);
+  padding-bottom: var(--space-8);
+}
+
+#home > .well {
+  width: 100%;
+}
+
+/* The last section needs room under it so the bottom tab bar never covers the
+   final line of the footer. */
+#contact {
+  padding-bottom: var(--space-9);
+}
+
+@media (width < 920px) {
+  html {
+    scroll-padding-top: calc(
+      var(--header-height-phone) + env(safe-area-inset-top, 0) + var(--space-4)
+    );
+  }
+
+  .page-section {
+    scroll-margin-top: calc(
+      var(--header-height-phone) + env(safe-area-inset-top, 0) + var(--space-4)
+    );
+  }
+
+  #home {
+    min-height: calc(
+      100svh - var(--header-height-phone) - env(safe-area-inset-top, 0) - var(--tab-bar-height)
+    );
+    padding-top: var(--space-6);
+  }
+
+  #contact {
+    padding-bottom: calc(var(--tab-bar-height) + env(safe-area-inset-bottom, 0) + var(--space-7));
+  }
+}
+
+/* A dialog owns the screen while it is open, and the page behind it must not
+   scroll underneath. The lock lives on the body now that the body is the
+   scroller. */
+body.is-modal-open {
+  overflow: hidden;
+}

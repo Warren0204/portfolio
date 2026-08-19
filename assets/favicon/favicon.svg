@@ -1,17 +1,39 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Warren Gallardo">
   <title>Warren Gallardo</title>
-  <rect width="64" height="64" rx="12" fill="#E8EEF6" />
-  <g fill="none" stroke="#14548F" stroke-width="4" stroke-linecap="round">
-    <path d="M17 32h8" />
-    <path d="M39 32h8" />
-    <path d="M32 17v8" />
-    <path d="M32 39v8" />
-  </g>
-  <g fill="#14548F">
-    <circle cx="32" cy="32" r="7" />
-    <rect x="8" y="26" width="12" height="12" rx="3" />
-    <rect x="44" y="26" width="12" height="12" rx="3" />
-    <rect x="26" y="8" width="12" height="12" rx="3" />
-    <rect x="26" y="44" width="12" height="12" rx="3" />
+  <!-- Traced by hand from the source mark: a W drawn as five connected nodes,
+       white on a blue-to-teal gradient disc. Vector rather than a traced
+       bitmap so it stays crisp at 16px in a tab and at 512px in an app icon.
+       The disc is full bleed — the source art's white margin would read as a
+       white tile against dark browser chrome. -->
+  <defs>
+    <linearGradient id="w-disc" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#0C9EE8" />
+      <stop offset="1" stop-color="#2AC0A2" />
+    </linearGradient>
+  </defs>
+
+  <circle cx="32" cy="32" r="31" fill="url(#w-disc)" />
+
+  <!-- Node coordinates are the traced ones. The transform re-centres that
+       bounding box on the disc and scales it to fill; keeping the two separate
+       means a retrace does not have to redo the fitting. -->
+  <g transform="translate(32 32) scale(1.09) translate(-30.6 -30.7)">
+    <!-- One polyline for the strokes, five discs for the vertices. Round caps
+         let the two merge into a single continuous mark. -->
+    <path
+      d="M14 29.6 L20.6 41.9 L28.6 24.3 L36.3 41.9 L46.6 20.1"
+      fill="none"
+      stroke="#fff"
+      stroke-width="4"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <g fill="#fff">
+      <circle cx="14" cy="29.6" r="4.3" />
+      <circle cx="20.6" cy="41.9" r="4.3" />
+      <circle cx="28.6" cy="24.3" r="4.6" />
+      <circle cx="36.3" cy="41.9" r="4.3" />
+      <circle cx="46.6" cy="20.1" r="4.9" />
+    </g>
   </g>
 </svg>

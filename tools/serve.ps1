@@ -49,6 +49,17 @@ try {
       continue
     }
 
+    # Vercel injects /_vercel/* at deploy time — the analytics script lives
+    # there and cannot exist locally. Answering with a clean 404 keeps the
+    # browser console quiet; falling through to the index.html fallback below
+    # would hand the page HTML with a .js extension and log a parse error that
+    # looks like a real bug.
+    if ($relative -like '_vercel/*') {
+      $context.Response.StatusCode = 404
+      $context.Response.Close()
+      continue
+    }
+
     if (Test-Path -LiteralPath $candidate -PathType Container) {
       $candidate = Join-Path $candidate 'index.html'
     }

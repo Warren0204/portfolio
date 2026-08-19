@@ -1,76 +1,56 @@
-/* Projects. An accordion of case studies; currently one. The opened body is
-   built by projectsCaseStudy.js; this module owns the list and its headers. */
+/* Projects. A list of case studies, currently one, each rendered open. The
+   section owns the heading and the scroll reveals; projectsCaseStudy.js owns
+   what a single project looks like. */
 
 import { el } from '../core/dom.js';
-import { createAccordion } from '../components/accordion.js';
-import { createSectionEyebrow } from '../components/sectionEyebrow.js';
+import { createSectionHead } from '../components/sectionHead.js';
+import { revealOnScroll } from '../core/animate.js';
 import { projects, projectsCopy } from '../data/projects.js';
 import { createCaseStudy } from './projectsCaseStudy.js';
 
-const { eyebrows } = projectsCopy;
-
-function createSummary(project) {
-  return [
-    el('span', { class: 'accordion__meta' }, [
-      el('span', { class: 'accordion__tag', text: project.tag }),
-      el('span', { class: 'accordion__rule', attrs: { 'aria-hidden': 'true' } }),
-      el('span', { class: 'accordion__period', text: project.period }),
-    ]),
-    el('span', { class: 'accordion__title', text: project.title }),
-    el('span', { class: 'accordion__lead', text: project.summary }),
-    el('span', { class: 'accordion__roles' }, [
-      createSectionEyebrow({ text: eyebrows.role, tone: 'accent' }),
-      el(
-        'span',
-        { class: 'accordion__role-chips' },
-        project.roles.map((role) => el('span', { class: 'chip chip--role', text: role }))
-      ),
-      el('span', { class: 'accordion__team', text: project.team }),
-    ]),
-  ];
-}
-
 /**
- * @returns {{ element: HTMLElement, destroy: () => void }}
+ * @returns {{ element: HTMLElement, armReveal: () => void, destroy: () => void }}
  */
 export function createProjectsSection() {
-  const tabsHolder = { current: null };
-
-  const accordions = projects.map((project) => {
-    const accordion = createAccordion({
-      summary: createSummary(project),
-      openLabel: projectsCopy.openLabel,
-      closeLabel: projectsCopy.closeLabel,
-      renderPanel: () => createCaseStudy(project, tabsHolder, () => accordion.toggle()),
-    });
-    return accordion;
+  const head = createSectionHead({
+    eyebrow: projectsCopy.eyebrow,
+    heading: projectsCopy.heading,
+    lead: projectsCopy.lead,
+    headingId: 'projects-heading',
   });
 
+  const studies = projects.map(createCaseStudy);
+
   const element = el('div', { class: 'well projects' }, [
-    el('h2', { class: 'section__heading', text: projectsCopy.heading }),
-    el('p', { class: 'section__lead', text: projectsCopy.lead }),
+    head,
     el(
       'div',
       { class: 'projects__list' },
-      accordions.map((accordion) => accordion.element)
+      studies.map((study) => study.element)
     ),
   ]);
 
-  function releaseTabs() {
-    if (tabsHolder.current) tabsHolder.current.destroy();
-    tabsHolder.current = null;
-  }
+  let reveals = [];
 
   return {
     element,
 
-    /* Leaving the chapter collapses every case study, so coming back shows the
-       list again rather than wherever the visitor happened to stop reading. */
-    reset() {
-      accordions.forEach((accordion) => accordion.close());
-      releaseTabs();
+    /* Each block of the case study rises as it is reached, rather than the
+       whole article arriving at once — a 2,000px article animated as one unit
+       either starts before the reader can see it or finishes after they have
+       read it. */
+    armReveal() {
+      reveals = [
+        revealOnScroll(Array.from(head.children), { trigger: head }),
+        ...studies.flatMap((study) =>
+          study.blocks.map((block) => revealOnScroll(block, { y: 30, stagger: 0 }))
+        ),
+      ];
     },
 
-    destroy: releaseTabs,
+    destroy() {
+      studies.forEach((study) => study.destroy());
+      reveals.forEach((reveal) => reveal.destroy());
+    },
   };
 }

@@ -1,87 +1,99 @@
-/* Contact chapter. */
+/* Contact section: the form, and the direct routes beside it. */
 
 .contact__strip {
-  display: flex;
-  gap: 10px;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 7px 10px;
   align-items: center;
-  margin-bottom: clamp(28px, 5vh, 44px);
-  padding: 9px 14px;
-  border: var(--line-soft);
-  border-radius: var(--radius-sm);
-  color: var(--dim);
+  padding: 7px 13px;
+  border: 1px solid rgba(var(--ok-rgb), 0.35);
+  border-radius: var(--radius-pill);
+  background: rgba(var(--ok-rgb), 0.08);
   font-family: var(--font-mono);
   font-size: 10.5px;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.08em;
 }
 
 .contact__strip-text {
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  color: var(--ok-ink);
+  font-weight: 600;
 }
 
 .contact__strip-zone {
-  margin-left: auto;
-  white-space: nowrap;
+  color: var(--muted);
+}
+
+/* Once the strip wraps to a second line, fully rounded ends stop reading as a
+   pill and start reading as a mistake. */
+@media (width < 560px) {
+  .contact__strip {
+    border-radius: var(--radius-xl);
+  }
+}
+
+.contact .section-head {
+  margin-top: var(--space-5);
 }
 
 .contact__body {
-  max-width: 760px;
+  display: grid;
+  gap: clamp(32px, 5vw, 64px);
+  margin-top: var(--space-7);
 }
 
-.contact__headline {
-  margin-top: 18px;
-  color: var(--text);
-  font-family: var(--font-display);
-  font-size: clamp(34px, 4.4vw, 56px);
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  line-height: 1.08;
-  text-wrap: pretty;
+/* The form leads and the direct routes sit beside it. Below 900px the form
+   comes first in the DOM and stays first on screen — someone who wanted the
+   email address has it in the footer either way, and burying the form under a
+   list of links is how a contact section ends up unused. */
+@media (width >= 900px) {
+  .contact__body {
+    grid-template-columns: minmax(0, 1.25fr) minmax(240px, 0.75fr);
+    align-items: start;
+  }
 }
 
-.contact__lead {
-  margin-top: var(--space-5);
-  color: var(--muted);
-  font-size: var(--text-body-lg);
-  line-height: 1.65;
-  text-wrap: pretty;
+.contact__direct .eyebrow {
+  margin-bottom: var(--space-4);
 }
 
-.contact__actions {
+.contact__links {
   display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-  margin-top: var(--space-6);
+  flex-direction: column;
+  gap: 2px;
+}
+
+.contact__link {
+  padding: var(--space-3) var(--space-3) var(--space-3) 0;
+  border-bottom: var(--line-soft);
+  color: var(--muted);
+  font-size: var(--text-body);
+  transition: color var(--duration-base);
+
+  /* Long email addresses must wrap rather than push the column wide. */
+  overflow-wrap: anywhere;
+}
+
+.contact__link:hover,
+.contact__link:focus-visible {
+  color: var(--accent-ink);
+}
+
+.contact__link--primary {
+  color: var(--accent-ink);
+  font-weight: 500;
 }
 
 .contact__footer {
-  margin-top: 26px;
-}
-
-/* Matches Home: full-width primary over two secondaries on a phone. */
-@media (width < 560px) {
-  .contact__actions {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-  }
-
-  .contact__actions .button {
-    justify-content: center;
-    padding: 0 var(--space-3);
-  }
-
-  .contact__actions .button--primary {
-    grid-column: 1 / -1;
-  }
+  margin-top: var(--space-8);
+  padding-top: var(--space-5);
+  border-top: var(--line);
 }
 
 .contact__details {
-  color: var(--muted);
+  color: var(--dim);
   font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.06em;
-  overflow-wrap: anywhere;
+  font-size: var(--text-eyebrow);
+  letter-spacing: 0.12em;
+  line-height: 1.9;
+  text-wrap: pretty;
 }

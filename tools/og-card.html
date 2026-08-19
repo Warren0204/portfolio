@@ -1,0 +1,248 @@
+<!doctype html>
+<!-- Source for assets/img/og/og-cover.jpg — the 1200x630 link preview.
+
+     Not part of the site: nothing links here and no shipped code reads it. It
+     is kept because the image has to be regenerated whenever the name, role, or
+     portrait changes, and hand-editing a JPEG is not a workflow.
+
+     Regenerate from the repo root, with tools/serve.ps1 already running:
+
+       Start-Process chrome '--headless --disable-gpu --remote-debugging-port=9222 --user-data-dir=C:\Temp\cdp about:blank'
+       powershell -File tools/shot.ps1 -Url http://localhost:5173/tools/og-card.html `
+         -Width 1200 -Height 630 -Scale 1 -Out C:\Temp\og.png
+
+     Then encode C:\Temp\og.png to assets/img/og/og-cover.jpg at quality ~88.
+
+     Dark is deliberate. The site follows the visitor's system theme, but a link
+     preview is a thumbnail in someone else's feed, and the dark palette holds
+     its contrast at that size where the soft blue-grey does not. Colours below
+     are the [data-theme='dark'] values from css/base/tokens.css, copied rather
+     than imported so this file renders standalone. -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Open Graph cover</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@1&family=Sora:wght@600;700&display=block"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        width: 1200px;
+        height: 630px;
+        overflow: hidden;
+        background: #0b1219;
+        color: #f1f5f9;
+        font-family: 'Hanken Grotesk', sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* The same two-gradient wash the page itself uses, so a shared link and
+         the page it opens are visibly the same object. */
+      .card {
+        position: relative;
+        display: flex;
+        gap: 60px;
+        align-items: center;
+        width: 1200px;
+        height: 630px;
+        padding: 62px 70px;
+        background:
+          radial-gradient(720px 460px at 88% 16%, rgba(126, 208, 240, 0.18), transparent 66%),
+          radial-gradient(560px 420px at 2% 96%, rgba(90, 208, 166, 0.08), transparent 70%), #0b1219;
+      }
+
+      /* An edge of its own, for wherever a platform crops or mats the image. */
+      .card::after {
+        position: absolute;
+        inset: 18px;
+        border: 1px solid rgba(255, 255, 255, 0.09);
+        border-radius: 12px;
+        content: '';
+      }
+
+      .lead {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        min-width: 0;
+      }
+
+      .brand {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        margin-bottom: 30px;
+      }
+
+      .brand img {
+        display: block;
+        width: 38px;
+        height: 38px;
+      }
+
+      .brand span {
+        color: #b4c1cd;
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 13px;
+        letter-spacing: 0.18em;
+      }
+
+      /* Status strip — one of the two shapes allowed to be a pill. */
+      .availability {
+        display: inline-flex;
+        gap: 11px;
+        align-items: center;
+        align-self: flex-start;
+        padding: 9px 17px;
+        border: 1px solid rgba(90, 208, 166, 0.35);
+        border-radius: 999px;
+        background: rgba(90, 208, 166, 0.09);
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 13px;
+        letter-spacing: 0.08em;
+      }
+
+      .availability__dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: #48c79a;
+        box-shadow: 0 0 0 4px rgba(90, 208, 166, 0.28);
+      }
+
+      .availability__status {
+        color: #5ad0a6;
+        font-weight: 600;
+      }
+
+      .availability__detail {
+        color: #b4c1cd;
+      }
+
+      .name {
+        margin: 24px 0 0;
+        font-family: 'Sora', sans-serif;
+        font-size: 60px;
+        font-weight: 700;
+        letter-spacing: -0.035em;
+        line-height: 1.02;
+      }
+
+      .role {
+        margin: 16px 0 0;
+        color: #b4c1cd;
+        font-size: 23px;
+        font-weight: 500;
+        letter-spacing: -0.005em;
+      }
+
+      .rule {
+        width: 88px;
+        height: 1px;
+        margin: 26px 0;
+        border: 0;
+        background: rgba(255, 255, 255, 0.16);
+      }
+
+      .headline {
+        max-width: 31ch;
+        margin: 0;
+        color: #dbe3ea;
+        font-size: 22px;
+        line-height: 1.45;
+        text-wrap: pretty;
+      }
+
+      /* The one emphasised phrase the card is allowed. */
+      .headline em {
+        color: #7ed0f0;
+        font-family: 'Instrument Serif', serif;
+        font-size: 1.12em;
+        font-style: italic;
+      }
+
+      .tracks {
+        margin-top: 36px;
+        color: #98a6b3;
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 13px;
+        letter-spacing: 0.14em;
+      }
+
+      /* 4:5, the frame the portrait sits in everywhere else on the site.
+         portrait.webp is 400x400, so 292x365 is a downscale in both axes. */
+      .portrait {
+        position: relative;
+        flex: none;
+        width: 292px;
+        height: 365px;
+      }
+
+      .portrait::before {
+        position: absolute;
+        z-index: 0;
+        inset: -12%;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #0c9ee8, #2ac0a2);
+        content: '';
+        filter: blur(48px);
+        opacity: 0.34;
+      }
+
+      .portrait img {
+        position: relative;
+        z-index: 1;
+        display: block;
+        width: 100%;
+        height: 100%;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: 8px;
+        background: #131c26;
+        object-fit: cover;
+        object-position: 50% 22%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div class="lead">
+        <p class="brand">
+          <img src="/assets/favicon/favicon.svg" alt="" />
+          <span>PORTFOLIO</span>
+        </p>
+
+        <p class="availability">
+          <span class="availability__dot"></span>
+          <span class="availability__status">OPEN TO WORK</span>
+          <span class="availability__detail">CEBU CITY · GMT+8</span>
+        </p>
+
+        <h1 class="name">Warren Villagonzalo<br />Gallardo</h1>
+        <p class="role">Power Platform Developer and Data Analyst</p>
+
+        <hr class="rule" />
+
+        <p class="headline">I modernize how operations run, and build <em>systems that stay standing.</em></p>
+
+        <p class="tracks">POWER PLATFORM · DATA ANALYTICS · PROJECT DELIVERY</p>
+      </div>
+
+      <div class="portrait"><img src="/assets/img/portrait.webp" alt="" /></div>
+    </div>
+  </body>
+</html>

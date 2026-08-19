@@ -1,6 +1,6 @@
 /* Project case studies. Adding a project means appending one object here —
-   no component or stylesheet changes. Copy is transcribed from the design
-   prototype and is authoritative. */
+   no component or stylesheet changes. This copy is the authoritative wording;
+   the section renders whatever is here and adds nothing of its own. */
 
 export const projects = Object.freeze([
   Object.freeze({
@@ -63,7 +63,10 @@ export const projects = Object.freeze([
     ]),
 
     stackGroups: Object.freeze([
-      Object.freeze({ label: 'WEB DASHBOARD', items: Object.freeze(['React + Vite', 'Firebase Hosting']) }),
+      Object.freeze({
+        label: 'WEB DASHBOARD',
+        items: Object.freeze(['React + Vite', 'Firebase Hosting']),
+      }),
       Object.freeze({ label: 'MOBILE APP', items: Object.freeze(['React Native', 'Gradle']) }),
       Object.freeze({
         label: 'BACKEND AND AI',
@@ -76,19 +79,16 @@ export const projects = Object.freeze([
 
 /* Section furniture, kept beside the content it labels. */
 export const projectsCopy = Object.freeze({
+  eyebrow: 'WHAT I HAVE BUILT',
   heading: 'Projects',
-  lead: 'Open a project to read the full case study, from the problem through to what shipped.',
+  lead: 'Case studies from the problem through to what shipped, and who it was validated with.',
   eyebrows: Object.freeze({
     problem: 'THE PROBLEM',
     solution: 'OUR SOLUTION',
     built: 'WHAT WE BUILT',
     surfaces: 'Project surfaces',
-    stack: 'STACK',
+    stack: 'BUILT WITH',
     status: 'STATUS',
     role: 'MY ROLE',
   }),
-  openLabel: 'OPEN CASE STUDY',
-  closeLabel: 'CLOSE',
-  stickyCloseLabel: 'CLOSE CASE STUDY',
-  stickyCloseAria: 'Close the TranspiraFund case study',
 });

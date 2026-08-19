@@ -8,6 +8,7 @@
   *::after {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
+
     /* Delays have to go too. Neutralising only the duration leaves staggered
        elements holding their "from" state for the length of the delay, which
        reads as content that is missing rather than content that is still. */

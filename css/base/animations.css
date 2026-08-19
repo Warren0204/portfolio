@@ -13,55 +13,6 @@
   }
 }
 
-/* Chapter transitions. Forward slides left, back slides right. */
-@keyframes chapter-in-forward {
-  from {
-    opacity: 0;
-    transform: translateX(56px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes chapter-out-forward {
-  from {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-  to {
-    opacity: 0;
-    transform: translateX(-28px);
-  }
-}
-
-@keyframes chapter-in-back {
-  from {
-    opacity: 0;
-    transform: translateX(-56px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes chapter-out-back {
-  from {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-  to {
-    opacity: 0;
-    transform: translateX(28px);
-  }
-}
-
 /* Panels and cards entering. */
 @keyframes rise {
   from {

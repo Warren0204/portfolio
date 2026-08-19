@@ -1,9 +1,18 @@
-/* Contact. The last chapter, and the one the whole site is pointed at: make
-   emailing the obvious next action. */
+/* Contact. The last section, and the one the whole page is pointed at.
+
+   Two columns: the form, and the direct routes for someone who would rather
+   not fill anything in. Offered beside the form rather than instead of it —
+   a recruiter on a phone with no mail client configured hits a dead end on a
+   mailto link, and someone who already has my address in their clipboard
+   should not have to type it into a form. */
 
 import { el } from '../core/dom.js';
+import { createSectionEyebrow } from '../components/sectionEyebrow.js';
+import { createSectionHead } from '../components/sectionHead.js';
 import { createStatusDot } from '../components/statusDot.js';
+import { revealOnScroll } from '../core/animate.js';
 import { profile } from '../data/profile.js';
+import { createContactForm } from './contactForm.js';
 
 const { contact } = profile;
 
@@ -15,49 +24,79 @@ function createAvailabilityBar() {
   ]);
 }
 
-function createActions() {
-  return el('div', { class: 'contact__actions' }, [
-    el('a', {
-      class: 'button button--primary',
-      text: profile.ctas.emailMe,
-      attrs: { href: `mailto:${profile.email}` },
-    }),
-    el('a', {
-      class: 'button button--outline',
-      text: profile.ctas.github,
-      attrs: { href: profile.github, target: '_blank', rel: 'noopener' },
-    }),
-    el('a', {
-      class: 'button button--outline',
-      text: profile.ctas.linkedin,
-      attrs: { href: profile.linkedin, target: '_blank', rel: 'noopener' },
-    }),
+function createDirectRoutes() {
+  return el('div', { class: 'contact__direct' }, [
+    createSectionEyebrow({ text: contact.directEyebrow, tone: 'accent' }),
+    el('div', { class: 'contact__links' }, [
+      el('a', {
+        class: 'contact__link contact__link--primary',
+        text: profile.email,
+        attrs: { href: `mailto:${profile.email}` },
+      }),
+      el('a', {
+        class: 'contact__link',
+        text: profile.phone,
+        attrs: { href: `tel:${profile.phone.replace(/\s/g, '')}` },
+      }),
+      el('a', {
+        class: 'contact__link',
+        text: profile.ctas.linkedin,
+        attrs: { href: profile.linkedin, target: '_blank', rel: 'noopener' },
+      }),
+      el('a', {
+        class: 'contact__link',
+        text: profile.ctas.github,
+        attrs: { href: profile.github, target: '_blank', rel: 'noopener' },
+      }),
+    ]),
   ]);
 }
 
 /**
- * @returns {{ element: HTMLElement, destroy: () => void }}
+ * @returns {{ element: HTMLElement, armReveal: () => void, destroy: () => void }}
  */
 export function createContactSection() {
+  const head = createSectionHead({
+    eyebrow: contact.eyebrow,
+    heading: contact.heading,
+    lead: contact.body,
+    headingId: 'contact-heading',
+  });
+
+  const strip = createAvailabilityBar();
+  const form = createContactForm();
+  const direct = createDirectRoutes();
+
+  const body = el('div', { class: 'contact__body' }, [form.element, direct]);
+
   const element = el('div', { class: 'well contact' }, [
-    createAvailabilityBar(),
-    el('div', { class: 'contact__body' }, [
-      el('p', { class: 'eyebrow eyebrow--muted', text: contact.eyebrow }),
-      el('h2', { class: 'contact__headline' }, [
-        contact.headlineLead,
-        el('em', { class: 'serif-tail', text: contact.headlineTail }),
-      ]),
-      el('p', { class: 'contact__lead', text: contact.body }),
-      createActions(),
-      // The one contentinfo landmark on the page, carrying the details a
-      // visitor would otherwise hunt for in a footer.
-      el(
-        'footer',
-        { class: 'contact__footer' },
-        el('p', { class: 'contact__details', text: contact.details })
-      ),
-    ]),
+    strip,
+    head,
+    body,
+    // The one contentinfo landmark on the page, carrying the details a
+    // visitor would otherwise hunt for in a footer.
+    el(
+      'footer',
+      { class: 'contact__footer' },
+      el('p', { class: 'contact__details', text: contact.details })
+    ),
   ]);
 
-  return { element, destroy() {} };
+  let reveals = [];
+
+  return {
+    element,
+
+    armReveal() {
+      reveals = [
+        revealOnScroll([strip, ...Array.from(head.children)], { trigger: strip }),
+        revealOnScroll([form.element, direct], { trigger: body, y: 30, stagger: 0.12 }),
+      ];
+    },
+
+    destroy() {
+      form.destroy();
+      reveals.forEach((reveal) => reveal.destroy());
+    },
+  };
 }

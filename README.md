@@ -10,19 +10,40 @@ hand them over so they keep running without me.
 
 ## What's inside
 
-The site is one page with five chapters:
+One page, five sections, read top to bottom:
 
-| Chapter | What it covers |
-|---|---|
-| **Home** | Who I am, what I do, and where to reach me |
-| **Projects** | TranspiraFund — a monitoring platform built and validated with a city engineering office |
-| **Experience** | The Benchmark365 internship, and the three systems I shipped into production there |
-| **Credentials** | My degree, certifications, the four tracks I am building in, and the skills underneath |
-| **Contact** | The fastest ways to get hold of me |
+| Section         | What it covers                                                                                                    |
+| --------------- | ----------------------------------------------------------------------------------------------------------------- |
+| **Home**        | Who I am, what I do, and the numbers behind it                                                                    |
+| **Projects**    | TranspiraFund — a monitoring platform built and validated with a city engineering office                          |
+| **Experience**  | The Benchmark365 internship, and the three systems I shipped into production there, each with its process diagram |
+| **Credentials** | My degree, certifications, the four tracks I am building in, and the skills underneath                            |
+| **Contact**     | A message form, and the direct routes for anyone who would rather not use it                                      |
 
-Everything is written in plain HTML, CSS, and JavaScript — no framework, no
-libraries, no build step. Light and dark themes, and it is built for a phone as
+Everything is written in plain HTML, CSS, and JavaScript — no framework and no
+build step. The one runtime dependency is GSAP, which drives the scroll
+animation, and it is committed to the repo rather than installed. Light and dark
+themes, following your system until you say otherwise, and built for a phone as
 much as a desktop.
+
+The three process diagrams in Experience are not images. They are node-and-edge
+data rendered to SVG, and each one draws itself in execution order as you scroll
+through it.
+
+## Running it locally
+
+No dependencies are needed to run the site — only a static server, because ES
+modules will not load from the filesystem.
+
+```powershell
+powershell -File tools/serve.ps1     # http://localhost:5173
+```
+
+With Node available, `npm install` fetches the linters and formatter only.
+
+Contributors should read [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) before
+changing code and [docs/HANDOFF.md](docs/HANDOFF.md) for the things that are not
+obvious from it.
 
 ## Get in touch
 

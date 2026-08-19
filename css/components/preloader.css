@@ -52,23 +52,9 @@
   animation: split-down var(--duration-intro-split) var(--ease-curtain) 120ms both;
 }
 
-/* The mask exists to reveal each line on the way in. On the way out it would
-   clip the words as they pull away from the seam, so it stops clipping. */
-.preloader--leaving .preloader__mask {
-  overflow: visible;
-}
-
-/* The words move further than their panels, so the sentence tears open before
-   it leaves rather than sliding off in one piece. */
-.preloader--leaving .preloader__half--top .preloader__line {
-  animation: tear-up var(--duration-intro-split) var(--ease-curtain) 120ms both;
-}
-
-.preloader--leaving .preloader__half--bottom .preloader__line {
-  animation: tear-down var(--duration-intro-split) var(--ease-curtain) 120ms both;
-}
-
-/* The window each line rises out of on the way in. */
+/* The window each line rises out of on the way in. Declared before the
+   .preloader--leaving overrides below, so the cascade reads in the same
+   direction as specificity — base state first, exit state after. */
 .preloader__mask {
   display: block;
   margin-bottom: -0.2em;
@@ -80,6 +66,12 @@
   align-self: center;
 }
 
+/* On the way out the mask would clip the words as they pull away from the
+   seam, so it stops clipping. */
+.preloader--leaving .preloader__mask {
+  overflow: visible;
+}
+
 .preloader__line {
   display: block;
   max-width: 14ch;
@@ -88,6 +80,7 @@
   font-size: clamp(40px, 9vw, 120px);
   font-style: italic;
   letter-spacing: -0.025em;
+
   /* Flush line box, so the two halves read as one continuous sentence. */
   line-height: 1;
   text-align: center;
@@ -97,6 +90,16 @@
 
 .preloader__line--delayed {
   animation-delay: 200ms;
+}
+
+/* The words move further than their panels, so the sentence tears open before
+   it leaves rather than sliding off in one piece. */
+.preloader--leaving .preloader__half--top .preloader__line {
+  animation: tear-up var(--duration-intro-split) var(--ease-curtain) 120ms both;
+}
+
+.preloader--leaving .preloader__half--bottom .preloader__line {
+  animation: tear-down var(--duration-intro-split) var(--ease-curtain) 120ms both;
 }
 
 .preloader__footer {

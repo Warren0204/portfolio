@@ -19,17 +19,18 @@ outage once.
 schema and rejects unknown keys, including the `"//"` comment convention that
 works in `package.json`. Hence this file.
 
-**`framework` is `null` on purpose.** Vite is in `devDependencies`, so Vercel
-would otherwise apply the Vite preset, run `vite build`, and publish `dist/`.
-That build succeeds and the site is broken: `assets/`, `robots.txt`,
-`sitemap.xml`, and `site.webmanifest` never reach `dist/`, because they are read
-at runtime through absolute paths rather than imported, and a bundler only
-copies what it can statically see. Every image and the CV would 404 under a
-green build log.
+**`framework` is `null` on purpose.** Left to detect, Vercel will apply a
+preset, run a bundler, and publish its output directory. That build succeeds and
+the site is broken: `assets/`, `robots.txt`, `sitemap.xml`, and
+`site.webmanifest` never reach the output, because they are read at runtime
+through absolute paths rather than imported, and a bundler only copies what it
+can statically see. Every image and the CV would 404 under a green build log.
 
-**The build script is `build:dist`, not `build`.** Vercel zero-config runs a
-script named exactly `build` if it finds one. Renaming removes the trigger
-instead of fighting it.
+**`package.json` has no script named `build`.** Vercel zero-config runs a script
+named exactly `build` if it finds one. Not having one removes the trigger
+instead of fighting it. Vite was removed from `devDependencies` entirely for the
+same reason — it existed only to serve files locally, which `tools/serve.ps1`
+already does without Node.
 
 **Do not add `buildCommand` or `outputDirectory`.** Either one puts Vercel into
 build mode, where it collects output from a directory this project never
@@ -41,9 +42,13 @@ only clue in the log.
 
 Static HTML has nowhere to put a variable, so the canonical URL appears in:
 
-    index.html    canonical, og:url, and the JSON-LD url
+    index.html    canonical, og:url, og:image, and the JSON-LD url
     robots.txt    the Sitemap: line
     sitemap.xml   the <loc>
+
+`og:image` has to stay absolute. Facebook, LinkedIn, and Slack resolve it
+against nothing and will silently skip a relative path, so the preview would
+just stop appearing with no error anywhere.
 
 Changing domain means editing those, and nothing else:
 
@@ -92,22 +97,41 @@ powershell -File tools/shot.ps1 -Width 1440 -Height 900 -Out desktop.png
 `-Mobile` sets the mobile flag as well as the size, so the bottom tab bar, the
 bottom-sheet dialog, and the touch styles all appear.
 
-## The design reference
+## Vercel Web Analytics
 
-`reference/` holds the original design mockup and is **not shipped**. Nothing in
-it is served, and no shipped code imports from it.
+Enabled in the dashboard under **Analytics**, and wired into `index.html` with
+the two script tags from Vercel's plain-HTML instructions. Page views and
+visitors only — no cookies and no cross-site identifier, so no consent banner is
+required.
 
-| File | What it is |
-|---|---|
-| `reference/prototype.html` | The original self-contained export. Open it in a browser to see the intended design, copy, and interactions. |
-| `reference/prototype.decoded.html` | The same page with its inlined assets unpacked, so the markup and data are readable. |
-| `reference/unbundle.ps1` | Regenerates the decoded copy and `reference/extracted/`. |
+The tracking script is served from this origin under `/_vercel/insights/`, a
+route Vercel injects at deploy time. Two consequences:
 
-`reference/extracted/` is generated and git-ignored:
+- **The rewrite in `vercel.json` must keep excluding `_vercel/`.** Without that
+  exclusion the catch-all answers the script request with `index.html`. Nothing
+  errors; the dashboard simply never fills up.
+- **It 404s on a local server**, because the route does not exist outside a
+  Vercel deployment. `tools/serve.ps1` returns a clean 404 for `/_vercel/*` so
+  the console shows a plain missing-resource line instead of a JavaScript parse
+  error. That 404 is expected locally and does not appear in production.
 
-```powershell
-powershell -File reference/unbundle.ps1
-```
+To confirm it is working after a deploy, open the site and look for a Fetch/XHR
+request to `/_vercel/insights/view` in the Network tab.
 
-Production assets were promoted out of that folder into `assets/`, which is the
-only place shipped code reads images from. Base64 never enters source files.
+## The contact form
+
+Posts to Web3Forms, which emails submissions to the address the access key is
+registered against. The key lives in `js/core/config.js` and is public by
+design — it can only send mail to that one inbox, and it is safe in a public
+repository. There is no environment variable and nothing to configure in
+Vercel.
+
+## What is deployed
+
+Everything in the repo, exactly as committed. That includes `js/vendor/`, which
+holds GSAP — the site's one runtime dependency, committed rather than installed
+because there is no install step in the deploy path. `docs/` and `tools/` are
+also published; they are small, harmless, and nothing links to them.
+
+There is no `reference/` folder any more. It held the original 3.2 MB design
+prototype, which was removed once the design moved past it.

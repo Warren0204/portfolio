@@ -117,13 +117,7 @@ export const stack = Object.freeze([
   Object.freeze({
     title: 'DATA ENGINEERING STACK',
     note: 'in active training, certification track underway',
-    items: Object.freeze([
-      'dbt',
-      'Airflow',
-      'DuckDB',
-      'Microsoft Fabric',
-      'Data modeling',
-    ]),
+    items: Object.freeze(['dbt', 'Airflow', 'DuckDB', 'Microsoft Fabric', 'Data modeling']),
   }),
 ]);
 

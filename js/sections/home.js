@@ -1,76 +1,41 @@
-/* Home. The one chapter that has to work as a landing screen on a phone and a
-   single-screen composition on a desktop, so its parts are ordered for the
-   phone and re-placed by grid areas above 800px. */
+/* Home. The landing screen: who this is, what he does, proof, and the one
+   thing to do next.
+
+   Ordered for the phone and re-placed by grid areas above 900px, so neither
+   arrangement is the accidental by-product of the other. The three "explore"
+   shortcut cards that used to close this section are gone — on a single
+   scrolling page they were a second navigation for destinations the visitor
+   reaches by doing nothing at all. */
 
 import { el } from '../core/dom.js';
-import { prefersReducedMotion } from '../core/motion.js';
 import { createTypewriter } from '../components/typewriter.js';
 import { createChip } from '../components/chip.js';
 import { createImageFrame } from '../components/imageFrame.js';
-import { createCard } from '../components/card.js';
-import { chapterById, exploreCards } from '../data/navigation.js';
+import { parallax, revealNow, revealOnScroll } from '../core/animate.js';
 import { profile } from '../data/profile.js';
 import { heroTools } from '../data/skills.js';
-import { createActions, createAvailabilityStrip, createHeadline } from './homeIntro.js';
-
-function createExplore() {
-  return el(
-    'div',
-    { class: 'home__explore' },
-    exploreCards.map((entry) => {
-      const chapter = chapterById(entry.chapterId);
-      return createCard({
-        modifier: 'explore',
-        href: chapter.route,
-        children: [
-          el('span', { class: 'home__explore-head' }, [
-            el('span', { class: 'home__explore-title', text: entry.title }),
-            el('span', {
-              class: 'home__explore-arrow',
-              text: '→',
-              attrs: { 'aria-hidden': 'true' },
-            }),
-          ]),
-          el('span', { class: 'home__explore-hook', text: entry.hook }),
-        ],
-      });
-    })
-  );
-}
-
-/**
- * Rise the shortcut cards in as they scroll into view. The hidden state is
- * applied from JavaScript, never from the stylesheet, so that without script —
- * or with motion reduced — the cards are simply visible rather than stranded
- * at opacity zero.
- *
- * @returns {{ observer: IntersectionObserver|null }}
- */
-function revealOnScroll(target) {
-  if (prefersReducedMotion()) return { observer: null };
-
-  target.classList.add('home__explore--pending');
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      for (const entry of entries) {
-        if (!entry.isIntersecting) continue;
-        entry.target.classList.remove('home__explore--pending');
-        observer.unobserve(entry.target);
-      }
-    },
-    { threshold: 0.1 }
-  );
-
-  observer.observe(target);
-  return { observer };
-}
+import {
+  createActions,
+  createAvailabilityStrip,
+  createHeadline,
+  createStats,
+} from './homeIntro.js';
 
 /**
  * @returns {{ element: HTMLElement, armReveal: () => void, destroy: () => void }}
  */
 export function createHomeSection() {
   const typewriter = createTypewriter({ phrases: profile.heroPhrases });
+  const availability = createAvailabilityStrip();
+  const headline = createHeadline();
+  const summary = el('p', { class: 'home__summary', text: profile.summary });
+  const actions = createActions();
+
+  const tools = el(
+    'div',
+    { class: 'home__tools' },
+    heroTools.map((tool) => createChip({ label: tool, size: 'md' }))
+  );
 
   const portrait = createImageFrame({
     src: profile.portrait.src,
@@ -82,47 +47,58 @@ export function createHomeSection() {
     eager: true,
   });
 
-  const explore = createExplore();
+  const stats = createStats();
 
-  // DOM order is the phone's reading order: the face sits with the name,
-  // directly under the headline, rather than after the calls to action. The
-  // desktop layout lifts the portrait into its own column with grid areas, so
-  // neither arrangement is the accidental by-product of the other.
-  const element = el('div', { class: 'well well--home home' }, [
-    el('div', { class: 'home__lead' }, [
-      typewriter.element,
-      createAvailabilityStrip(),
-      createHeadline(),
-      portrait,
-      el('p', { class: 'home__summary', text: profile.summary }),
-      // Actions before tools: on a phone this is reading order, and the thing
-      // to do must come before the list of what I do it with. The desktop grid
-      // places them by area, so it is unaffected by this order.
-      createActions(),
-      el(
-        'div',
-        { class: 'home__tools' },
-        heroTools.map((tool) => createChip({ label: tool, size: 'md' }))
-      ),
-    ]),
-    explore,
+  const cue = el('p', { class: 'home__cue', attrs: { 'aria-hidden': 'true' } }, [
+    el('span', { class: 'home__cue-label', text: profile.scrollCue }),
+    el('span', { class: 'home__cue-line' }),
   ]);
 
-  let reveal = { observer: null };
+  /* Three blocks rather than two, and the split is load-bearing.
+
+     On a phone this is the reading order: who is speaking, then the face, then
+     what he does and what to do about it. Keeping the portrait inside one long
+     lead column pushed it below everything — a visitor on a 390px screen met
+     six paragraphs before they met a person.
+
+     Above 900px the grid puts intro and body in the left column and spans the
+     portrait down the right, so the desktop composition is unchanged and
+     neither layout is the accidental by-product of the other. */
+  const element = el('div', { class: 'well well--home home' }, [
+    el('div', { class: 'home__hero' }, [
+      el('div', { class: 'home__intro' }, [typewriter.element, availability, headline.element]),
+      el('div', { class: 'home__portrait' }, portrait),
+      el('div', { class: 'home__body' }, [summary, actions, tools]),
+    ]),
+    stats.element,
+    cue,
+  ]);
+
+  let reveals = [];
 
   return {
     element,
 
     /* Armed by the caller once the preloader is out of the way. Arming at
-       construction would spend the reveal behind the curtain, where nobody
+       construction would spend the entrance behind the curtain, where nobody
        is there to see it. */
     armReveal() {
-      reveal = revealOnScroll(explore);
+      reveals = [
+        // The hero is already on screen, so it plays rather than waits. Words
+        // first and tightly staggered: the headline should read as one line
+        // assembling, not as thirteen separate arrivals.
+        revealNow(headline.words, { y: 34, stagger: 0.035, duration: 0.7 }),
+        revealNow([typewriter.element, availability], { delay: 0.1, y: 14 }),
+        revealNow([summary, actions, tools], { delay: 0.35, stagger: 0.1 }),
+        revealNow(portrait, { delay: 0.2, y: 40, duration: 1 }),
+        parallax(portrait, 50),
+        revealOnScroll(stats.items, { trigger: stats.element, y: 24, stagger: 0.09 }),
+      ];
     },
 
     destroy() {
       typewriter.destroy();
-      if (reveal.observer) reveal.observer.disconnect();
+      reveals.forEach((reveal) => reveal.destroy());
     },
   };
 }

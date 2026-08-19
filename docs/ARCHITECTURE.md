@@ -1,21 +1,26 @@
 # Architecture
 
-One HTML page, five hash-routed chapters, no framework and no runtime
-dependencies. `index.html` holds only the shell — head, the `<header>` hook, and
+One HTML page, five sections on a single scroll, no framework and no build step.
+`index.html` holds only the shell — head, the `<header>` hook, and
 `<main id="stage">`. Everything visible is built by JavaScript from data.
+
+There is exactly one runtime dependency, GSAP, and it is vendored into the repo
+rather than installed. See [Motion](#motion).
 
 ## Layers
 
-Dependencies point one way: **data → sections → components → core**.
+Dependencies point one way: **data → sections → components → core → vendor**.
 
-| Layer | Owns | May import |
-|---|---|---|
-| `js/core/` | DOM building, state, routing, storage, motion, focus, formatting | nothing above it |
-| `js/data/` | every user-facing string, frozen plain objects | nothing |
-| `js/components/` | reusable, data-in / element-out pieces | `core/`, `data/` |
-| `js/sections/` | one chapter each, composing components with data | `core/`, `data/`, `components/` |
+| Layer            | Owns                                                             | May import                      |
+| ---------------- | ---------------------------------------------------------------- | ------------------------------- |
+| `js/vendor/`     | third-party code, committed not installed                        | nothing                         |
+| `js/core/`       | DOM building, state, routing, storage, motion, focus, formatting | `vendor/`                       |
+| `js/data/`       | every user-facing string, frozen plain objects                   | nothing                         |
+| `js/components/` | reusable, data-in / element-out pieces                           | `core/`, `data/`                |
+| `js/sections/`   | one section each, composing components with data                 | `core/`, `data/`, `components/` |
 
 A component never imports a section. There are no circular imports.
+`js/core/animate.js` is the only module that imports GSAP.
 
 CSS mirrors the same shape and colocates by name: `js/components/modal.js` pairs
 with `css/components/modal.css`. `css/main.css` is an import manifest and
@@ -26,8 +31,8 @@ nothing else; its order is the cascade order.
 - Components are factory functions — `createChip(props)` returns a DOM node.
   No classes, no state inside a component, no `innerHTML` with interpolated
   data. Build nodes with `el()` from `js/core/dom.js`.
-- A component that registers anything global (keydown, resize, an observer)
-  returns a `destroy()` that removes it.
+- A component that registers anything global (keydown, resize, an observer, a
+  ScrollTrigger) returns a `destroy()` that removes it.
 - No strings in components. Copy lives in `js/data/`.
 - No magic values. Durations, breakpoints, z-index layers, and spacing come from
   `css/base/tokens.css` or `js/core/constants.js`.
@@ -37,41 +42,122 @@ nothing else; its order is the cascade order.
   one card. Two things that look alike are the same component with a modifier.
 - Rule of three — duplicate once, extract on the third use.
 
+## One page, five sections
+
+The five sections are `<section>` landmarks stacked in `<main>`, and the
+document is the scroller. They keep their hash routes — `#/`, `#/projects`,
+`#/experience`, `#/credentials`, `#/contact` — because those are already in the
+sitemap and in anything anyone has linked.
+
+`js/core/router.js` keeps the hash and the scroll position as two views of one
+fact:
+
+- a nav click, a deep link, or the back button **scrolls** to that section
+- scrolling past a section **rewrites the hash** to name it, with
+  `replaceState`, so scrolling the whole page once does not cost the visitor
+  five presses of Back to leave
+
+Routes stay in the `#/projects` form rather than becoming bare `#projects`
+element ids. A bare id would let the browser jump natively, which sounds simpler
+but costs the smooth scroll and the header offset. Nothing relies on the hash
+matching an element id; sections clear the header via `scroll-margin-top` in
+`css/layout/page.css`.
+
+The nav's active state follows the reader, not the last thing they clicked —
+`onSectionChange` in `js/core/animate.js` reports whichever section covers the
+middle of the screen.
+
+## Motion
+
+`js/core/animate.js` is the whole motion layer and the only importer of GSAP.
+Sections ask for an effect by name and get a `destroy()` back.
+
+Two rules hold it together:
+
+**Motion is additive.** Every animated element is fully visible and readable
+with no JavaScript at all — the helpers animate _from_ an offset state that GSAP
+applies itself at creation time. A failed script or a blocked vendor file leaves
+a plain, complete page rather than a blank one.
+
+**Reduced motion is answered once, at the source.** Under
+`prefers-reduced-motion: reduce` nothing is tweened and no ScrollTrigger is
+created; every helper returns the same shape either way, so callers never
+branch. CSS suppressing an animation that has already started still costs the
+layout thrash that started it.
+
+GSAP is committed to `js/vendor/` and loaded by classic `<script defer>` tags in
+`index.html`, **not** imported from a module. The `.min.js` files are UMD, and a
+UMD wrapper evaluated as a module throws on its own global-assignment fallback.
+`js/vendor/README.md` has the full explanation; do not "tidy" those script tags
+into imports.
+
+### The process diagrams
+
+The three diagrams in Experience are data, not pictures:
+`diagrams` in `js/data/experience.js` is a set of node/edge specs,
+`js/sections/experienceDiagramSvg.js` renders one to SVG, and
+`js/sections/experienceDiagram.js` scrubs it on scroll so the flow draws itself
+in execution order. Both arrays in a spec are authored in execution order —
+reordering an array reorders the animation.
+
+Arrowheads are their own paths rather than SVG markers, because a marker paints
+the instant its line exists and would hang in space ahead of a connector that is
+still being drawn.
+
 ## The shell changes shape, not just size
 
-Below 800px the site is built as an app, not as a narrowed page. These are
-different structures, not one structure scaled:
+Below 920px the site is built as an app, not as a narrowed page. 920 is where
+the five mono nav labels stop fitting beside the wordmark and the theme switch —
+measured, not guessed.
 
-| | phone (< 800px) | 800px and up |
-|---|---|---|
-| Navigation | bottom tab bar, in the thumb arc | chapter nav in the header |
-| Header | slim title bar: short wordmark + theme | full wordmark + nav + theme |
-| Detail dialog | bottom sheet with a grab handle | centred dialog |
-| Home | one column, portrait under the headline | two columns, portrait in its own |
-| Calls to action | full-width primary over two secondaries | inline row |
+|                 | phone (< 920px)                         | 920px and up                     |
+| --------------- | --------------------------------------- | -------------------------------- |
+| Navigation      | bottom tab bar, in the thumb arc        | section nav in the header        |
+| Header          | slim title bar: short wordmark + theme  | wordmark + nav + theme           |
+| Detail dialog   | bottom sheet with a grab handle         | centred dialog                   |
+| Home            | one column, portrait between the two    | two columns, portrait in its own |
+| Calls to action | full-width primary over two secondaries | inline row                       |
+
+The header is `position: sticky`, not `fixed`. A fixed element is laid out
+against the initial containing block, which includes the classic scrollbar
+gutter — that put the theme switch under the scrollbar at tablet widths.
 
 `env(safe-area-inset-*)` keeps the header below the status bar and the tab bar
-above the home indicator; the stage is inset between them. Hover affordances are
-neutralised under `@media (hover: none)` in `css/utilities/touch.css`, because a
-browser leaves `:hover` on the last thing tapped — without that, tapping a card
-leaves it stuck in its lifted state.
+above the home indicator. Hover affordances are neutralised under
+`@media (hover: none)` in `css/utilities/touch.css`, because a browser leaves
+`:hover` on the last thing tapped — without that, tapping a card leaves it stuck
+in its lifted state.
+
+## Theme
+
+An explicit choice always wins; until one is made, the system preference
+decides. The choice is written to storage only on an actual click, so a
+system-derived value is never frozen in as though the visitor had picked it.
+The pre-paint bootstrap in `index.html` mirrors `readStoredTheme()` exactly —
+change one and you must change the other, or dark visitors get a light flash.
 
 ## Where new content goes
 
 Adding content is a one-object data edit. Nothing in `js/components/`,
 `js/sections/`, or the CSS should need to change.
 
-| To add | Edit | Append |
-|---|---|---|
-| A project case study | `js/data/projects.js` | one object to `projects` |
-| A delivered system under a role | `js/data/experience.js` | one object to that role's `systems` |
-| A certification | `js/data/credentials.js` | one object to `certifications`; include `image` to get the click-to-enlarge proof, omit it for a compact card |
-| A track | `js/data/credentials.js` | one object to `tracks` |
-| A skill group | `js/data/skills.js` | one object to `practices`, `platforms`, or `stack` |
-| A chapter | `js/data/navigation.js` and `js/sections/` | one object to `chapters`, one section module |
+| To add                          | Edit                                       | Append                                                                                                        |
+| ------------------------------- | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------- |
+| A project case study            | `js/data/projects.js`                      | one object to `projects`                                                                                      |
+| A delivered system under a role | `js/data/experience.js`                    | one object to that role's `systems`                                                                           |
+| A process diagram               | `js/data/experience.js`                    | one entry to `diagrams`, and `diagram: '<key>'` on the system                                                 |
+| A certification                 | `js/data/credentials.js`                   | one object to `certifications`; include `image` to get the click-to-enlarge proof, omit it for a compact card |
+| A track                         | `js/data/credentials.js`                   | one object to `tracks`                                                                                        |
+| A skill group                   | `js/data/skills.js`                        | one object to `practices`, `platforms`, or `stack`                                                            |
+| A section                       | `js/data/navigation.js` and `js/sections/` | one object to `chapters`, one section module registered in `js/main.js`                                       |
 
-## Reference
+Sections are still called chapters in the code. The word predates the scrolling
+layout; renaming it would touch every module for no behavioural gain.
 
-`reference/` holds the original design prototype and is not shipped. Shipped
-code never imports from it. See [DEPLOYMENT.md](DEPLOYMENT.md) for how to
-regenerate its decoded form.
+## The contact form
+
+Three fields, posted to a third-party endpoint — there is no backend. The
+endpoint and its access key live in `js/core/config.js`, which explains how to
+get one. **The form does not send anything until that key is set**; until then a
+submit fails into the error state, which points the visitor at the mailto link.
+It never silently swallows a message.

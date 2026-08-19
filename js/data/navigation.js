@@ -1,5 +1,9 @@
-/* Chapter order, labels, and routes. Index order is the reading order:
-   forward equals right. Adding a chapter means appending one object here. */
+/* Section order, labels, and routes. Index order is the reading order, which on
+   a single scrolling page is literally top to bottom. Adding a section means
+   appending one object here and one module in js/sections/.
+
+   They are still called chapters in the code. The word predates the scrolling
+   layout, and renaming it would touch every module for no behavioural gain. */
 
 export const chapters = Object.freeze([
   Object.freeze({
@@ -46,25 +50,6 @@ export const chapters = Object.freeze([
     title: 'Contact — Warren Villagonzalo Gallardo',
     description:
       'Open to Power Platform and automation development, data analytics, and project coordination roles. Remote, hybrid, or onsite from Cebu City.',
-  }),
-]);
-
-/* The three shortcut cards at the foot of Home. */
-export const exploreCards = Object.freeze([
-  Object.freeze({
-    chapterId: 'projects',
-    title: 'Projects',
-    hook: 'Case studies of what I have built, from problem to deployment.',
-  }),
-  Object.freeze({
-    chapterId: 'experience',
-    title: 'Experience',
-    hook: 'Where I have worked and the systems I shipped there.',
-  }),
-  Object.freeze({
-    chapterId: 'credentials',
-    title: 'Credentials',
-    hook: 'Tracks I am building in, certifications, and education.',
   }),
 ]);
 

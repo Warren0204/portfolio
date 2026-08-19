@@ -4,9 +4,10 @@
 .button {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   min-height: 44px;
   padding: 0 26px;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-lg);
   font-family: var(--font-body);
   font-size: var(--text-body);
   text-decoration: none;
@@ -16,7 +17,16 @@
   background: var(--cta-bg);
   color: var(--on-accent);
   font-weight: 600;
-  transition: background var(--duration-base);
+  box-shadow: 0 6px 18px -8px rgba(var(--accent-rgb), 0.7);
+  transition:
+    background var(--duration-base),
+    box-shadow var(--duration-base),
+    transform var(--duration-base);
+}
+
+.button--primary:hover {
+  box-shadow: 0 10px 24px -8px rgba(var(--accent-rgb), 0.8);
+  transform: translateY(-1px);
 }
 
 .button--primary:hover,
@@ -37,5 +47,21 @@
 .button--outline:hover,
 .button--outline:focus-visible {
   border-color: rgba(var(--accent-rgb), 0.5);
+  color: var(--accent-ink);
+}
+
+/* The third-tier action. Present for the visitor who wants it, and quiet
+   enough that the eye reaches the primary first. */
+.button--ghost {
+  color: var(--muted);
+  font-weight: 500;
+  transition:
+    background var(--duration-base),
+    color var(--duration-base);
+}
+
+.button--ghost:hover,
+.button--ghost:focus-visible {
+  background: rgba(var(--accent-rgb), 0.1);
   color: var(--accent-ink);
 }

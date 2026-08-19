@@ -1,0 +1,192 @@
+/* Form fields and the contact form around them.
+
+   Single column, labels above, one field per row. A two-column form saves
+   vertical space and costs the reader a decision about where to look next on
+   every single row; on a three-field form there is no space worth saving. */
+
+.contact-form__heading {
+  margin-top: var(--space-3);
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: clamp(20px, 2.4vw, 26px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  text-wrap: pretty;
+}
+
+.contact-form__lead {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: var(--text-body);
+}
+
+.contact-form__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  margin-top: var(--space-6);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.field__label {
+  color: var(--text);
+  font-size: var(--text-small);
+  font-weight: 500;
+}
+
+.field__hint {
+  color: var(--dim);
+  font-size: 13px;
+}
+
+.field__control {
+  width: 100%;
+
+  /* 44px is the comfortable touch target; the padding and the 16px type get
+     there without a fixed height that would break when the text wraps. */
+  padding: 13px var(--space-4);
+  border: 1px solid rgba(var(--line-rgb), 0.2);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font-body);
+
+  /* Never below 16px: iOS Safari zooms the whole page in on any smaller input
+     the moment it takes focus, and does not zoom back out. */
+  font-size: 16px;
+  line-height: 1.5;
+  transition:
+    border-color var(--duration-base),
+    box-shadow var(--duration-base);
+}
+
+.field__control--area {
+  min-height: 132px;
+  resize: vertical;
+}
+
+.field__control::placeholder {
+  color: var(--dim);
+}
+
+.field__control:hover {
+  border-color: rgba(var(--line-rgb), 0.32);
+}
+
+.field__control:focus-visible {
+  border-color: var(--accent-ink);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.25);
+}
+
+.field--invalid .field__control {
+  border-color: rgba(190, 40, 40, 0.75);
+}
+
+[data-theme='dark'] .field--invalid .field__control {
+  border-color: rgba(255, 138, 128, 0.8);
+}
+
+.field__error {
+  display: flex;
+  gap: 6px;
+  align-items: flex-start;
+  color: #a1231d;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+[data-theme='dark'] .field__error {
+  color: #ff9d94;
+}
+
+/* Colour is never the only signal that something is wrong. */
+.field__error::before {
+  content: '⚠';
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* Off-screen rather than display:none, and never focusable: a bot that fills
+   every input it can find fills this one; a real visitor never sees it and a
+   screen reader never reaches it. */
+.field--honeypot {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.contact-form__submit {
+  align-self: flex-start;
+  min-height: 48px;
+  padding-inline: var(--space-6);
+}
+
+.contact-form__submit[aria-busy='true'] {
+  cursor: progress;
+  opacity: 0.75;
+}
+
+.contact-form__status {
+  color: var(--muted);
+  font-size: var(--text-small);
+  line-height: 1.55;
+}
+
+/* The live region is always in the DOM so a screen reader is watching it
+   before there is anything to announce; it just takes no space until there is. */
+.contact-form__status:empty {
+  display: none;
+}
+
+.contact-form__status--error {
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid rgba(190, 40, 40, 0.4);
+  border-radius: var(--radius-lg);
+  background: rgba(190, 40, 40, 0.07);
+  color: var(--text);
+}
+
+.contact-form__status-title {
+  font-weight: 600;
+}
+
+.contact-form__status a {
+  color: var(--accent-ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Sent */
+
+.contact-form__done {
+  margin-top: var(--space-6);
+  padding: clamp(24px, 4vw, 36px);
+  border: 1px solid rgba(var(--ok-rgb), 0.35);
+  border-radius: var(--radius-xl);
+  background: rgba(var(--ok-rgb), 0.08);
+}
+
+.contact-form__done-title {
+  color: var(--ok-ink);
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.contact-form__done-body {
+  margin-top: 8px;
+  margin-bottom: var(--space-5);
+  color: var(--muted);
+  font-size: var(--text-body);
+  text-wrap: pretty;
+}

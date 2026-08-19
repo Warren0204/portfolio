@@ -14,15 +14,7 @@ import { el } from '../core/dom.js';
  * @param {boolean} [props.eager] True for above-the-fold images only.
  * @returns {HTMLElement}
  */
-export function createImageFrame({
-  src,
-  alt,
-  width,
-  height,
-  caption,
-  figureLabel,
-  eager = false,
-}) {
+export function createImageFrame({ src, alt, width, height, caption, figureLabel, eager = false }) {
   const image = el('img', {
     class: 'image-frame__img',
     attrs: {

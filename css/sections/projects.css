@@ -1,62 +1,177 @@
-/* Projects chapter. */
+/* Projects section: the case study, open. */
 
 .projects__list {
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  margin-top: 26px;
+  gap: var(--space-9);
+  margin-top: var(--space-7);
 }
 
-.projects__case {
+.project__header {
+  max-width: 74ch;
+}
+
+.project__meta {
   display: flex;
-  flex-direction: column;
-  gap: 18px;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
 }
 
-/* Problem and solution beside what was built; one column when it will not fit. */
-.projects__split {
+.project__tag {
+  padding: 4px 10px;
+  border: 1px solid rgba(var(--accent-rgb), 0.4);
+  border-radius: var(--radius-sm);
+  color: var(--accent-ink);
+  font-family: var(--font-mono);
+  font-size: var(--text-eyebrow);
+  letter-spacing: 0.16em;
+}
+
+.project__period {
+  color: var(--dim);
+  font-family: var(--font-mono);
+  font-size: var(--text-eyebrow);
+  letter-spacing: 0.16em;
+}
+
+.project__rule {
+  flex: 1;
+  min-width: 20px;
+  height: 1px;
+  background: rgba(var(--line-rgb), 0.14);
+}
+
+.project__title {
+  margin-top: var(--space-4);
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: clamp(26px, 3.6vw, 38px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: var(--leading-tight);
+}
+
+.project__summary {
+  margin-top: var(--space-4);
+  color: var(--muted);
+  font-size: var(--text-lead);
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+.project__roles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px var(--space-3);
+  align-items: center;
+  margin-top: var(--space-5);
+}
+
+.project__roles .chip-row {
+  gap: var(--space-2);
+}
+
+.project__team {
+  color: var(--dim);
+  font-family: var(--font-mono);
+  font-size: var(--text-eyebrow);
+  letter-spacing: 0.14em;
+}
+
+/* Problem beside solution. The claim of a case study is that the second one
+   answers the first, so they are set as a pair and never stack on desktop. */
+.project__narrative {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
-  gap: 18px;
+  gap: clamp(24px, 3.5vw, 48px);
+  margin-top: var(--space-7);
 }
 
-.projects__split .eyebrow {
+@media (width >= 900px) {
+  .project__narrative {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.project__narrative-column .eyebrow {
   margin-bottom: var(--space-3);
 }
 
-.projects__split .prose + .eyebrow {
-  margin-top: 26px;
+/* Surfaces */
+
+.project__surfaces {
+  margin-top: var(--space-7);
+  padding: clamp(20px, 3vw, 32px);
+  border: var(--line);
+  border-radius: var(--radius-xl);
+  background: var(--surface);
 }
 
-.projects__surface {
-  margin-top: 14px;
+.project__surfaces > .eyebrow {
+  margin-bottom: var(--space-4);
 }
 
-.projects__surface-caption {
-  color: var(--dim);
+.project__surface {
+  margin-top: var(--space-5);
+}
+
+.project__surface:focus {
+  outline: none;
+}
+
+.project__surface:focus-visible {
+  outline: 2px solid var(--accent-ink);
+  outline-offset: 6px;
+}
+
+.project__surface-caption {
+  color: var(--accent-ink);
   font-family: var(--font-mono);
-  font-size: var(--text-meta);
+  font-size: 11.5px;
   letter-spacing: 0.08em;
 }
 
-.projects__surface-list {
-  margin-top: 14px;
+.project__surface-list {
+  margin-top: var(--space-4);
 }
 
-.projects__stack {
+/* Stack */
+
+.project__stack {
+  margin-top: var(--space-7);
+}
+
+.project__stack > .eyebrow {
+  margin-bottom: var(--space-4);
+}
+
+.project__stack-groups {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(230px, 100%), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
   gap: var(--space-5);
-  margin-top: 18px;
 }
 
-.projects__stack-group .eyebrow {
-  margin-bottom: 10px;
+.project__stack-group .chip-row {
+  margin-top: 10px;
 }
 
-.projects__status {
+/* Status */
+
+.project__status {
   display: flex;
-  gap: 9px;
+  gap: 10px;
   align-items: baseline;
-  margin-top: var(--space-3);
+  margin-top: var(--space-6);
+  padding: var(--space-4) var(--space-5);
+  border: 1px solid rgba(var(--ok-rgb), 0.3);
+  border-radius: var(--radius-lg);
+  background: rgba(var(--ok-rgb), 0.07);
+}
+
+.project__status .eyebrow {
+  margin-bottom: 6px;
+}
+
+.project__status .status-dot {
+  transform: translateY(-2px);
 }

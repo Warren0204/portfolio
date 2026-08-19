@@ -1,0 +1,29 @@
+/* The opening of a page section. Identical in all four so that crossing from
+   one subject to the next always looks the same. */
+
+.section-head {
+  max-width: 74ch;
+}
+
+.section-head__eyebrow {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+/* A short rule trailing the eyebrow, so the label reads as a marker rather
+   than as a stray line of small text above a heading. */
+.section-head__eyebrow::after {
+  width: clamp(28px, 6vw, 64px);
+  height: 1px;
+  background: rgba(var(--accent-rgb), 0.45);
+  content: '';
+}
+
+.section-head__heading {
+  margin-top: var(--space-3);
+}
+
+.section-head__lead {
+  margin-top: var(--space-4);
+}

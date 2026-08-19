@@ -1,9 +1,23 @@
-/* Fixed chapter bar: wordmark, chapter nav, theme switch. On phones the nav
-   moves to the bottom tab bar and this becomes a slim title bar. */
+/* The section bar: wordmark, section nav, theme switch, and a scroll progress
+   hairline. Below 920px the nav moves to the bottom tab bar and this becomes a
+   slim title bar — 920 is where the five mono labels stop fitting beside the
+   wordmark and the switch, measured rather than guessed.
 
+   The bar is translucent now that live content scrolls beneath it rather than
+   being clipped by a fixed stage. The blur is an enhancement: the background
+   colour underneath is opaque enough on its own that text never collides with
+   text where backdrop-filter is unsupported. */
+
+/* Sticky, not fixed. A fixed element is laid out against the initial containing
+   block, which includes the classic scrollbar gutter — at 834px that put the
+   theme toggle's right edge at 835px inside an 819px readable viewport, so the
+   scrollbar sat on top of it. Sticky stays in normal flow, so it is the width
+   of the content and the problem cannot arise. It also means the header
+   occupies its own space at the top of the page instead of the first section
+   having to reserve room for it. */
 .header {
-  position: fixed;
-  inset: 0 0 auto;
+  position: sticky;
+  top: 0;
   z-index: var(--z-header);
   display: flex;
   align-items: center;
@@ -12,14 +26,22 @@
   height: var(--header-height);
   padding: 0 clamp(20px, 4vw, 40px);
   border-bottom: var(--line-soft);
-  background: var(--bg);
+  background: var(--header-bg);
+  backdrop-filter: blur(14px) saturate(140%);
 }
 
 .header__wordmark {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 10px;
   padding: var(--space-1) 0;
+}
+
+.header__mark {
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
 }
 
 .header__name {
@@ -40,10 +62,11 @@
 .header__nav {
   display: flex;
   align-items: center;
-  gap: clamp(14px, 2vw, 26px);
+  gap: clamp(6px, 1.2vw, 14px);
 }
 
 .header__link {
+  position: relative;
   padding: var(--space-2) var(--space-3);
   border-radius: var(--radius-sm);
   color: var(--muted);
@@ -57,13 +80,47 @@
 
 .header__link:hover,
 .header__link:focus-visible {
-  background: var(--accent-ink);
-  color: var(--on-accent);
+  background: rgba(var(--accent-rgb), 0.12);
+  color: var(--accent-ink);
 }
 
-.header__link[aria-current='page'] {
+/* The current section is marked by an underline rather than a filled pill.
+   The active state changes continuously as someone scrolls, and a block of
+   solid colour sliding between five items every few seconds is a flicker;
+   a 2px rule reads at a glance and does not flash. */
+.header__link--current {
+  color: var(--text);
+}
+
+.header__link--current::after {
+  position: absolute;
+  right: var(--space-3);
+  bottom: 2px;
+  left: var(--space-3);
+  height: 2px;
+  border-radius: var(--radius-pill);
   background: var(--accent-ink);
-  color: var(--on-accent);
+  content: '';
+}
+
+/* Scroll progress through the whole document. Scaled from the left rather than
+   animated as a width, so it never triggers layout. */
+.header__progress {
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  height: 2px;
+  overflow: hidden;
+}
+
+.header__progress-bar {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--brand-gradient);
+  transform: scaleX(0);
+  transform-origin: left center;
 }
 
 /* Theme switch. Lives in the header rather than in components/ because there is
@@ -120,16 +177,25 @@
   display: none;
 }
 
-/* On phones the chapter nav lives in the bottom tab bar, so the header slims
-   to a title bar: short wordmark, theme switch, and the status-bar inset. */
-@media (width < 800px) {
-  .header__nav,
+/* Below 1080px the five mono labels and the full name cannot share the bar. */
+@media (width < 1080px) {
   .header__name--full {
     display: none;
   }
 
   .header__name--short {
     display: inline;
+  }
+}
+
+/* On phones the section nav lives in the bottom tab bar, so the header slims
+   to a title bar: short wordmark, theme switch, and the status-bar inset. */
+@media (width < 920px) {
+  .header__nav {
+    display: none;
+  }
+
+  .header__name--short {
     font-size: 15px;
   }
 

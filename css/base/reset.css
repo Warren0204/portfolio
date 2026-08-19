@@ -12,7 +12,24 @@
 }
 
 html {
+  /* Stops iOS Safari inflating text in the layouts it decides are too narrow.
+     The prefix is not legacy cruft here: Safari implements only the prefixed
+     property, so dropping it — which `stylelint --fix` will happily do — turns
+     the guard off on the one browser that needs it. Both are declared, and the
+     rule is disabled for this line rather than for the file. */
+
+  /* stylelint-disable-next-line property-no-vendor-prefix */
   -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* The `hidden` attribute only hides through the user-agent stylesheet, so any
+   author rule that sets `display` on the same element silently defeats it —
+   `.field__error { display: flex }` left every empty error row on screen,
+   warning glyph and all. Stated here, once, rather than remembered at each of
+   the dozen places something is toggled. */
+[hidden] {
+  display: none !important;
 }
 
 body {

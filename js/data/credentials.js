@@ -133,6 +133,7 @@ export const tracks = Object.freeze([
 ]);
 
 export const credentialsCopy = Object.freeze({
+  eyebrow: 'WHAT I AM BUILT ON',
   heading: 'Credentials',
   lead: 'Where I am strongest today and where I am deliberately growing next. Four views: the degree behind it, the certifications, the tracks, and the skills underneath.',
   tabsLabel: 'Credentials views',

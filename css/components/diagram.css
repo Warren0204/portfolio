@@ -1,0 +1,143 @@
+/* Process diagrams. Three of them share this file — the notation is identical
+   by design, so the styling has to be too.
+
+   The drawing has a minimum legible width and scrolls inside its own box
+   rather than forcing the page to scroll sideways. Scaling it to fit a 390px
+   phone instead would put the labels at about four pixels, which is not a
+   smaller diagram, it is a picture of one. */
+
+.diagram {
+  margin-top: var(--space-6);
+  padding-top: var(--space-5);
+  border-top: var(--line-soft);
+}
+
+.diagram__head {
+  max-width: 74ch;
+}
+
+.diagram__caption {
+  margin-top: 7px;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+.diagram__figure {
+  position: relative;
+  margin-top: var(--space-4);
+}
+
+.diagram__scroll {
+  overflow-x: auto;
+  padding: clamp(10px, 1.6vw, 18px);
+  border: var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+
+  /* Tells a touch device this is a horizontal scroller and keeps a vertical
+     drag scrolling the page rather than fighting the box. */
+  overscroll-behavior-x: contain;
+  touch-action: pan-x pan-y;
+}
+
+.diagram__hint {
+  margin-top: 10px;
+}
+
+/* Once the box is wide enough to hold the whole drawing there is nothing to
+   scroll, and an instruction to scroll is worse than no instruction. */
+@media (width >= 1000px) {
+  .diagram__hint {
+    display: none;
+  }
+}
+
+.diagram__svg {
+  display: block;
+  width: 100%;
+  min-width: 900px;
+  height: auto;
+  font-family: var(--font-body);
+}
+
+.diagram__edges {
+  fill: none;
+  stroke: var(--muted);
+  stroke-width: 1.6;
+}
+
+.diagram__arrows {
+  fill: var(--muted);
+}
+
+.diagram__edge-labels {
+  fill: var(--dim);
+  font-size: 12.5px;
+
+  /* Painting the stroke first knocks a halo of background out from behind the
+     glyphs, so a label crossing a connector stays readable. */
+  paint-order: stroke;
+  stroke: var(--surface);
+  stroke-linejoin: round;
+  stroke-width: 4;
+}
+
+.diagram__shape {
+  fill: var(--bg);
+  stroke: rgba(var(--line-rgb), 0.22);
+  stroke-width: 1.4;
+}
+
+.diagram__shape--accent {
+  fill: rgba(var(--accent-rgb), 0.08);
+  stroke: rgba(var(--accent-rgb), 0.5);
+  stroke-width: 1.6;
+}
+
+.diagram__text--title {
+  fill: var(--text);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.diagram__text--hub {
+  fill: var(--text);
+  font-size: 16px;
+  font-weight: 650;
+}
+
+.diagram__text--meta {
+  fill: var(--muted);
+  font-size: 12.5px;
+}
+
+.diagram__text--mono {
+  fill: var(--text);
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
+.diagram__text--mono-small {
+  fill: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+}
+
+.diagram__text--mono-tracked {
+  fill: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 1.2px;
+}
+
+.diagram__step {
+  fill: var(--accent-ink);
+}
+
+.diagram__step-label {
+  fill: var(--on-accent);
+  font-size: 13px;
+  font-weight: 700;
+}

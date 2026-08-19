@@ -13,20 +13,20 @@ export const THEMES = Object.freeze({
 });
 
 /* Mirrors the media queries in the stylesheets. Kept in pixels because the
-   JavaScript side reads window.innerWidth, not em. */
+   JavaScript side reads window.innerWidth, not em.
+
+   Only breakpoints JavaScript actually tests belong here. The shell breakpoint
+   -- below which the section nav becomes the bottom tab bar -- is 920px and
+   lives in css/layout/header.css, because nothing in js/ needs to know it. */
 export const BREAKPOINTS = Object.freeze({
-  /* Below this, the phone layout takes over and the inline nav collapses. */
-  phone: 800,
   /* The narrowest width the credentials connector spine still reads at. */
   trackTree: 892,
-  /* Wide layout, where the edge chapter arrows have room to appear. */
-  wide: 1440,
 });
 
-/* Milliseconds. The chapter duration is mirrored by --duration-chapter. */
+/* Milliseconds. Only the values JavaScript has to time itself live here;
+   everything scroll-driven is owned by js/core/animate.js and expressed in
+   seconds, the unit GSAP works in. */
 export const DURATIONS = Object.freeze({
-  chapter: 350,
-  panel: 340,
   base: 200,
   fast: 160,
   /* Preloader: count, then the split. Together they stay under three seconds —
@@ -41,11 +41,4 @@ export const TYPEWRITER = Object.freeze({
   holdMs: 2100,
   deleteMs: 24,
   restartMs: 320,
-});
-
-/* A swipe must be decisively horizontal before it changes chapter, so that
-   vertical scrolling is never hijacked. */
-export const SWIPE = Object.freeze({
-  minDistancePx: 64,
-  horizontalRatio: 1.4,
 });

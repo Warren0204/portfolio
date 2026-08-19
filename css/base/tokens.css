@@ -4,22 +4,31 @@
    data-theme attribute still renders correctly.
 
    Colour channels are stored as comma-separated triplets so borders and tints
-   can be built with alpha at the point of use: rgba(var(--line-rgb), 0.1). */
+   can be built with alpha at the point of use: rgba(var(--line-rgb), 0.1).
+
+   The accent is tuned to the wordmark — the blue-to-teal disc in
+   assets/favicon/favicon.svg — rather than to a generic blue. Every text
+   colour below was checked against its own background for WCAG AA:
+   --accent-ink is 5.5:1 on --bg in light and 11.2:1 in dark. Semantic green
+   stays deliberately greener than the accent so "in production" never reads
+   as decoration. */
 
 :root {
   /* Surfaces and text — light. Soft blue-grey, never white. */
   --bg: #e8eef6;
   --surface: #f5f8fc;
   --raised: #dbe4ef;
+  --sunken: #dde6f1;
   --text: #0f1822;
   --muted: #37455a;
   --dim: #4a5765;
   --chip-text: #212c37;
 
-  /* Blue is the working accent. */
-  --accent-ink: #14548f;
-  --accent-ink-hover: #0e4174;
-  --accent-dot: #1a63a8;
+  /* The working accent: the azure half of the wordmark, darkened to carry
+     body-sized text on --bg. */
+  --accent-ink: #0b6491;
+  --accent-ink-hover: #084c70;
+  --accent-dot: #0e86a8;
 
   /* Green is semantic only — "in production", "earned". Never decorative. */
   --ok-ink: #0b6b4f;
@@ -30,14 +39,20 @@
 
   /* Channel triplets, for borders and tints built with alpha. */
   --line-rgb: 16, 30, 46;
-  --accent-rgb: 20, 84, 143;
+  --accent-rgb: 11, 100, 145;
   --ok-rgb: 11, 107, 79;
   --plan-rgb: 74, 87, 101;
 
+  /* The wordmark gradient, for the one or two places brand is expressed as a
+     surface rather than as ink: the logo chip and the hero glow. */
+  --brand-from: #0c9ee8;
+  --brand-to: #2ac0a2;
+  --brand-gradient: linear-gradient(135deg, var(--brand-from), var(--brand-to));
+
   /* Call to action. */
-  --on-accent: #ffffff;
-  --cta-bg: #14548f;
-  --cta-hover: #0e4174;
+  --on-accent: #fff;
+  --cta-bg: #0b6491;
+  --cta-hover: #084c70;
 
   /* Dot halos, derived from the semantic channels. */
   --ok-glow: rgba(var(--ok-rgb), 0.24);
@@ -48,11 +63,20 @@
   --edge-bg: rgba(245, 248, 252, 0.94);
   --modal-scrim: rgba(3, 10, 20, 0.62);
 
+  /* The fixed header sits over live content, so it needs a backdrop that is
+     translucent but never lets text collide with text. */
+  --header-bg: rgba(232, 238, 246, 0.82);
+
   /* Borders. The project's single border recipe. */
   --line: 1px solid rgba(var(--line-rgb), 0.1);
   --line-soft: 1px solid rgba(var(--line-rgb), 0.08);
   --line-strong: 1px solid rgba(var(--line-rgb), 0.18);
   --line-accent: 1px solid rgba(var(--accent-rgb), 0.45);
+
+  /* Elevation. Three, and no more — restraint is the whole point. */
+  --shadow-sm: 0 1px 2px rgba(var(--line-rgb), 0.06);
+  --shadow-md: 0 6px 20px -8px rgba(var(--line-rgb), 0.18);
+  --shadow-lg: 0 24px 60px -24px rgba(var(--line-rgb), 0.3);
 
   /* Radii. 3-8px, never pill except sticky closes and status strips. */
   --radius-xs: 3px;
@@ -60,9 +84,10 @@
   --radius-md: 6px;
   --radius-lg: 8px;
   --radius-xl: 12px;
+  --radius-2xl: 18px;
   --radius-pill: 999px;
 
-  /* Spacing scale. */
+  /* Spacing scale. 4px base — a value not on this scale is a mistake. */
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
@@ -71,6 +96,12 @@
   --space-6: 30px;
   --space-7: 44px;
   --space-8: 60px;
+  --space-9: 88px;
+  --space-10: 120px;
+
+  /* The gap between one page section and the next, fluid so a phone does not
+     pay desktop whitespace to scroll past. */
+  --section-gap: clamp(72px, 11vw, 148px);
 
   /* Motion. Durations are referenced from CSS and mirrored in
      js/core/constants.js for the transitions JavaScript has to time. */
@@ -79,17 +110,15 @@
   --duration-fast: 160ms;
   --duration-base: 200ms;
   --duration-slow: 340ms;
-  --duration-chapter: 350ms;
   --duration-pulse: 2s;
+
   /* Mirrors DURATIONS.introExit minus its 120ms lead-in. */
   --duration-intro-split: 800ms;
 
   /* Layering. Every z-index in the project is one of these. */
   --z-stage: 1;
-  --z-chapter-active: 2;
   --z-sticky: 6;
   --z-tab-bar: 7;
-  --z-chapter-nav: 12;
   --z-menu: 15;
   --z-header: 20;
   --z-modal: 90;
@@ -109,14 +138,15 @@
   --bg: #0b1219;
   --surface: #131c26;
   --raised: #1c2734;
+  --sunken: #0e161e;
   --text: #f1f5f9;
   --muted: #b4c1cd;
   --dim: #98a6b3;
   --chip-text: #dbe3ea;
 
-  --accent-ink: #84c2f7;
-  --accent-ink-hover: #aedafc;
-  --accent-dot: #62a9e8;
+  --accent-ink: #7ed0f0;
+  --accent-ink-hover: #a9e1f7;
+  --accent-dot: #5cbfe6;
 
   --ok-ink: #5ad0a6;
   --ok-dot: #48c79a;
@@ -124,13 +154,13 @@
   --plan-ink: #8996a3;
 
   --line-rgb: 255, 255, 255;
-  --accent-rgb: 132, 194, 247;
+  --accent-rgb: 126, 208, 240;
   --ok-rgb: 90, 208, 166;
   --plan-rgb: 137, 150, 163;
 
-  --on-accent: #08111a;
-  --cta-bg: #84c2f7;
-  --cta-hover: #aedafc;
+  --on-accent: #06131c;
+  --cta-bg: #7ed0f0;
+  --cta-hover: #a9e1f7;
 
   /* Dark needs a stronger halo to read against the deep background. */
   --ok-glow: rgba(var(--ok-rgb), 0.45);
@@ -138,6 +168,13 @@
 
   --menu-overlay-bg: rgba(12, 18, 24, 0.98);
   --edge-bg: rgba(19, 27, 36, 0.92);
+  --header-bg: rgba(11, 18, 25, 0.82);
+
+  /* A shadow built from black disappears on a dark ground; these lean on
+     depth of tint instead of depth of black. */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 6px 20px -8px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 24px 60px -24px rgba(0, 0, 0, 0.75);
 
   color-scheme: dark;
 }

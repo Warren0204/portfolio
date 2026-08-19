@@ -1,0 +1,8 @@
+# Vendored third-party builds. Reformatting minified source would balloon the
+# files, break the byte-for-byte match with the published release, and make any
+# future upgrade an unreadable diff. See js/vendor/README.md.
+js/vendor/*.min.js
+
+# Generated.
+node_modules/
+package-lock.json

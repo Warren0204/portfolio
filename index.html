@@ -18,15 +18,22 @@
     <meta property="og:type" content="profile" />
     <meta property="og:url" content="https://portfolio-beta-coral-24.vercel.app/" />
     <meta property="og:site_name" content="Warren Villagonzalo Gallardo" />
-    <meta
-      property="og:title"
-      content="Warren Villagonzalo Gallardo — Power Platform Developer and Data Analyst"
-    />
+    <meta property="og:title" content="Warren Villagonzalo Gallardo — Power Platform Developer and Data Analyst" />
     <meta
       property="og:description"
       content="Power Platform developer and data analyst in Cebu City. Automation and reporting shipped into live operations, documented, and handed over."
     />
-    <meta name="twitter:card" content="summary" />
+    <!-- Regenerated from tools/og-card.html; see the comment at the top of that
+         file. Absolute because Facebook, LinkedIn, and Slack all resolve
+         og:image against nothing and will silently skip a relative path. -->
+    <meta property="og:image" content="https://portfolio-beta-coral-24.vercel.app/assets/img/og/og-cover.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Warren Villagonzalo Gallardo, Power Platform developer and data analyst, open to work in Cebu City."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -57,26 +64,29 @@
           "@type": "CollegeOrUniversity",
           "name": "University of Cebu, Banilad Campus"
         },
-        "sameAs": [
-          "https://github.com/Warren0204",
-          "https://www.linkedin.com/in/warren-gallardo/"
-        ]
+        "sameAs": ["https://github.com/Warren0204", "https://www.linkedin.com/in/warren-gallardo/"]
       }
     </script>
 
     <script>
-      // Runs before first paint so a dark-theme visitor never sees a light flash.
-      // Module scripts are deferred, so main.js is too late to set this.
-      // Mirrors STORAGE_KEYS.theme in js/core/constants.js.
+      // Runs before first paint so a dark-theme visitor never sees a light
+      // flash. Module scripts are deferred, so main.js is too late to set this.
+      // Mirrors readStoredTheme() in js/components/themeToggle.js and
+      // STORAGE_KEYS.theme in js/core/constants.js: an explicit choice wins,
+      // and until there is one the system preference decides.
       (function () {
+        var stored = null;
         try {
-          var stored = localStorage.getItem('nc-theme');
-          if (stored === 'dark' || stored === 'light') {
-            document.documentElement.dataset.theme = stored;
-          }
+          stored = localStorage.getItem('nc-theme');
         } catch (error) {
           // Private-mode storage denial is not worth failing the page over.
         }
+
+        if (stored !== 'dark' && stored !== 'light') {
+          stored = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+
+        document.documentElement.dataset.theme = stored;
       })();
 
       // The intro is markup now, so a returning visitor would see it flash
@@ -126,9 +136,42 @@
     <a class="skip-link" href="#stage">Skip to content</a>
     <header id="site-header" class="header"></header>
     <main id="stage" class="stage"></main>
+
+    <!-- GSAP, vendored in js/vendor/. Classic scripts, not modules: these are
+         UMD builds, and a UMD wrapper loaded as a module throws on its own
+         global-assignment fallback. js/vendor/README.md has the detail.
+         Deferred classic scripts and module scripts run in one queue in
+         document order, so these are ready before anything below imports them. -->
+    <script defer src="/js/vendor/gsap.min.js"></script>
+    <script defer src="/js/vendor/ScrollTrigger.min.js"></script>
+
     <!-- Loaded first and kept tiny, so the loading screen starts counting
          without waiting for the whole application graph. -->
     <script type="module" src="/js/intro.js"></script>
     <script type="module" src="/js/main.js"></script>
+
+    <!-- Vercel Web Analytics. Page views and visitors only: no cookies, no
+         cross-site identifier, and nothing that needs a consent banner.
+
+         Both the queue shim and the script are Vercel's own, verbatim from
+         their plain-HTML instructions. The queue exists so that a view fired
+         before the deferred script arrives is replayed rather than dropped.
+
+         The script is served from this origin under /_vercel/, which Vercel
+         injects at deploy time — it does not exist in this repository and it
+         404s on a local server. That is expected; tools/serve.ps1 answers it
+         with a clean 404 so local development does not log a parse error.
+
+         vercel.json must keep /_vercel/ out of its catch-all rewrite, or this
+         request is answered with index.html and analytics silently records
+         nothing. See DEPLOYMENT.md. -->
+    <script>
+      window.va =
+        window.va ||
+        function () {
+          (window.vaq = window.vaq || []).push(arguments);
+        };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
   </body>
 </html>

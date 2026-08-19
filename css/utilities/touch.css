@@ -7,8 +7,7 @@
 @media (hover: none) {
   .card--interactive:hover,
   .certificate__thumb:hover,
-  .chapter-nav:hover,
-  .sticky-close__button:hover {
+  .button--primary:hover {
     box-shadow: none;
     transform: none;
   }
@@ -26,7 +25,6 @@
     transform: translateY(-2px);
   }
 
-  .accordion__header:hover,
   .header__theme:hover {
     background: none;
   }
@@ -35,21 +33,22 @@
     background: none;
     color: var(--muted);
   }
+
+  .contact__link:hover {
+    color: var(--muted);
+  }
 }
 
 /* The press itself. Scale rather than colour, so it reads the same in both
    themes and never drops contrast on the label it is confirming. */
 .button:active,
 .card--interactive:active,
-.accordion__control:active,
 .tabs__tab:active,
 .certificate__thumb:active,
-.sticky-close__button:active,
 .modal__close:active {
   transform: scale(0.985);
 }
 
-.accordion__header:active,
 .card--interactive:active {
   background: var(--raised);
 }
@@ -65,10 +64,8 @@ button,
 @media (prefers-reduced-motion: reduce) {
   .button:active,
   .card--interactive:active,
-  .accordion__control:active,
   .tabs__tab:active,
   .certificate__thumb:active,
-  .sticky-close__button:active,
   .modal__close:active {
     transform: none;
   }

@@ -1,18 +1,13 @@
-/* Entry point. Creates the one store, mounts the shell and the five chapters,
-   and keeps the document in sync with it. */
+/* Entry point. Creates the one store, mounts the shell and the five sections
+   into one scrolling page, and keeps the document in sync with it. */
 
 import { createStore } from './core/store.js';
-import { qs } from './core/dom.js';
+import { el, qs } from './core/dom.js';
 import { createRouter } from './core/router.js';
-import { wireGlobalInput } from './core/input.js';
-import { DURATIONS } from './core/constants.js';
-import { prefersReducedMotion } from './core/motion.js';
+import { onSectionChange } from './core/animate.js';
 import { createHeader } from './components/header.js';
-import { createChapterStage } from './components/chapterStage.js';
-import { createChapterNav } from './components/chapterNav.js';
 import { createTabBar } from './components/tabBar.js';
-import { closeActiveModal } from './components/modal.js';
-import { applyTheme, readStoredTheme } from './components/themeToggle.js';
+import { applyTheme, onSystemThemeChange, readStoredTheme } from './components/themeToggle.js';
 import { introComplete } from './intro.js';
 import { chapters, indexForRoute } from './data/navigation.js';
 import { createHomeSection } from './sections/home.js';
@@ -34,81 +29,71 @@ function boot() {
     chapterIndex: indexForRoute(window.location.hash),
   });
 
-  // The inline bootstrap in index.html already set the attribute for the
-  // stored theme; this keeps it authoritative for every later change.
+  // The inline bootstrap in index.html already set the attribute before first
+  // paint; this keeps it authoritative for every later change.
   applyTheme(store.get().theme);
   store.subscribe((state, changedKeys) => {
     if (changedKeys.includes('theme')) applyTheme(state.theme);
   });
 
-  const router = createRouter({ store });
+  // Until the visitor makes a choice of their own, follow their system.
+  onSystemThemeChange((theme) => store.set({ theme }));
 
-  // Chapters are built once and kept, so their state survives navigation.
-  const sections = {
-    home: createHomeSection(),
-    projects: createProjectsSection(),
-    experience: createExperienceSection(),
-    credentials: createCredentialsSection(),
-    contact: createContactSection(),
+  const builders = {
+    home: createHomeSection,
+    projects: createProjectsSection,
+    experience: createExperienceSection,
+    credentials: createCredentialsSection,
+    contact: createContactSection,
   };
 
-  createHeader({ mount: headerMount, store });
+  /* Every section is in the document at once now, so each is a real <section>
+     landmark named by its own heading rather than a panel that has to be made
+     inert when it is not the current one. */
+  const sections = {};
+  const panels = chapters.map((chapter) => {
+    const built = builders[chapter.id]();
+    sections[chapter.id] = built;
+
+    return el(
+      'section',
+      {
+        class: 'page-section',
+        attrs: {
+          id: chapter.id,
+          'aria-labelledby': chapter.id === 'home' ? null : `${chapter.id}-heading`,
+          'aria-label': chapter.id === 'home' ? chapter.menuLabel : null,
+        },
+      },
+      built.element
+    );
+  });
+
+  stage.replaceChildren(...panels);
+
+  const elements = Object.fromEntries(
+    chapters.map((chapter, index) => [chapter.id, panels[index]])
+  );
+
+  const router = createRouter({ store, sections: elements });
+
+  createHeader({ mount: headerMount, store, onNavigate: router.navigate });
   // Phones navigate from the bottom bar; wider screens use the header nav.
-  createTabBar({ mount: document.body, store });
-  createChapterStage({
-    mount: stage,
-    store,
-    content: Object.fromEntries(
-      Object.entries(sections).map(([id, section]) => [id, section.element])
-    ),
+  createTabBar({ mount: document.body, store, onNavigate: router.navigate });
+
+  // The nav's active state follows the reader rather than the last thing they
+  // clicked, which on a scrolling page is the only honest source for it.
+  onSectionChange(panels, router.syncToScroll);
+
+  /* The intro is already running, started by js/intro.js. Everything visual is
+     armed for when it clears, so no entrance is spent behind the curtain and
+     no deep link scrolls the page while it is still covered. */
+  introComplete.then(() => {
+    router.restoreInitialPosition();
+    for (const section of Object.values(sections)) {
+      if (section.armReveal) section.armReveal();
+    }
   });
-  createChapterNav({ mount: stage, store, onNavigate: (index) => router.navigate(index) });
-
-  /** Collapse the open panels of the chapter at this index. */
-  function resetChapter(index) {
-    const chapter = chapters[index];
-    const section = chapter && sections[chapter.id];
-    if (section && section.reset) section.reset();
-  }
-
-  wireGlobalInput({ store, router, resetChapter });
-
-  // Leaving a chapter puts it back to its resting state: dialog dismissed and
-  // every panel collapsed. Returning to it should look the way it looked on
-  // arrival, not like wherever the visitor stopped reading.
-  //
-  // The collapse waits for the slide to finish. The outgoing chapter is still
-  // on screen for the length of the transition, and snapping its panels shut
-  // underneath the visitor as it leaves is exactly the flinch this avoids.
-  let pendingReset = 0;
-  let previousIndex = store.get().chapterIndex;
-  const chaptersToReset = new Set();
-
-  store.subscribe((state, changedKeys) => {
-    if (!changedKeys.includes('chapterIndex')) return;
-
-    chaptersToReset.add(previousIndex);
-    previousIndex = state.chapterIndex;
-
-    closeActiveModal();
-
-    // Collected in a set, not a single pending index: navigating three
-    // chapters in quick succession must still collapse all of them.
-    window.clearTimeout(pendingReset);
-    const delay = prefersReducedMotion() ? 0 : DURATIONS.chapter + 80;
-    pendingReset = window.setTimeout(() => {
-      for (const index of chaptersToReset) {
-        // Never reset the chapter the visitor ended up on — they may have
-        // opened something on it while the transition was still running.
-        if (index !== store.get().chapterIndex) resetChapter(index);
-      }
-      chaptersToReset.clear();
-    }, delay);
-  });
-
-  // The intro is already running, started by js/intro.js. Arm the reveal for
-  // when it clears, so it is not spent behind the loading screen.
-  introComplete.then(() => sections.home.armReveal());
 }
 
 boot();
