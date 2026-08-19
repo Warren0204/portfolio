@@ -7,7 +7,7 @@ export const education = Object.freeze({
   degree: 'Bachelor of Science in Information Technology',
   school: 'University of Cebu, Banilad Campus',
   logo: Object.freeze({
-    src: '/assets/img/logos/university-of-cebu.png',
+    src: '/assets/img/logos/university-of-cebu.webp',
     alt: 'University of Cebu',
     width: 112,
     height: 112,
@@ -33,7 +33,7 @@ export const certifications = Object.freeze([
     status: 'EARNED · AUG 2026',
     why: 'Eight courses covering AI for data analysis, research, writing, and app building, closing with a custom AI solution built end to end. It certifies the judgement part: prompting effectively, evaluating what comes back, and using these tools responsibly on real work. That sits under every track rather than inside one.',
     image: Object.freeze({
-      src: '/assets/img/credentials/google-ai-professional.jpg',
+      src: '/assets/img/credentials/google-ai-professional.webp',
       alt: 'Google AI Professional Certificate awarded to Warren Villagonzalo Gallardo, August 16 2026',
       aspectRatio: '1650 / 1275',
     }),

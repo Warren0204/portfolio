@@ -23,7 +23,7 @@ const LOGO_SLUG_BY_LABEL = Object.freeze({
 /** @returns {string|null} asset path for a tool label, or null when unknown. */
 export function logoPathFor(label) {
   const slug = LOGO_SLUG_BY_LABEL[label];
-  return slug ? `/assets/img/logos/${slug}.png` : null;
+  return slug ? `/assets/img/logos/${slug}.webp` : null;
 }
 
 /**
