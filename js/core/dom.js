@@ -42,15 +42,10 @@ export function el(tag, options = {}, children = []) {
   return node;
 }
 
-/** Build a document fragment from a list of nodes. */
-export function frag(children = []) {
-  const fragment = document.createDocumentFragment();
-  append(fragment, children);
-  return fragment;
-}
-
-/** Append children, flattening arrays and skipping empty slots. */
-export function append(parent, children) {
+/* Internal. Every caller outside this file goes through el() or
+   replaceChildren(), so exporting it would only invite a second way to do the
+   same thing. */
+function append(parent, children) {
   const list = Array.isArray(children) ? children : [children];
   for (const child of list) {
     if (child === null || child === undefined || child === false) continue;
@@ -76,24 +71,8 @@ export function on(target, type, handler, options) {
   return () => target.removeEventListener(type, handler, options);
 }
 
-/**
- * Listen on a container for events from descendants matching a selector.
- *
- * @returns {() => void}
- */
-export function delegate(container, type, selector, handler) {
-  return on(container, type, (event) => {
-    const match = event.target.closest(selector);
-    if (match && container.contains(match)) handler(event, match);
-  });
-}
-
 export function qs(selector, scope = document) {
   return scope.querySelector(selector);
-}
-
-export function qsa(selector, scope = document) {
-  return Array.from(scope.querySelectorAll(selector));
 }
 
 /** Replace an element's children in one pass. */

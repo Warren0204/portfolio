@@ -60,8 +60,15 @@ fact:
 Routes stay in the `#/projects` form rather than becoming bare `#projects`
 element ids. A bare id would let the browser jump natively, which sounds simpler
 but costs the smooth scroll and the header offset. Nothing relies on the hash
-matching an element id; sections clear the header via `scroll-margin-top` in
-`css/layout/page.css`.
+matching an element id; the header is cleared by a single `scroll-padding-top`
+on `html` in `css/layout/page.css`.
+
+That offset is stated **once**, on the scrollport, not per section. It was
+briefly declared twice — `scroll-padding-top` on `html` and `scroll-margin-top`
+on `.page-section` — and the two compounded, landing every section 172px down
+instead of 86px. Padding on the scrollport is the one to keep: it also covers
+the browser scrolling a focused element into view when someone tabs into a
+section, which a margin on the section would miss.
 
 The nav's active state follows the reader, not the last thing they clicked —
 `onSectionChange` in `js/core/animate.js` reports whichever section covers the

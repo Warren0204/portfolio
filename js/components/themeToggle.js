@@ -32,8 +32,9 @@ export function applyTheme(theme) {
   document.documentElement.dataset.theme = theme;
 }
 
-/** Remember an explicit choice, so it outranks the system from now on. */
-export function persistTheme(theme) {
+/* Internal. Called from exactly one place — the toggle click — because that
+   click is the only moment a preference has actually been expressed. */
+function persistTheme(theme) {
   local.write(STORAGE_KEYS.theme, theme);
 }
 

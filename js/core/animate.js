@@ -34,8 +34,9 @@ const NOOP_HANDLE = Object.freeze({ destroy() {} });
    arrives at an element mid-animation. */
 const ENTER_AT = 'top 85%';
 
-/** @returns {boolean} true when motion should actually run. */
-export function motionEnabled() {
+/* Internal. Every helper below already answers the preference, so a caller
+   that needed this would be re-implementing one of them. */
+function motionEnabled() {
   return !prefersReducedMotion();
 }
 

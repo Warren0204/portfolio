@@ -20,8 +20,10 @@ const LOGO_SLUG_BY_LABEL = Object.freeze({
   SQL: 'sql',
 });
 
-/** @returns {string|null} asset path for a tool label, or null when unknown. */
-export function logoPathFor(label) {
+/* Internal: createChip is the only thing that needs a mark, and a caller
+   building its own <img> would bypass the sizing rules in chip.css.
+   @returns {string|null} asset path for a tool label, or null when unknown. */
+function logoPathFor(label) {
   const slug = LOGO_SLUG_BY_LABEL[label];
   return slug ? `/assets/img/logos/${slug}.webp` : null;
 }

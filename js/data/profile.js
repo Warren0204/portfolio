@@ -81,7 +81,10 @@ export const profile = Object.freeze({
   ctas: Object.freeze({
     viewProjects: 'View projects',
     downloadCv: 'Download CV',
-    emailMe: 'Email me',
+    /* Deliberately not "Email me". This scrolls to the contact form; a label
+       promising a mail client and not opening one is a small lie, and on a
+       phone with no mail app configured a mailto is a dead end. */
+    getInTouch: 'Get in touch',
     github: 'GitHub',
     linkedin: 'LinkedIn',
   }),
@@ -139,7 +142,6 @@ export const profile = Object.freeze({
     successAgain: 'Send another message',
     errorTitle: 'That did not send',
     errorBody: 'Something went wrong on the way out. Try again, or email me directly at',
-    errorRetry: 'Try again',
     offlineBody:
       'You appear to be offline. Reconnect and try again — nothing you typed has been lost.',
     /* No "above" or "below": the summary sits under the button, the fields it
@@ -157,5 +159,4 @@ export const profile = Object.freeze({
   themeToggleLabel: 'Switch between dark and light mode',
   themeLabels: Object.freeze({ light: 'LIGHT', dark: 'DARK' }),
   homeLabel: 'Warren Gallardo, home',
-  skipToContent: 'Skip to content',
 });

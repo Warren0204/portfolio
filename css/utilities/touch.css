@@ -44,8 +44,7 @@
 .button:active,
 .card--interactive:active,
 .tabs__tab:active,
-.certificate__thumb:active,
-.modal__close:active {
+.certificate__thumb:active {
   transform: scale(0.985);
 }
 
@@ -65,8 +64,7 @@ button,
   .button:active,
   .card--interactive:active,
   .tabs__tab:active,
-  .certificate__thumb:active,
-  .modal__close:active {
+  .certificate__thumb:active {
     transform: none;
   }
 }

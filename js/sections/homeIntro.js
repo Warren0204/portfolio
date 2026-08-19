@@ -20,7 +20,7 @@ import { profile } from '../data/profile.js';
  * @param {string} className
  * @returns {Array<HTMLElement|string>}
  */
-export function splitWords(value, className) {
+function splitWords(value, className) {
   const words = value.trim().split(/\s+/);
   return words.flatMap((word, index) => {
     const span = el('span', { class: className, text: word });
@@ -56,8 +56,21 @@ export function createHeadline() {
 
 /**
  * One primary action, two secondary. "View projects" is the primary because it
- * is the thing this page exists to get someone to do; the CV and the mailto are
- * for people who have already decided.
+ * is the thing this page exists to get someone to do; the CV and the contact
+ * jump are for people who have already decided.
+ *
+ * The third action used to be a `mailto:`. It is now an in-page jump to the
+ * contact form, for three reasons: a mailto dead-ends on a phone with no mail
+ * client configured, it handed the visitor off the site at the exact moment
+ * they were interested, and it duplicated the contact section a scroll away.
+ * The label changed with it — a button promising to open mail that instead
+ * scrolls is a small lie, and small lies are what make an interface feel
+ * untrustworthy.
+ *
+ * All three are plain links. Changing the hash is enough: the router listens
+ * for `hashchange` and does the smooth scroll, so these need no click handler
+ * and keep every behaviour a link should have — middle-click, copy, open in a
+ * new tab.
  *
  * @returns {HTMLElement}
  */
@@ -75,8 +88,8 @@ export function createActions() {
     }),
     el('a', {
       class: 'button button--ghost',
-      text: profile.ctas.emailMe,
-      attrs: { href: `mailto:${profile.email}` },
+      text: profile.ctas.getInTouch,
+      attrs: { href: chapterById('contact').route },
     }),
   ]);
 }

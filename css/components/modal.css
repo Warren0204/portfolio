@@ -45,30 +45,6 @@
   padding: clamp(20px, 3vw, 30px);
 }
 
-.modal__close {
-  display: inline-flex;
-  gap: var(--space-2);
-  align-items: center;
-  min-height: 44px;
-  margin-left: auto;
-  padding: 0 var(--space-4);
-  border: 1px solid rgba(var(--line-rgb), 0.2);
-  border-radius: var(--radius-pill);
-  color: var(--muted);
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  letter-spacing: var(--tracking-mono);
-  transition:
-    background var(--duration-fast),
-    color var(--duration-fast);
-}
-
-.modal__close:hover,
-.modal__close:focus-visible {
-  background: var(--raised);
-  color: var(--text);
-}
-
 /* The zoom fills the screen against a near-black ground so the certificate
    itself is the only thing lit. */
 .modal--zoom {

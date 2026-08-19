@@ -8,10 +8,18 @@
    restoration understands. */
 
 html {
-  /* Native anchor jumps and Find-in-page both land under a fixed header
-     otherwise. The router asks for smooth scrolling explicitly per call, so
-     scroll-behavior is deliberately left alone here — declaring it globally
-     would also animate scroll restoration on reload, which should be instant. */
+  /* The single source of the header offset.
+
+     scroll-padding-top insets the whole scrollport, so it covers every
+     scroll-into-view in the document: the router's jumps, native anchor
+     jumps, Find-in-page, and the one that is easy to forget — the browser
+     scrolling a focused element into view when someone tabs into a section.
+     A scroll-margin-top on .page-section would only have covered the first
+     two, and declaring both made them add up.
+
+     scroll-behavior is deliberately not declared. The router asks for smooth
+     scrolling per call; setting it globally would also animate scroll
+     restoration on reload, which should be instant. */
   scroll-padding-top: calc(var(--header-height) + var(--space-5));
 }
 
@@ -38,12 +46,11 @@ body {
   pointer-events: none;
 }
 
+/* No scroll-margin-top here. The header offset is stated once, as
+   scroll-padding-top on html above — declaring both made them add up, and
+   sections landed 172px down instead of 86px. */
 .page-section {
   position: relative;
-
-  /* Clears the fixed header when the router scrolls a section into view, so no
-     caller has to know how tall the header is. */
-  scroll-margin-top: calc(var(--header-height) + var(--space-5));
   padding-block: var(--section-gap);
 }
 
@@ -94,12 +101,6 @@ body {
 @media (width < 920px) {
   html {
     scroll-padding-top: calc(
-      var(--header-height-phone) + env(safe-area-inset-top, 0) + var(--space-4)
-    );
-  }
-
-  .page-section {
-    scroll-margin-top: calc(
       var(--header-height-phone) + env(safe-area-inset-top, 0) + var(--space-4)
     );
   }

@@ -6,15 +6,6 @@
 import { el, on } from '../core/dom.js';
 import { trapFocus } from '../core/focusTrap.js';
 
-/* Only one dialog is ever open. Tracking it lets navigation dismiss whatever
-   is showing without every caller having to hold on to its handle. */
-let activeModal = null;
-
-/** Dismiss the open dialog, if there is one. */
-export function closeActiveModal() {
-  if (activeModal) activeModal.destroy();
-}
-
 /**
  * @param {object} props
  * @param {string} props.label Accessible name for the dialog.
@@ -82,17 +73,13 @@ export function createModal({
   const trap = trapFocus(dialog);
   document.body.classList.add('is-modal-open');
 
-  const api = {
+  return {
     element: backdrop,
     destroy() {
-      if (activeModal === api) activeModal = null;
       stopKeydown();
       trap.release();
       document.body.classList.remove('is-modal-open');
       backdrop.remove();
     },
   };
-
-  activeModal = api;
-  return api;
 }
