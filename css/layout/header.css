@@ -173,18 +173,63 @@
   left: 18px;
 }
 
+/* Availability chip. The compact twin of the contact section's card, reading
+   from the same data. A pill is one of the two shapes allowed to be one: a
+   status strip. */
+.header__availability {
+  display: inline-flex;
+  flex: none;
+  gap: 8px;
+  align-items: center;
+  padding: 6px 12px;
+  border: 1px solid rgba(var(--ok-rgb), 0.35);
+  border-radius: var(--radius-pill);
+  background: rgba(var(--ok-rgb), 0.08);
+  transition:
+    border-color var(--duration-base),
+    background var(--duration-base);
+}
+
+.header__availability:hover,
+.header__availability:focus-visible {
+  border-color: rgba(var(--ok-rgb), 0.55);
+  background: rgba(var(--ok-rgb), 0.14);
+}
+
+.header__availability-label {
+  color: var(--ok-ink);
+  font-family: var(--font-mono);
+  font-size: var(--text-eyebrow);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
 .header__name--short {
   display: none;
 }
 
-/* Below 1080px the five mono labels and the full name cannot share the bar. */
-@media (width < 1080px) {
+/* The wordmark drops to the short name from 1280px rather than 1080px.
+
+   That is what pays for the availability chip. The bar had 71px of slack at
+   1080px and the chip needs about 130px; switching to the short name there
+   frees 108px, which covers it with room to spare. The trade is deliberate —
+   "Warren Gallardo" instead of the full name on mid-size screens, in exchange
+   for the one piece of information a recruiter is actually scanning for. */
+@media (width < 1280px) {
   .header__name--full {
     display: none;
   }
 
   .header__name--short {
     display: inline;
+  }
+}
+
+/* Below this the nav is still present but the bar has no room to spare. */
+@media (width < 1080px) {
+  .header__availability {
+    display: none;
   }
 }
 

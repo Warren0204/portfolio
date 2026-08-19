@@ -27,6 +27,17 @@ export const profile = Object.freeze({
     status: 'OPEN TO WORK',
     response: 'Replies within a day',
     window: 'GMT+8',
+
+    /* The header's compact form of the same fact. Sentence case rather than a
+       lowercased copy of `status`: the contact chip's caps are a deliberate
+       mono-label treatment, and the header chip sits beside sentence-case nav
+       furniture. One string per rendering, not one string reused in two cases.
+
+       `shortAria` names the destination, which the visible text alone does
+       not. It contains the visible text verbatim, so it satisfies WCAG 2.5.3
+       Label in Name — a speech-input user saying "open to work" still hits it. */
+    short: 'Open to work',
+    shortAria: 'Open to work, go to contact',
   }),
 
   /* Typewriter line above the headline. */
