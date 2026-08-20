@@ -130,6 +130,11 @@ Read newest first. Use these as the pattern for anything new.
 
 | Message                                     | What it covered                                                                                                                                 |
 | ------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Drop SQL chip`                             | Hero tech stack down to seven; SQL is still claimed in the Credentials data group, where it reads alongside PostgreSQL and DAX                  |
+| `Center frame caption`                      | A caption narrower than its own text centres both lines instead of ragging left inside a centred block                                          |
+| `Stack hero actions`                        | One action per row below 560px, so the hierarchy is carried by weight rather than by width                                                      |
+| `Rebalance hero grid`                       | A third hero arrangement from 440px: portrait beside the headline, body across both columns. Fixes the orphaned portrait and the clipped chips  |
+| `Reserve tab bar`                           | `--tab-bar-space`, reserved once on `.stage`, replacing the bar-aware padding that only Contact had                                             |
 | `Consolidate colour tokens`                 | 27 ad-hoc colours retired into tokens; 4 text levels folded to 2; 10 dead tokens removed                                                        |
 | `Rebalance contact layout`                  | One grid for the whole section, routes card raised level with the heading                                                                       |
 | `Add header chip`                           | Availability chip in the header from 1080px, reading the contact section's data                                                                 |
