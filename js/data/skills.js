@@ -121,12 +121,16 @@ export const stack = Object.freeze([
   }),
 ]);
 
-/* The logo chips on Home, in display order. */
+/* The logo chips on Home, in display order.
+
+   Seven, not eight. SQL is still claimed in the data group above, where it is
+   read alongside PostgreSQL, Firestore, and DAX and means something specific;
+   in the hero it was one more chip competing with the calls to action for the
+   first screen. The hero is a summary, not an inventory. */
 export const heroTools = Object.freeze([
   'JavaScript',
   'React',
   'Firebase',
-  'SQL',
   'Power Automate',
   'Power Apps',
   'Power BI',
