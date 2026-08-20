@@ -112,18 +112,22 @@
   margin-top: var(--space-6);
 }
 
-/* On a phone the primary action takes the full width and the two secondaries
-   share the row beneath it. Left to wrap on its own, the three buttons broke
-   two-then-one, which left the least important action alone on its own line
-   looking like the most important one. */
+/* One action per row until all three fit on one.
+
+   Every row is the same width, so the hierarchy is carried by weight alone —
+   filled, then outlined, then nothing — instead of by size. The two-up
+   arrangement this replaces gave the primary twice the width of either
+   secondary and left the borderless third action centred in a half-empty
+   cell, which read as an unfinished row rather than as a third tier.
+
+   Left to wrap on its own the three buttons broke two-then-one, which put the
+   least important action alone on a line looking like the most important one,
+   so this stays declared rather than emergent. The three and their gaps
+   measure 457px, so 560 is the first width with room to spare. */
 @media (width < 560px) {
   .home__actions {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .home__actions .button--primary {
-    grid-column: 1 / -1;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
