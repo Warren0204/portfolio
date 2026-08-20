@@ -1,28 +1,43 @@
 /* Home.
 
-   One column on a phone, two from 900px. The DOM order is the phone's reading
-   order — name and role, then proof, then what to do — and the wide layout
-   moves the portrait into its own column rather than reordering anything, so
-   neither arrangement is the accidental by-product of the other.
+   Three arrangements, not two, and the middle one is load-bearing.
+
+   Phone: one column, in DOM order — name and role, then the face, then what
+   he does and what to do about it.
+
+   From 440px: the portrait moves up beside the headline and the body runs the
+   full width underneath. Stacked, the portrait was a block a third of the
+   column wide with nothing next to it, which was both an empty gutter and
+   270-440px of height spent on very little. Beside the headline it fills that
+   gutter with the one element large enough to hold it, and the hero loses
+   enough height that its last row of chips clears the bottom tab bar instead
+   of meeting it.
+
+   From 900px: the portrait takes its own full-height column on the right and
+   intro and body stack on the left — the composition this page was designed
+   around, unchanged.
+
+   None of the three is the accidental by-product of another: each is declared,
+   and the DOM order is the phone's reading order that the other two re-place.
 
    Portrait size is bounded by the source. portrait.webp is 400x400; filling a
    4:5 frame keeps 320x400 of real pixels, so the sharpest CSS width is 320px
    at 1x and 160px at 2x. */
-
-/* Phone: one column, in DOM order — intro, portrait, body.
-   Desktop: intro over body on the left, portrait spanning the right. */
 .home__hero {
   display: grid;
   gap: clamp(24px, 3.5vw, 40px);
 }
 
-@media (width >= 900px) {
+/* 440 rather than a rounder number: 430px is the widest mainstream phone, so
+   every real phone keeps the single-column reading order and this band starts
+   where a viewport is a narrow window or a foldable instead. */
+@media (width >= 440px) {
   .home__hero {
     grid-template:
       'intro portrait' auto
-      'body  portrait' 1fr
-      / minmax(0, 1.45fr) minmax(260px, 0.8fr);
-    column-gap: clamp(32px, 5vw, 72px);
+      'body  body' auto
+      / minmax(0, 1.35fr) minmax(0, 1fr);
+    column-gap: clamp(24px, 4vw, 72px);
     align-items: start;
   }
 
@@ -36,6 +51,26 @@
 
   .home__portrait {
     grid-area: portrait;
+  }
+}
+
+/* 900, deliberately not the shell's 920.
+
+   The two numbers answer different questions — 920 is where five mono nav
+   labels stop fitting beside the wordmark, 900 is where the hero has room for
+   two full-height columns — and making them agree costs 900-919px a worse
+   composition for no gain. What does have to agree is the tab bar and the
+   space reserved for it, and both are keyed to 920 in layout/page.css. */
+@media (width >= 900px) {
+  .home__hero {
+    grid-template:
+      'intro portrait' auto
+      'body  portrait' 1fr
+      / minmax(0, 1.45fr) minmax(260px, 0.8fr);
+    column-gap: clamp(32px, 5vw, 72px);
+  }
+
+  .home__portrait {
     align-self: center;
   }
 }
@@ -102,18 +137,27 @@
 /* The portrait, lit from behind with the brand gradient so it sits in the page
    rather than on it. */
 
-/* 320px is the sharpest this source supports: portrait.webp is 400x400, and a
-   4:5 frame keeps 320x400 of real pixels. On a phone it is deliberately much
-   smaller — at full width the face ate the whole first screen and pushed the
-   summary and the calls to action below the fold, which is the opposite of
-   what a hero is for. Small and left-aligned, it reads as a byline photo. */
+/* Stacked, the portrait is a share of the column rather than a fixed width.
+
+   At full width the face ate the whole first screen and pushed the summary and
+   the calls to action below the fold, which is the opposite of what a hero is
+   for — so it stays small and left-aligned, on the same edge as everything
+   else, and reads as a byline photo. But a fixed 184px stayed 52% of a 320px
+   phone and became 34% of a 600px window, which is exactly when it stopped
+   reading as a byline photo and started reading as an image someone forgot to
+   size. A percentage is the same intent at every width.
+
+   Above 440px it is not stacked any more: it has its own grid track, fills it,
+   and stops at the 320px the source can actually supply. Sizing sits here
+   rather than in the placement block above so it lands after the base rule and
+   wins, the way the 640px rule it replaces did. */
 .home__portrait {
   position: relative;
   justify-self: start;
-  width: min(184px, 52%);
+  width: min(320px, 52%);
 }
 
-@media (width >= 640px) {
+@media (width >= 440px) {
   .home__portrait {
     justify-self: center;
     width: min(320px, 100%);
