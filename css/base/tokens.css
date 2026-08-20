@@ -167,6 +167,15 @@
   --header-height: 64px;
   --header-height-phone: 56px;
   --tab-bar-height: 58px;
+
+  /* How much of the bottom of the screen the tab bar occupies, or 0 where it
+     is not rendered at all. The bar is fixed, so it overlays the scrolling
+     content rather than displacing it, and everything that scrolls has to
+     reserve this. Stated as a token so the reserve is one number rather than
+     a calc repeated per section; layout/page.css gives it its phone value
+     under the same 920 that shows the bar. */
+  --tab-bar-space: 0px;
+
   --content-max: 1140px;
 
   color-scheme: light;

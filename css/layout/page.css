@@ -47,6 +47,17 @@ body {
 .stage {
   position: relative;
   z-index: var(--z-stage);
+
+  /* The one place the bottom tab bar is reserved for.
+
+     The bar is fixed, so it paints over whatever the document has scrolled
+     under it. Before this, the reserve was a padding on #contact alone —
+     which kept the footer clear and left every other section to discover the
+     problem for itself. Home did: it is the one section that also has a
+     viewport-height floor, and its last row of chips sat under the bar on the
+     first screen. Stated here, no section can hit it again, and none of them
+     has to know the bar exists. */
+  padding-bottom: var(--tab-bar-space);
 }
 
 /* One ambient wash for the whole page, fixed so it stays put while the content
@@ -96,26 +107,41 @@ body {
    scroll to see the headline. svh rather than vh so a phone's collapsing
    address bar does not leave a gap at the bottom, and the header's own height
    is subtracted because the sticky header sits above this in normal flow
-   rather than floating over it. */
+   rather than floating over it.
+
+   The tab bar comes out of the padding, not out of the min-height. Both put
+   the content in the same place — box-sizing is border-box, so padding is
+   inside the floor either way — but only one of them says what is true:
+   min-height is how tall the panel is, padding is what is reserved inside it.
+   Subtracting the bar from the height instead made the panel stop short of the
+   bottom of the screen and still let content run underneath the bar. */
 #home {
   display: flex;
   align-items: center;
   min-height: calc(100svh - var(--header-height));
   padding-top: var(--space-7);
-  padding-bottom: var(--space-8);
+  padding-bottom: calc(var(--space-8) + var(--tab-bar-space));
 }
 
 #home > .well {
   width: 100%;
 }
 
-/* The last section needs room under it so the bottom tab bar never covers the
-   final line of the footer. */
+/* The page's closing rhythm. The tab bar is not this section's problem any
+   more — .stage reserves it for everything that scrolls. */
 #contact {
   padding-bottom: var(--space-9);
 }
 
 @media (width < 920px) {
+  /* The bar's footprint is live exactly where the bar is. 920 is stated in
+     components/tab-bar.css too, because that is where the bar decides to show
+     itself; this is the same number answering the same question, and the two
+     must not drift apart. */
+  :root {
+    --tab-bar-space: calc(var(--tab-bar-height) + env(safe-area-inset-bottom, 0));
+  }
+
   html {
     scroll-padding-top: calc(
       var(--header-height-phone) + env(safe-area-inset-top, 0) + var(--space-4)
@@ -123,14 +149,8 @@ body {
   }
 
   #home {
-    min-height: calc(
-      100svh - var(--header-height-phone) - env(safe-area-inset-top, 0) - var(--tab-bar-height)
-    );
+    min-height: calc(100svh - var(--header-height-phone) - env(safe-area-inset-top, 0));
     padding-top: var(--space-6);
-  }
-
-  #contact {
-    padding-bottom: calc(var(--tab-bar-height) + env(safe-area-inset-bottom, 0) + var(--space-7));
   }
 }
 
