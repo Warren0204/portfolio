@@ -32,8 +32,24 @@ export const certifications = Object.freeze([
     issuer: 'Google · Coursera · 8 courses',
     status: 'EARNED · AUG 2026',
     why: 'Eight courses covering AI for data analysis, research, writing, and app building, closing with a custom AI solution built end to end. It certifies the judgement part: prompting effectively, evaluating what comes back, and using these tools responsibly on real work. That sits under every track rather than inside one.',
+    /* `src` is the full 1650px scan and stays the lightbox's source. The
+       thumbnail candidates let a browser take the 800px one where that is
+       genuinely enough — a 300px box at 1x or 2x, which is most desktop
+       visitors — instead of every one of them pulling 188KB for a thumbnail.
+       A phone at DPR 3 needs about 940 device pixels and correctly keeps
+       taking the full file.
+
+       The sizes hint follows the card: two columns capped at 300px from
+       800px up, one full-width column below it, where the thumb is the
+       viewport less the well's gutter, the card's padding, and its border.
+       80px slightly under-states that, which is the safe direction — it
+       over-states the width needed and so errs toward the sharper file. */
     image: Object.freeze({
       src: '/assets/img/credentials/google-ai-professional.webp',
+      thumbSrcset:
+        '/assets/img/credentials/google-ai-professional-800.webp 800w, ' +
+        '/assets/img/credentials/google-ai-professional.webp 1650w',
+      thumbSizes: '(width >= 800px) 300px, calc(100vw - 80px)',
       alt: 'Google AI Professional Certificate awarded to Warren Villagonzalo Gallardo, August 16 2026',
       aspectRatio: '1650 / 1275',
     }),
