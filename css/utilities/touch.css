@@ -33,6 +33,29 @@
     background: none;
     color: var(--muted);
   }
+
+  /* A 44px target without a 44px box.
+
+     The nav labels measure 58-118px wide but only 34px tall, so on a touch
+     tablet — the one place this nav is both rendered and finger-operated —
+     they miss the floor on one axis. Growing the box with min-height would
+     also move .header__link--current::after, which is pinned to the bottom
+     edge rather than to the text: the underline's gap from its label goes
+     from 4px to 9px, and that 2px rule was chosen over a filled pill
+     precisely because it reads at a glance.
+
+     So the hit area grows and the box does not. The link is already
+     position: relative. The focus ring still wraps the label rather than a
+     44px slab, and nothing moves by a pixel. */
+  .header__link::before {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    left: 0;
+    height: 44px;
+    content: '';
+    transform: translateY(-50%);
+  }
 }
 
 /* The press itself. Scale rather than colour, so it reads the same in both
