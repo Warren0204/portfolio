@@ -1,7 +1,8 @@
 /* The section bar: wordmark, section nav, theme switch, and a scroll progress
    hairline. Below 920px the nav moves to the bottom tab bar and this becomes a
    slim title bar — 920 is where the five mono labels stop fitting beside the
-   wordmark and the switch, measured rather than guessed.
+   wordmark and the switch, measured rather than guessed. A short touch screen
+   takes the same slim bar whatever its width; see layout/page.css.
 
    The bar is translucent now that live content scrolls beneath it rather than
    being clipped by a fixed stage. The blur is an enhancement: the background
@@ -234,8 +235,12 @@
 }
 
 /* On phones the section nav lives in the bottom tab bar, so the header slims
-   to a title bar: short wordmark, theme switch, and the status-bar inset. */
-@media (width < 920px) {
+   to a title bar: short wordmark, theme switch, and the status-bar inset.
+
+   The condition is the phone shell's, stated once in layout/page.css. A phone
+   held sideways is wider than 920 and still a phone, and it is the case that
+   most needs this bar rather than the desktop one. */
+@media (width < 920px), ((height < 470px) and (pointer: coarse)) {
   .header__nav {
     display: none;
   }

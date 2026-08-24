@@ -133,11 +133,35 @@ body {
   padding-bottom: var(--space-9);
 }
 
-@media (width < 920px) {
-  /* The bar's footprint is live exactly where the bar is. 920 is stated in
-     components/tab-bar.css too, because that is where the bar decides to show
-     itself; this is the same number answering the same question, and the two
-     must not drift apart. */
+/* The phone shell: narrow, or short-and-touch.
+
+   Width alone was wrong, and one device proved it. An iPhone 15 Pro Max in
+   landscape is 932 CSS px wide — above 920 — so it took the desktop bar: the
+   bottom tab bar vanished, --tab-bar-space went to 0, and the only navigation
+   left was five 34px-tall nav links on a 430px-tall touch screen, sitting
+   under the display cutout. The second branch catches it by asking what the
+   device is rather than how wide its window happens to be.
+
+   470, and the unit is the whole reason it is not a rounder number: the
+   `height` media feature reports the initial containing block — the screen
+   MINUS the browser's own chrome — not the screen. Measured that way,
+   landscape phones top out around 392 (a Pixel 9 Pro XL's 448 less a 56px
+   toolbar) and the shortest tablet is the Android 7-inch class at roughly 504
+   (a 600px panel less a tablet tab strip). 470 sits in that gap with about
+   70px either side. Taking the number from screen heights instead would have
+   landed near 560, which fires permanently on a 1024x600 tablet and pins a
+   five-tab phone bar across it.
+
+   `pointer: coarse` reports the primary input, so a laptop with a touchscreen
+   and a trackpad stays `fine` and keeps the desktop shell however short its
+   window is dragged. A short desktop window is a short desktop window.
+
+   The query is stated three times — here, components/tab-bar.css, and
+   layout/header.css — because three separate things answer to it: the space
+   reserved for the bar, the bar showing itself, and the header slimming down.
+   It is one question with one answer, and the three must not drift apart. */
+@media (width < 920px), ((height < 470px) and (pointer: coarse)) {
+  /* The bar's footprint is live exactly where the bar is. */
   :root {
     --tab-bar-space: calc(var(--tab-bar-height) + env(safe-area-inset-bottom, 0));
   }

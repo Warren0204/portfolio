@@ -60,7 +60,8 @@
    labels stop fitting beside the wordmark, 900 is where the hero has room for
    two full-height columns — and making them agree costs 900-919px a worse
    composition for no gain. What does have to agree is the tab bar and the
-   space reserved for it, and both are keyed to 920 in layout/page.css. */
+   space reserved for it, and both are keyed to the phone shell's condition in
+   layout/page.css — which is no longer 920 alone. */
 @media (width >= 900px) {
   .home__hero {
     grid-template:

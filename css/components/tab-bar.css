@@ -84,7 +84,9 @@
   background: var(--raised);
 }
 
-@media (width < 920px) {
+/* The phone shell's condition, stated once in layout/page.css: narrow, or
+   short enough and touch-driven to be a phone held sideways. */
+@media (width < 920px), ((height < 470px) and (pointer: coarse)) {
   .tab-bar {
     display: flex;
   }
