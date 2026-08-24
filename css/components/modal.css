@@ -94,9 +94,18 @@
   background: transparent;
 }
 
-/* The ground around the certificate dismisses on click, so it says so. */
+/* The ground around the certificate dismisses on click, so it says so.
+
+   flex: 1 is what makes the centring mean anything. As a column flex item the
+   body computed to `flex: 0 1 auto`, so whenever the certificate was smaller
+   than the space available the body was only as tall as the image and had
+   nothing to centre it in: at 393x852 the certificate sat jammed under the
+   header with 444px of empty ground beneath it. It looked right on a wide
+   screen purely by accident, because there the image overflows and shrinking
+   pulls the body back down to the free height. */
 .modal__dialog--zoom .modal__body {
   display: flex;
+  flex: 1;
   align-items: center;
   justify-content: center;
   min-height: 0;
@@ -109,10 +118,8 @@
   cursor: default;
 }
 
-/* Scroll is locked behind an open dialog. */
-.is-modal-open {
-  overflow: hidden;
-}
+/* Scroll is locked behind an open dialog by layout/page.css, which owns the
+   scroller. It was stated here as well, and both copies were inert. */
 
 /* On phones the detail dialog becomes a bottom sheet: it rises from the edge
    the thumb is already near, keeps a strip of the page visible above it so the

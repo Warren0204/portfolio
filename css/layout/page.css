@@ -179,8 +179,23 @@ body {
 }
 
 /* A dialog owns the screen while it is open, and the page behind it must not
-   scroll underneath. The lock lives on the body now that the body is the
-   scroller. */
-body.is-modal-open {
-  overflow: hidden;
+   scroll underneath.
+
+   The lock has to name html, not body, and the reason is four rules up this
+   file: overflow on body only reaches the viewport when the ROOT element's
+   own overflow is visible, and `overflow-x: clip` above means it is not. The
+   old `body.is-modal-open { overflow: hidden }` therefore did nothing at all
+   — measured, 1200px of wheel with the certificate lightbox open scrolled the
+   page 1200px, on every viewport. Worst on touch, where the lightbox covers
+   the whole screen and the page slides invisibly under the finger.
+
+   :has() rather than moving the class to documentElement, so the component
+   keeps putting its one class in one place and the scroller's business stays
+   in the file that owns the scroller.
+
+   clip rather than hidden: hidden would make the viewport a scroll container
+   again, which is exactly what the note on overflow-x above says breaks the
+   sticky header. */
+html:has(> body.is-modal-open) {
+  overflow-y: clip;
 }
