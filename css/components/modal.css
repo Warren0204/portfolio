@@ -23,7 +23,19 @@
   display: flex;
   flex-direction: column;
   width: min(1000px, 100%);
+
+  /* Two terms, because 88% of the screen is not the only ceiling. svh rather
+     than vh: on iOS vh is the chrome-collapsed viewport, so 88vh on a 430px
+     landscape screen asks for more height than is actually on show. The 100%
+     resolves against .modal's content box, which already has the backdrop's
+     own padding taken out of it — without it, 88vh plus 2x28px of ground
+     overflows a short landscape screen by the difference.
+
+     The vh line above it is the fallback for an engine without svh, where the
+     whole min() would otherwise be invalid and leave no ceiling at all. Same
+     pattern as the sheet below. */
   max-height: 88vh;
+  max-height: min(88svh, 100%);
   overflow: hidden;
   border: 1px solid rgba(var(--line-rgb), 0.16);
   border-radius: var(--radius-xl);
