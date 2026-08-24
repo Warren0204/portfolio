@@ -17,6 +17,10 @@
    occupies its own space at the top of the page instead of the first section
    having to reserve room for it. */
 .header {
+  /* The bar's own gutter. utilities/safe-area.css turns it into the inline
+     padding, taking whichever is larger of this and a display cutout. */
+  --edge-pad: clamp(20px, 4vw, 40px);
+
   position: sticky;
   top: 0;
   z-index: var(--z-header);
@@ -25,7 +29,7 @@
   justify-content: space-between;
   gap: var(--space-4);
   height: var(--header-height);
-  padding: 0 clamp(20px, 4vw, 40px);
+  padding-block: 0;
   border-bottom: var(--line-soft);
   background: var(--header-bg);
   backdrop-filter: blur(14px) saturate(140%);
@@ -250,9 +254,11 @@
   }
 
   .header {
+    --edge-pad: var(--space-4);
+
     gap: var(--space-2);
     height: calc(var(--header-height-phone) + env(safe-area-inset-top, 0));
-    padding: env(safe-area-inset-top, 0) var(--space-4) 0;
+    padding-block: env(safe-area-inset-top, 0) 0;
   }
 
   .header__controls {

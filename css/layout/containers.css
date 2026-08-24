@@ -6,7 +6,10 @@
    next one's top. */
 
 .well {
+  /* The reading gutter. Stated here, applied by utilities/safe-area.css so a
+     landscape display cutout can raise it without this file knowing. */
+  --edge-pad: clamp(20px, 5vw, 48px);
+
   max-width: var(--content-max);
   margin: 0 auto;
-  padding-inline: clamp(20px, 5vw, 48px);
 }

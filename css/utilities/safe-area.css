@@ -1,0 +1,39 @@
+/* The display cutout.
+
+   index.html sets viewport-fit=cover, so the page paints edge to edge and the
+   physical inset becomes ours to answer. In portrait that inset is at the top
+   and the bottom, and the header, the tab bar, and the bottom sheet each
+   already carry it. Turn the phone sideways and it moves to the sides — 47 to
+   59px on a notched iPhone — and nothing in this project answered that at
+   all: the wordmark, the first and last tab, the reading column, and the
+   certificate lightbox all painted underneath the cutout.
+
+   One rule, because it is one question. Every element that spans the full
+   width of the viewport states the gutter it wants as --edge-pad, in its own
+   file next to the rest of its layout, and this takes the larger of that and
+   the physical inset. Where there is no cutout every max() resolves to the
+   gutter itself and nothing moves, which is why this needs no media query and
+   no feature test.
+
+   THE INVARIANT, and it is load-bearing: this file is imported last, so these
+   longhands beat the padding shorthand of every rule below at equal
+   specificity — including rules inside media queries, which contribute no
+   specificity of their own. Any rule anywhere that sets inline padding on one
+   of these four selectors must therefore declare its own --edge-pad, or it
+   will silently lose to this one. .modal--panel is the case that proves it:
+   it zeroes its padding so the sheet sits flush against the screen edges, and
+   without an --edge-pad of its own it took the centred dialog's gutter and
+   stopped being a bottom sheet at all. */
+
+:root {
+  --safe-l: env(safe-area-inset-left, 0px);
+  --safe-r: env(safe-area-inset-right, 0px);
+}
+
+.header,
+.tab-bar,
+.well,
+.modal {
+  padding-right: max(var(--edge-pad, 0px), var(--safe-r));
+  padding-left: max(var(--edge-pad, 0px), var(--safe-l));
+}

@@ -2,6 +2,10 @@
    carries the home-indicator inset so it never sits under the system bar. */
 
 .tab-bar {
+  /* Edge to edge by default; utilities/safe-area.css raises it where a
+     landscape cutout would otherwise eat the first and last tab. */
+  --edge-pad: 0px;
+
   position: fixed;
   right: 0;
   bottom: 0;
