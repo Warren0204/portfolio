@@ -78,7 +78,11 @@ function createFeaturedCertification(certification) {
       el('img', {
         class: 'certificate__image',
         attrs: {
+          // src stays the full scan, so a browser without srcset support
+          // still gets a correct image rather than none.
           src: certification.image.src,
+          srcset: certification.image.thumbSrcset,
+          sizes: certification.image.thumbSizes,
           alt: certification.image.alt,
           loading: 'lazy',
           decoding: 'async',

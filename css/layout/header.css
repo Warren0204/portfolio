@@ -1,7 +1,8 @@
 /* The section bar: wordmark, section nav, theme switch, and a scroll progress
    hairline. Below 920px the nav moves to the bottom tab bar and this becomes a
    slim title bar — 920 is where the five mono labels stop fitting beside the
-   wordmark and the switch, measured rather than guessed.
+   wordmark and the switch, measured rather than guessed. A short touch screen
+   takes the same slim bar whatever its width; see layout/page.css.
 
    The bar is translucent now that live content scrolls beneath it rather than
    being clipped by a fixed stage. The blur is an enhancement: the background
@@ -16,6 +17,10 @@
    occupies its own space at the top of the page instead of the first section
    having to reserve room for it. */
 .header {
+  /* The bar's own gutter. utilities/safe-area.css turns it into the inline
+     padding, taking whichever is larger of this and a display cutout. */
+  --edge-pad: clamp(20px, 4vw, 40px);
+
   position: sticky;
   top: 0;
   z-index: var(--z-header);
@@ -24,7 +29,7 @@
   justify-content: space-between;
   gap: var(--space-4);
   height: var(--header-height);
-  padding: 0 clamp(20px, 4vw, 40px);
+  padding-block: 0;
   border-bottom: var(--line-soft);
   background: var(--header-bg);
   backdrop-filter: blur(14px) saturate(140%);
@@ -234,8 +239,12 @@
 }
 
 /* On phones the section nav lives in the bottom tab bar, so the header slims
-   to a title bar: short wordmark, theme switch, and the status-bar inset. */
-@media (width < 920px) {
+   to a title bar: short wordmark, theme switch, and the status-bar inset.
+
+   The condition is the phone shell's, stated once in layout/page.css. A phone
+   held sideways is wider than 920 and still a phone, and it is the case that
+   most needs this bar rather than the desktop one. */
+@media (width < 920px), ((height < 470px) and (pointer: coarse)) {
   .header__nav {
     display: none;
   }
@@ -245,9 +254,11 @@
   }
 
   .header {
+    --edge-pad: var(--space-4);
+
     gap: var(--space-2);
     height: calc(var(--header-height-phone) + env(safe-area-inset-top, 0));
-    padding: env(safe-area-inset-top, 0) var(--space-4) 0;
+    padding-block: env(safe-area-inset-top, 0) 0;
   }
 
   .header__controls {

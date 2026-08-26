@@ -60,7 +60,8 @@
    labels stop fitting beside the wordmark, 900 is where the hero has room for
    two full-height columns — and making them agree costs 900-919px a worse
    composition for no gain. What does have to agree is the tab bar and the
-   space reserved for it, and both are keyed to 920 in layout/page.css. */
+   space reserved for it, and both are keyed to the phone shell's condition in
+   layout/page.css — which is no longer 920 alone. */
 @media (width >= 900px) {
   .home__hero {
     grid-template:
@@ -263,5 +264,49 @@
 @media (height < 720px) {
   .home__cue {
     display: none;
+  }
+}
+
+/* The portrait on a phone held sideways.
+
+   Left alone, the 4:5 frame is sized by its grid track and the track is sized
+   by the column: at 852x393 that made the figure 312x428 — the face alone
+   taller than the whole screen, with the headline above it and the summary
+   below both off-view. The frame has to be sized by the axis that is actually
+   scarce, which in landscape is height.
+
+   One number, two consumers. --portrait-w is the width that makes the whole
+   figure — 1px border, 4:5 media, caption, 1px border — come to 55% of the
+   screen, and both the element and the track it sits in are cut from it, so
+   the portrait fills its column instead of floating centred in one nearly
+   twice its width.
+
+   58px is the caption plus the two borders, and it is two lines rather than
+   one on purpose: 'CEBU CITY, PHILIPPINES' needs a 204px-wide figure to stay
+   on one line and no screen this rule fires on is tall enough to buy that, so
+   the second line is budgeted rather than discovered.
+
+   Gated on pointer as well as height, matching the phone shell in
+   layout/page.css. A short desktop window is a short desktop window: it has a
+   mouse, it has no tab bar, and measurement says the hero is exactly the same
+   height there with this rule or without it, because the portrait spans two
+   rows whose heights are set by the intro and the body. It only pays where
+   the portrait is what is squeezing the screen. */
+@media ((height < 470px) and (pointer: coarse)) {
+  .home__hero {
+    --portrait-w: min(320px, calc((55svh - 58px) / 1.25 + 2px));
+  }
+
+  .home__portrait {
+    width: min(100%, var(--portrait-w));
+  }
+}
+
+/* The track follows the element. grid-template-columns overrides only the
+   columns of the grid-template shorthand above, so both bands keep the areas
+   and rows they declare. */
+@media (width >= 440px) and ((height < 470px) and (pointer: coarse)) {
+  .home__hero {
+    grid-template-columns: minmax(0, 1fr) var(--portrait-w);
   }
 }

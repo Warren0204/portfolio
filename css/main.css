@@ -45,3 +45,7 @@
 @import url('utilities/a11y.css');
 @import url('utilities/touch.css');
 @import url('utilities/motion.css');
+
+/* Last on purpose. Its longhands have to outrank the padding shorthand of
+   every rule above it; see the invariant at the top of the file. */
+@import url('utilities/safe-area.css');

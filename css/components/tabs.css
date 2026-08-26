@@ -6,8 +6,11 @@
   gap: var(--space-2);
 }
 
+/* No min-height here. The floor is 44px and it comes from the `target`
+   utility the tab carries, so the number is stated once, in a11y.css, next to
+   the standard it answers to — rather than as a 40 here that quietly missed
+   it. */
 .tabs__tab {
-  min-height: 40px;
   padding: 9px 15px;
   border: 1px solid rgba(var(--line-rgb), 0.14);
   border-radius: var(--radius-sm);

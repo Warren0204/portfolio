@@ -95,6 +95,20 @@ the browser HTML with a `.js` extension, which would log a parse error that
 looks like a real bug. One 404 line per local page load is correct; the request
 succeeds in production.
 
+**Safe-area insets can be emulated, and viewport height cannot.**
+`Emulation.setSafeAreaInsetsOverride` over the DevTools protocol makes
+`env(safe-area-inset-*)` resolve to real values in headless Chrome, so the
+landscape-cutout rules can be checked without a notched phone. Browser chrome
+is the opposite: an emulated viewport has none, so the `height` media feature
+reads 50-100px taller than the same device reports in a real browser. Never
+pick a height breakpoint from an emulated viewport — `(height < 470px)` in
+`layout/page.css` is chosen against initial-containing-block sizes, and the
+comment there explains why the number is not the one a screen spec suggests.
+
+**`tools/serve.ps1` is PowerShell only.** On Linux or macOS,
+`python3 -m http.server 5173` serves the site the same way; the only thing
+lost is the clean 404 on `/_vercel/insights/script.js`.
+
 **`tools/serve.ps1` sends no cache headers**, so Chrome will happily reuse a
 module it fetched before you edited it. When a change appears to do nothing,
 disable the cache before concluding the change was wrong.
@@ -130,6 +144,14 @@ Read newest first. Use these as the pattern for anything new.
 
 | Message                                     | What it covered                                                                                                                                 |
 | ------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Add thumbnail source`                      | An 800px credential thumbnail behind `srcset`/`sizes`; a client at DPR 2 or less takes 48KB where it used to take 188KB                         |
+| `Fix modal lock`                            | The scroll lock named body and so never reached the viewport; the zoom body now fills its dialog, so the certificate centres on a phone         |
+| `Raise touch targets`                       | Tab buttons and the wordmark to the 44px floor through `.target`; nav links get a 44px hit area without a 44px box, so the underline stays put  |
+| `Shrink landscape portrait`                 | The hero portrait and its grid track sized from viewport height on a phone held sideways, where the frame was taller than the screen            |
+| `Cap dialog height`                         | `min(88svh, 100%)`, so a dialog cannot be taller than the screen it is centred in once the backdrop's own padding is counted                    |
+| `Inset for cutouts`                         | One rule answering `env(safe-area-inset-left/right)` for the header, tab bar, well and dialogs, via an `--edge-pad` each states for itself      |
+| `Key shell to height`                       | The phone shell keyed to a short touch screen as well as a narrow one, so a landscape phone keeps its tab bar instead of taking the desktop nav |
+| `Unstick credentials tabs`                  | The Credentials tab strip was sticky underneath the header and never once visible; it sits in normal flow now                                   |
 | `Drop SQL chip`                             | Hero tech stack down to seven; SQL is still claimed in the Credentials data group, where it reads alongside PostgreSQL and DAX                  |
 | `Center frame caption`                      | A caption narrower than its own text centres both lines instead of ragging left inside a centred block                                          |
 | `Stack hero actions`                        | One action per row below 560px, so the hierarchy is carried by weight rather than by width                                                      |
@@ -161,9 +183,33 @@ deployments.
 
 ## Still outstanding
 
-**Image weight.** `assets/img/credentials/google-ai-professional.jpg` is 971 KB
-and the logo PNGs total roughly 800 KB. Nothing is broken, but re-encoding them
-as WebP is the single biggest performance win left on this site.
+**Two images are capped by their sources, not by the code.**
+`assets/img/portrait.webp` is 400x400 and that is the original. The 4:5 hero
+frame keeps 320x400 of it, so the sharpest honest display is 320 CSS px at 1x —
+and a phone at DPR 3 wants 960. `assets/img/og/og-cover.jpg` carries the same
+face at roughly 292x370 and JPEG-compressed, so it is not a second source.
+`assets/img/logos/university-of-cebu.webp` has the same problem from the other
+end: 180x180 against a crest that pins to its 84px floor on every phone and
+wants 252 device pixels there. Upscaling either produces bytes, not detail.
+**Both need a higher-resolution original before anything else is worth doing.**
+
+**The certificate lightbox header is 135px tall on a phone.** `.modal__bar`
+wraps to two rows below about 700px wide: 16% of a 393x852 screen and 24% of a
+320x568 one, against a certificate that is only 273px and 216px tall
+respectively. Measured, not estimated. The cheap levers are hiding
+`.zoom__eyebrow` and tightening the bar's block padding on a short screen.
+
+**Font CLS is the largest layout-shift source left on the site.** Four
+families, eight faces, from fonts.googleapis.com with `display=swap`, no
+preload and no metric-adjusted fallback, on a hero headline at
+`clamp(31px, 5vw, 62px)`. The real fix is `size-adjust` and `ascent-override`
+fallback faces, about four `@font-face` blocks. `display=optional` removes the
+shift in a one-line edit but shows a first-time visitor the whole page in
+fallback type. Self-hosting is the biggest win and the biggest change.
+
+**`--z-tab-bar` is now unused.** `Unstick credentials tabs` took its last
+consumer; the bottom bar itself sits at `--z-header`. Left in place rather than
+pruned inside a responsiveness pass.
 
 ## Decided, so nobody re-opens it
 

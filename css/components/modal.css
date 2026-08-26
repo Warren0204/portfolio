@@ -1,13 +1,19 @@
 /* One dialog, two variants: the system detail panel and the certificate zoom. */
 
 .modal {
+  /* The ground around the dialog, on all four sides. utilities/safe-area.css
+     turns it into the inline padding and raises it for a display cutout — at
+     932px wide this clamp is only 28px against a 59px inset, so the centred
+     dialog needed the same treatment as the full-bleed zoom. */
+  --edge-pad: clamp(12px, 3vw, 40px);
+
   position: fixed;
   inset: 0;
   z-index: var(--z-modal);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: clamp(12px, 3vw, 40px);
+  padding-block: var(--edge-pad);
   background: var(--modal-scrim);
   backdrop-filter: blur(6px);
   animation: fade-in var(--duration-base) ease both;
@@ -17,7 +23,19 @@
   display: flex;
   flex-direction: column;
   width: min(1000px, 100%);
+
+  /* Two terms, because 88% of the screen is not the only ceiling. svh rather
+     than vh: on iOS vh is the chrome-collapsed viewport, so 88vh on a 430px
+     landscape screen asks for more height than is actually on show. The 100%
+     resolves against .modal's content box, which already has the backdrop's
+     own padding taken out of it — without it, 88vh plus 2x28px of ground
+     overflows a short landscape screen by the difference.
+
+     The vh line above it is the fallback for an engine without svh, where the
+     whole min() would otherwise be invalid and leave no ceiling at all. Same
+     pattern as the sheet below. */
   max-height: 88vh;
+  max-height: min(88svh, 100%);
   overflow: hidden;
   border: 1px solid rgba(var(--line-rgb), 0.16);
   border-radius: var(--radius-xl);
@@ -48,7 +66,9 @@
 /* The zoom fills the screen against a near-black ground so the certificate
    itself is the only thing lit. */
 .modal--zoom {
-  padding: 0;
+  --edge-pad: 0px;
+
+  padding-block: 0;
   background: var(--zoom-bg);
   backdrop-filter: none;
 }
@@ -64,14 +84,28 @@
   box-shadow: none;
 }
 
+/* padding-top clears the status bar, and it carries no media query: env() is
+   already 0 where there is no inset, so gating it on a width only stopped it
+   firing on the phones that hold the lightbox sideways — which are exactly
+   the ones with a cutout to clear. */
 .modal__dialog--zoom .modal__header {
+  padding-top: env(safe-area-inset-top, 0);
   border-bottom: none;
   background: transparent;
 }
 
-/* The ground around the certificate dismisses on click, so it says so. */
+/* The ground around the certificate dismisses on click, so it says so.
+
+   flex: 1 is what makes the centring mean anything. As a column flex item the
+   body computed to `flex: 0 1 auto`, so whenever the certificate was smaller
+   than the space available the body was only as tall as the image and had
+   nothing to centre it in: at 393x852 the certificate sat jammed under the
+   header with 444px of empty ground beneath it. It looked right on a wide
+   screen purely by accident, because there the image overflows and shrinking
+   pulls the body back down to the free height. */
 .modal__dialog--zoom .modal__body {
   display: flex;
+  flex: 1;
   align-items: center;
   justify-content: center;
   min-height: 0;
@@ -84,19 +118,25 @@
   cursor: default;
 }
 
-/* Scroll is locked behind an open dialog. */
-.is-modal-open {
-  overflow: hidden;
-}
+/* Scroll is locked behind an open dialog by layout/page.css, which owns the
+   scroller. It was stated here as well, and both copies were inert. */
 
 /* On phones the detail dialog becomes a bottom sheet: it rises from the edge
    the thumb is already near, keeps a strip of the page visible above it so the
    context is not lost, and is dismissed by tapping that strip. A centred box
    floating in the middle of a phone screen is a desktop dialog in disguise. */
 @media (width < 800px) {
+  /* --edge-pad, not just padding: the safe-area utility is imported last and
+     beats this rule's shorthand at equal specificity, so without a gutter of
+     its own the sheet would take .modal's centred-dialog clamp and float 12px
+     in from both screen edges — rounded corners meeting nothing, scrim
+     showing down the sides. Stated inside the media query, because above
+     800px the panel is a centred dialog that should keep that gutter. */
   .modal--panel {
+    --edge-pad: 0px;
+
     align-items: flex-end;
-    padding: 0;
+    padding-block: 0;
   }
 
   .modal__dialog--panel {
@@ -128,9 +168,5 @@
   /* Clear of the home indicator. */
   .modal__dialog--panel .modal__body {
     padding-bottom: calc(var(--space-6) + env(safe-area-inset-bottom, 0));
-  }
-
-  .modal__dialog--zoom .modal__header {
-    padding-top: env(safe-area-inset-top, 0);
   }
 }

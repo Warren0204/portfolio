@@ -33,7 +33,9 @@ export function createHeader({ mount, store, onNavigate }) {
   const wordmark = el(
     'a',
     {
-      class: 'header__wordmark',
+      // `target` is the 44px accessibility floor from css/utilities/a11y.css.
+      // The wordmark is the one control on a phone header that was under it.
+      class: 'header__wordmark target',
       attrs: { href: chapters[0].route, 'aria-label': profile.homeLabel },
       on: {
         click: (event) => {

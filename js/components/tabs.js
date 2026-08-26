@@ -23,7 +23,8 @@ export function createTabs({ items, selectedId, onSelect, label, panelId, varian
 
   const buttons = items.map((item) =>
     el('button', {
-      class: 'tabs__tab',
+      // `target` is the 44px accessibility floor from css/utilities/a11y.css.
+      class: 'tabs__tab target',
       text: item.label,
       attrs: {
         type: 'button',
