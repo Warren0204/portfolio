@@ -8,3 +8,13 @@
   height: 18px;
   fill: currentcolor;
 }
+
+/* An icon set inline with text: sized by the type it follows, sitting a touch
+   below centre so it lines up with lowercase, with a hair of space before it. */
+.icon--inline {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  margin-left: 0.3em;
+  vertical-align: -0.15em;
+}

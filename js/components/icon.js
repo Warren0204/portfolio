@@ -1,8 +1,8 @@
 /* The project's small icon set, as inline SVG.
 
-   Inline rather than an icon font or sprite sheet: there are four of them, they
+   Inline rather than an icon font or sprite sheet: there are eight of them, they
    need to inherit `currentColor` so they follow the theme without a second set
-   of rules, and a font would be a network request for four glyphs.
+   of rules, and a font would be a network request for eight glyphs.
 
    Every icon here is decorative — each one sits beside a visible text label —
    so they are all `aria-hidden`. If one is ever used without a label, it needs
@@ -11,7 +11,8 @@
 const SVG_NS = 'http://www.w3.org/2000/svg';
 
 /* All paths are drawn on a 24x24 grid. The two brand marks are the official
-   logotypes; the other two are drawn to match their weight. */
+   logotypes; the other six are drawn to match their weight, as filled shapes
+   about two units thick rather than strokes, so one `fill` rule covers all. */
 const PATHS = Object.freeze({
   email:
     'M2 5.5A1.5 1.5 0 0 1 3.5 4h17A1.5 1.5 0 0 1 22 5.5v13a1.5 1.5 0 0 1-1.5 1.5h-17A1.5 1.5 0 0 1 2 18.5v-13Zm2.6.5L12 12.15 19.4 6H4.6ZM20 7.96l-7.38 6.14a1 1 0 0 1-1.24 0L4 7.96V18h16V7.96Z',
@@ -24,20 +25,38 @@ const PATHS = Object.freeze({
 
   github:
     'M12 .5C5.37.5 0 5.78 0 12.29c0 5.21 3.44 9.63 8.2 11.19.6.11.82-.25.82-.58v-2.03c-3.34.71-4.04-1.61-4.04-1.61-.55-1.37-1.34-1.74-1.34-1.74-1.09-.73.08-.72.08-.72 1.2.08 1.84 1.21 1.84 1.21 1.07 1.8 2.81 1.28 3.5.98.11-.76.42-1.28.76-1.58-2.67-.29-5.47-1.31-5.47-5.84 0-1.29.47-2.34 1.24-3.17-.13-.29-.54-1.49.11-3.1 0 0 1.01-.32 3.3 1.21a11.6 11.6 0 0 1 6.01 0c2.29-1.53 3.3-1.21 3.3-1.21.65 1.61.24 2.81.12 3.1.77.83 1.24 1.88 1.24 3.17 0 4.54-2.81 5.54-5.49 5.83.43.36.82 1.09.82 2.2v3.26c0 .33.21.7.82.58A11.8 11.8 0 0 0 24 12.29C24 5.78 18.63.5 12 .5Z',
+
+  /* Arrow out of a box with its top-right corner open: leaves this site. */
+  external: 'M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42L17.59 5H14V3ZM4 6h6v2H6v10h10v-4h2v6H4V6Z',
+
+  /* Arrow down into a tray: saves a file. */
+  download:
+    'M11 3h2v9.17l3.29-3.29 1.42 1.42L12 16l-5.71-5.7 1.42-1.42L11 12.17V3ZM4 14h2v4h12v-4h2v6H4v-6Z',
+
+  /* Two bars crossed: dismisses. */
+  close:
+    'M6.22 4.81a1 1 0 0 0-1.41 1.41L10.59 12l-5.78 5.78a1 1 0 1 0 1.41 1.41L12 13.41l5.78 5.78a1 1 0 0 0 1.41-1.41L13.41 12l5.78-5.78a1 1 0 0 0-1.41-1.41L12 10.59 6.22 4.81Z',
+
+  /* Two corner arrows pulling apart: enlarges. */
+  expand:
+    'M14 3h7v7h-2V6.41l-4.29 4.3-1.42-1.42L17.59 5H14V3ZM10 21H3v-7h2v3.59l4.29-4.3 1.42 1.42L6.41 19H10v2Z',
 });
 
 /**
  * @param {string} name One of the keys in PATHS.
  * @param {number} [size] Rendered edge length in pixels.
+ * @param {object} [options]
+ * @param {boolean} [options.inline] Set the icon in running text: sized by the
+ *   type it follows and aligned to it, via `icon--inline` in icon.css.
  * @returns {SVGElement|null} null for an unknown name, so a typo drops the
  *   icon rather than breaking the row it sits in.
  */
-export function createIcon(name, size = 18) {
+export function createIcon(name, size = 18, { inline = false } = {}) {
   const d = PATHS[name];
   if (!d) return null;
 
   const svg = document.createElementNS(SVG_NS, 'svg');
-  svg.setAttribute('class', 'icon');
+  svg.setAttribute('class', inline ? 'icon icon--inline' : 'icon');
   svg.setAttribute('viewBox', '0 0 24 24');
   svg.setAttribute('width', String(size));
   svg.setAttribute('height', String(size));

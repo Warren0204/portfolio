@@ -75,3 +75,23 @@ body {
   font-weight: 400;
   letter-spacing: -0.01em;
 }
+
+/* Inline text links in running copy carry an underline, so they read as links
+   without leaning on colour alone. Components (nav, tab bar, routes, buttons)
+   style their own affordance and are not matched here. */
+p a,
+li a,
+.field__error a {
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+p a:hover,
+p a:focus-visible,
+li a:hover,
+li a:focus-visible,
+.field__error a:hover,
+.field__error a:focus-visible {
+  color: var(--accent-ink-hover);
+}

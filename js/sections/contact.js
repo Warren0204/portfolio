@@ -49,7 +49,11 @@ function createRoute(route) {
     el('span', { class: 'route__icon' }, createIcon(route.icon)),
     el('span', { class: 'route__text' }, [
       el('span', { class: 'route__label', text: route.label }),
-      el('span', { class: 'route__value', text: route.value }),
+      el('span', { class: 'route__value' }, [
+        route.value,
+        // The glyph says the link leaves this site, beside the address it opens.
+        route.external ? createIcon('external', 14, { inline: true }) : null,
+      ]),
       route.note ? el('span', { class: 'route__note', text: route.note }) : null,
     ]),
   ];
@@ -63,7 +67,7 @@ function createRoute(route) {
       attrs: {
         href: route.href,
         target: route.external ? '_blank' : null,
-        rel: route.external ? 'noopener' : null,
+        rel: route.external ? 'noopener noreferrer' : null,
       },
     },
     body

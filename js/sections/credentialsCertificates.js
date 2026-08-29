@@ -5,6 +5,7 @@
 import { el } from '../core/dom.js';
 import { createBadge } from '../components/badge.js';
 import { createCard } from '../components/card.js';
+import { createIcon } from '../components/icon.js';
 import { createModal } from '../components/modal.js';
 import { createSectionEyebrow } from '../components/sectionEyebrow.js';
 import { certifications, credentialsCopy } from '../data/credentials.js';
@@ -20,11 +21,11 @@ function createZoomHeader(certification, close) {
       'a',
       {
         class: 'zoom__verify',
-        attrs: { href: certification.verify, target: '_blank', rel: 'noopener' },
+        attrs: { href: certification.verify, target: '_blank', rel: 'noopener noreferrer' },
       },
       [
         el('span', { text: credentialsCopy.verifyLabel }),
-        el('span', { text: '↗', attrs: { 'aria-hidden': 'true' } }),
+        createIcon('external', 14, { inline: true }),
       ]
     ),
     el(
@@ -36,7 +37,7 @@ function createZoomHeader(certification, close) {
       },
       [
         el('span', { text: credentialsCopy.zoomClose }),
-        el('span', { text: '✕', attrs: { 'aria-hidden': 'true' } }),
+        createIcon('close', 14, { inline: true }),
       ]
     ),
   ]);
@@ -91,7 +92,7 @@ function createFeaturedCertification(certification) {
       }),
       el('span', { class: 'certificate__hint' }, [
         el('span', { text: credentialsCopy.enlargeHint }),
-        el('span', { text: '⤢', attrs: { 'aria-hidden': 'true' } }),
+        createIcon('expand', 12, { inline: true }),
       ]),
     ]
   );

@@ -7,6 +7,7 @@
    rather than as emphasis. */
 
 import { el } from '../core/dom.js';
+import { createIcon } from '../components/icon.js';
 import { chapterById } from '../data/navigation.js';
 import { profile } from '../data/profile.js';
 
@@ -75,11 +76,15 @@ export function createActions() {
       text: profile.ctas.viewProjects,
       attrs: { href: chapterById('projects').route },
     }),
-    el('a', {
-      class: 'button button--outline',
-      text: profile.ctas.downloadCv,
-      attrs: { href: profile.cv.href, download: profile.cv.downloadName },
-    }),
+    el(
+      'a',
+      {
+        class: 'button button--outline',
+        attrs: { href: profile.cv.href, download: profile.cv.downloadName },
+      },
+      // The glyph says this one saves a file rather than moving down the page.
+      [profile.ctas.downloadCv, createIcon('download', 18, { inline: true })]
+    ),
     el('a', {
       class: 'button button--ghost',
       text: profile.ctas.getInTouch,
