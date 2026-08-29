@@ -5,7 +5,7 @@
   gap: var(--space-2);
   align-items: center;
   padding: 5px 10px;
-  border: var(--line);
+  border: var(--line-soft);
   border-radius: var(--radius-xs);
   color: var(--text);
   font-family: var(--font-mono);
@@ -26,7 +26,7 @@
   flex: none;
   width: 22px;
   height: 22px;
-  border-radius: var(--radius-sm);
+  border-radius: 2px;
 
   /* The marks are full-colour product logos drawn for a white ground, so they
      keep one in both themes rather than washing out on the dark surface. */
@@ -44,7 +44,7 @@
 .chip--md .chip__logo {
   width: 26px;
   height: 26px;
-  border-radius: 5px;
+  border-radius: var(--radius-xs);
 }
 
 /* A wrapping row of chips. */
