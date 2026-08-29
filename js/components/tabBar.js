@@ -48,10 +48,15 @@ export function createTabBar({ mount, store, onNavigate }) {
 
   const element = el('nav', { class: 'tab-bar', attrs: { 'aria-label': 'Sections' } }, tabs);
 
+  // Sections the reader has been in, so passing one leaves a trace behind.
+  const visited = new Set();
+
   function render(index) {
+    visited.add(index);
     tabs.forEach((tab, tabIndex) => {
       const isCurrent = tabIndex === index;
       tab.classList.toggle('tab-bar__tab--current', isCurrent);
+      tab.classList.toggle('tab-bar__tab--visited', !isCurrent && visited.has(tabIndex));
       if (isCurrent) tab.setAttribute('aria-current', 'true');
       else tab.removeAttribute('aria-current');
     });

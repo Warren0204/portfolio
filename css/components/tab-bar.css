@@ -51,6 +51,14 @@
   opacity: 0;
 }
 
+/* A section already read keeps a trace of the marker, so the bar reads as
+   milestones passed rather than five equal buttons. Stated before the current
+   rule, which must win where both apply. */
+.tab-bar__tab--visited .tab-bar__marker {
+  width: 6px;
+  opacity: 0.5;
+}
+
 .tab-bar__tab--current .tab-bar__marker {
   width: 60%;
   opacity: 1;
