@@ -290,7 +290,7 @@
 .home__cue-line {
   width: 54px;
   height: 1px;
-  background: linear-gradient(90deg, rgba(var(--line-rgb), 0.4), transparent);
+  background: rgba(var(--line-rgb), 0.4);
   animation: cue-slide 2.4s var(--ease-out) infinite;
   transform-origin: left center;
 }

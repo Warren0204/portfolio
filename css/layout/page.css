@@ -92,13 +92,7 @@ body {
   left: 50%;
   width: min(var(--content-max), calc(100% - 2 * clamp(20px, 5vw, 48px)));
   height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(var(--line-rgb), 0.16) 18%,
-    rgba(var(--line-rgb), 0.16) 82%,
-    transparent
-  );
+  background: rgba(var(--line-rgb), 0.16);
   content: '';
   transform: translateX(-50%);
 }

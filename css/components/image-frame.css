@@ -19,15 +19,12 @@
   object-fit: cover;
 }
 
-/* A cool accent wash across the top corner, matching the prototype's grade. */
+/* A flat wash screened over the image. It was a corner gradient; the site keeps
+   three gradients and this was not one of them. */
 .image-frame__wash {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    262deg,
-    rgba(var(--accent-rgb), 0.16),
-    rgba(var(--accent-rgb), 0) 34%
-  );
+  background: rgba(var(--line-rgb), 0.16);
   mix-blend-mode: screen;
   pointer-events: none;
 }
