@@ -83,7 +83,7 @@
   /* Text sitting on an accent fill. The fill itself is --accent-ink; there is
      no separate CTA colour, because there never was one — --cta-bg and
      --cta-hover were byte-identical copies of the accent pair. */
-  --on-accent: #fff;
+  --on-accent: var(--surface);
 
   /* White that must stay white in both themes. Product logos and scanned
      certificates are artwork drawn for a white ground; tinting it by theme
@@ -92,8 +92,8 @@
 
   /* Ink for content that always sits on a dark scrim, whatever the theme: the
      certificate lightbox. Not theme-aware on purpose. */
-  --scrim-ink: #fff;
-  --scrim-ink-rgb: 255, 255, 255;
+  --scrim-ink: #f1f5f9;
+  --scrim-ink-rgb: 241, 245, 249;
   --scrim-ink-muted: rgba(var(--scrim-ink-rgb), 0.6);
   --zoom-bg: #080c11;
 
@@ -199,7 +199,7 @@
 
   --error-ink: #ff9d94;
 
-  --line-rgb: 255, 255, 255;
+  --line-rgb: 241, 245, 249;
   --accent-rgb: 126, 208, 240;
   --ok-rgb: 90, 208, 166;
   --error-rgb: 255, 157, 148;
@@ -214,9 +214,9 @@
 
   /* A shadow built from black disappears on a dark ground; these lean on
      depth of tint instead of depth of black. */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 6px 20px -8px rgba(0, 0, 0, 0.6);
-  --shadow-lg: 0 24px 60px -24px rgba(0, 0, 0, 0.75);
+  --shadow-sm: 0 1px 2px rgba(3, 10, 20, 0.4);
+  --shadow-md: 0 6px 20px -8px rgba(3, 10, 20, 0.6);
+  --shadow-lg: 0 24px 60px -24px rgba(3, 10, 20, 0.75);
 
   color-scheme: dark;
 }
