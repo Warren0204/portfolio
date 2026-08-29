@@ -1,11 +1,12 @@
-/* Projects. A list of case studies, currently one, each rendered open. The
-   section owns the heading and the scroll reveals; projectsCaseStudy.js owns
-   what a single project looks like. */
+/* Projects. A list of case studies, each rendered open, plus compact cards for
+   the smaller pieces. The section owns the heading and the scroll reveals;
+   projectsCaseStudy.js and projectsCard.js own what a single entry looks like. */
 
 import { el } from '../core/dom.js';
 import { createSectionHead } from '../components/sectionHead.js';
 import { revealOnScroll } from '../core/animate.js';
 import { projects, projectsCopy } from '../data/projects.js';
+import { createProjectCard } from './projectsCard.js';
 import { createCaseStudy } from './projectsCaseStudy.js';
 
 /**
@@ -19,7 +20,13 @@ export function createProjectsSection() {
     headingId: 'projects-heading',
   });
 
-  const studies = projects.map(createCaseStudy);
+  // A compact entry is one card; everything else is a full case study. The
+  // index numbers the identity line, so the data's order is the page's.
+  const studies = projects.map((project, index) =>
+    project.kind === 'compact'
+      ? createProjectCard(project, index)
+      : createCaseStudy(project, index)
+  );
 
   const element = el('div', { class: 'well projects' }, [
     head,

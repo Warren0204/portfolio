@@ -1,12 +1,21 @@
 /* Project case studies. Adding a project means appending one object here —
    no component or stylesheet changes. This copy is the authoritative wording;
-   the section renders whatever is here and adds nothing of its own. */
+   the section renders whatever is here and adds nothing of its own.
+
+   An entry with `kind: 'compact'` renders as one card rather than a full case
+   study: for work that is real but small. Tags and periods are sentence case
+   here and uppercased by the stylesheet. */
+
+/* The notebook behind the guided project. One constant, so it can be swapped
+   in one line. */
+export const DATACAMP_NOTEBOOK_URL =
+  'https://www.datacamp.com/datalab/w/c51273ae-41ff-47f6-b2ad-df3bc716c6a8/edit';
 
 export const projects = Object.freeze([
   Object.freeze({
     id: 'transprafund',
-    tag: 'CAPSTONE',
-    period: '2025 TO 2026',
+    tag: 'Capstone project',
+    period: '2025 to 2026',
     title: 'TranspiraFund',
     team: 'Team of four',
     roles: Object.freeze(['Project Manager', 'Web and Mobile Developer', 'QA Tester']),
@@ -48,6 +57,8 @@ export const projects = Object.freeze([
           'Notice to Proceed compliance uploads',
         ]),
       }),
+      /* The AI work under both surfaces, split out of the shared foundation
+         so it is one token rather than three lines inside another. */
       Object.freeze({
         id: 'ai-layer',
         label: 'AI layer',
@@ -56,8 +67,14 @@ export const projects = Object.freeze([
           'Milestone generation and title validation on Claude Haiku 4.5, structured through forced tool use and server side validation',
           'Vision based proof of work verification on Claude Sonnet, triggered automatically on upload',
           'Retrieval based milestone selection over a 20 project SME validated corpus',
-      /* The AI work under both surfaces, split out of the shared foundation
-         so it is one token rather than three lines inside another. */
+        ]),
+      }),
+      Object.freeze({
+        id: 'foundation',
+        label: 'Shared foundation',
+        caption: 'Shared foundation under both surfaces',
+        items: Object.freeze([
+          'Multi tenant architecture with a four tier role hierarchy and tenant isolation through custom claims plus Firestore and Storage rules',
           'Tamper evident server side image stamping with geotag and timestamp burn in',
         ]),
       }),
@@ -67,14 +84,6 @@ export const projects = Object.freeze([
       Object.freeze({
         label: 'WEB DASHBOARD',
         items: Object.freeze(['React + Vite', 'Firebase Hosting']),
-        ]),
-      }),
-      Object.freeze({
-        id: 'foundation',
-        label: 'Shared foundation',
-        caption: 'Shared foundation under both surfaces',
-        items: Object.freeze([
-          'Multi tenant architecture with a four tier role hierarchy and tenant isolation through custom claims plus Firestore and Storage rules',
       }),
       Object.freeze({ label: 'MOBILE APP', items: Object.freeze(['React Native', 'Gradle']) }),
       Object.freeze({
@@ -83,6 +92,23 @@ export const projects = Object.freeze([
       }),
       Object.freeze({ label: 'DESIGN', items: Object.freeze(['Figma']) }),
     ]),
+  }),
+
+  Object.freeze({
+    id: 'students-mental-health',
+    kind: 'compact',
+    tag: 'Guided project',
+    period: '2026',
+    title: "Analyzing Students' Mental Health",
+    summary:
+      'PostgreSQL analysis of a 286-record mental health survey from a Japanese international university, testing whether international students show higher depression risk and whether length of stay is a factor. Completed the DataCamp guided project deliverable, then extended it with a data-quality audit, a missing-value investigation, severity and connectedness banding, and a stress comparison.',
+    context:
+      'DataCamp guided project, SQL coursework (Associate Data Engineer in SQL track). Completed and extended.',
+    tags: Object.freeze(['SQL', 'PostgreSQL', 'DataCamp DataLab']),
+    links: Object.freeze([
+      Object.freeze({ label: 'Open notebook', href: DATACAMP_NOTEBOOK_URL, external: true }),
+    ]),
+    status: Object.freeze({ text: 'Completed', tone: 'ok' }),
   }),
 ]);
 

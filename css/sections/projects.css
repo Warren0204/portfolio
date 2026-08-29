@@ -175,3 +175,15 @@
 .project__status .status-dot {
   transform: translateY(-2px);
 }
+
+/* The compact card's own rows. */
+
+.project__context {
+  margin-top: var(--space-3);
+  color: var(--muted);
+  font-size: var(--text-small);
+}
+
+.project--compact .chip-row {
+  margin-top: var(--space-4);
+}
