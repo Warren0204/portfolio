@@ -64,6 +64,15 @@
   gap: var(--space-6);
 }
 
+/* On a phone the primary way in comes before the addresses: the availability
+   card and the form sit above the routes card. Placement by `order` only, so
+   the DOM (and the reveal targets in contact.js) stay where they are. */
+@media (width < 900px) {
+  .contact__grid > .contact__routes {
+    order: 1;
+  }
+}
+
 /* The area names live with the template that defines them, inside the media
    query, and nowhere else.
 
@@ -246,7 +255,7 @@ a.route .route__value {
 /* Footer */
 
 .contact__footer {
-  margin-top: var(--space-8);
+  margin-top: var(--space-6);
   padding-top: var(--space-5);
   border-top: var(--line);
 }

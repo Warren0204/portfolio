@@ -96,19 +96,18 @@ export function createContactSection() {
   const form = createContactForm();
   const routes = createRoutes();
 
-  /* DOM order is the phone's reading order: heading, intro, status, then the
-     addresses, and the form last. Someone on a phone reaches the email and the
-     LinkedIn link without scrolling past a three-field form first.
+  /* DOM order is heading, intro, status, the addresses, then the form, and
+     that is the tab order everywhere. On a phone the routes card is moved
+     below the form by `order` in css/sections/contact.css, so the primary way
+     in comes before the addresses; the DOM stays put so the reveal targets
+     below keep pointing at real elements.
 
      Above 900px the same four children are placed by grid area — head, chip
      and form down the left, routes card spanning the right from the very top.
-     Placement only; no CSS `order`, which would desynchronise the visual order
-     from the tab order and leave a keyboard user jumping around the section.
 
      The consequence, accepted deliberately: on desktop the four route links
-     take focus before the form does. Four stops before the primary action is
-     the price of the phone order being right, and the phone is where this
-     section gets used. */
+     take focus before the form does, and on a phone the visual order and the
+     tab order differ by one card. */
   const grid = el('div', { class: 'contact__grid' }, [
     head,
     availabilityCard,
@@ -119,10 +118,11 @@ export function createContactSection() {
   const element = el('div', { class: 'well contact' }, [
     grid,
     // The one contentinfo landmark on the page, carrying the details a
-    // visitor would otherwise hunt for in a footer.
+    // visitor would otherwise hunt for in a footer. The role is explicit: a
+    // <footer> inside <main> is not a landmark on its own.
     el(
       'footer',
-      { class: 'contact__footer' },
+      { class: 'contact__footer', attrs: { role: 'contentinfo' } },
       el('p', { class: 'contact__details', text: contact.details })
     ),
   ]);
