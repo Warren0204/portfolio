@@ -139,7 +139,7 @@
 
   /* The gap between one page section and the next, fluid so a phone does not
      pay desktop whitespace to scroll past. */
-  --section-gap: clamp(72px, 11vw, 148px);
+  --section-gap: clamp(48px, 8vw, 148px);
 
   /* Motion. Durations are referenced from CSS and mirrored in
      js/core/constants.js for the transitions JavaScript has to time. */

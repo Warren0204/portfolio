@@ -17,7 +17,7 @@
 }
 
 .diagram__caption {
-  margin-top: 7px;
+  margin-top: var(--space-2);
   color: var(--muted);
   font-size: 15px;
   line-height: 1.6;

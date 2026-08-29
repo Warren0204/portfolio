@@ -3,13 +3,13 @@
 .bullet-list {
   display: flex;
   flex-direction: column;
-  gap: 11px;
+  gap: var(--space-3);
 }
 
 .bullet-list__item {
   display: grid;
   grid-template-columns: 5px minmax(0, 1fr);
-  gap: 13px;
+  gap: var(--space-3);
   align-items: start;
 }
 

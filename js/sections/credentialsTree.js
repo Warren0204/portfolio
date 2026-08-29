@@ -12,7 +12,8 @@ import { createSectionEyebrow } from '../components/sectionEyebrow.js';
 import { credentialsCopy } from '../data/credentials.js';
 import { createTrackDetail } from './credentialsTrackDetail.js';
 
-const CARD_GAP_PX = 14;
+/* Mirrors the gap on .track-tree__grid in css/components/track-tree.css. */
+const CARD_GAP_PX = 16;
 
 /** Horizontal centre of card `index` within a `count`-column grid. */
 function cardCentre(index, count) {

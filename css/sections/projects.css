@@ -110,7 +110,7 @@
 }
 
 .project__surfaces > .eyebrow {
-  margin-bottom: var(--space-4);
+  margin-bottom: var(--space-3);
 }
 
 .project__surface {
@@ -144,7 +144,7 @@
 }
 
 .project__stack > .eyebrow {
-  margin-bottom: var(--space-4);
+  margin-bottom: var(--space-3);
 }
 
 .project__stack-groups {
@@ -171,7 +171,7 @@
 }
 
 .project__status .eyebrow {
-  margin-bottom: 6px;
+  margin-bottom: var(--space-2);
 }
 
 .project__status .status-dot {
