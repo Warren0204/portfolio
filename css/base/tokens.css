@@ -182,27 +182,28 @@
 }
 
 [data-theme='dark'] {
-  /* Dark is the reference. It measured 6.9:1 and up before this pass, so no
-     value here moved for contrast — only the redundant tokens were retired. */
+  /* Dark is the reference. Its inks cleared 6.9:1 before the Phase 2 pass, so
+     the accent, green, and red below were only desaturated, never darkened;
+     each still clears 8:1 on --bg and on --surface (computed, see the recon). */
   --bg: #0b1219;
   --surface: #131c26;
   --raised: #1c2734;
   --text: #f1f5f9;
   --muted: #b4c1cd;
 
-  --accent-ink: #7ed0f0;
-  --accent-ink-hover: #a9e1f7;
-  --accent-dot: #5cbfe6;
+  --accent-ink: #83c7e2;
+  --accent-ink-hover: #acdaec;
+  --accent-dot: #66b6d6;
 
-  --ok-ink: #5ad0a6;
+  --ok-ink: #68caa8;
   --ok-dot: #48c79a;
 
-  --error-ink: #ff9d94;
+  --error-ink: #f5a199;
 
   --line-rgb: 241, 245, 249;
-  --accent-rgb: 126, 208, 240;
-  --ok-rgb: 90, 208, 166;
-  --error-rgb: 255, 157, 148;
+  --accent-rgb: 131, 199, 226;
+  --ok-rgb: 104, 202, 168;
+  --error-rgb: 245, 161, 153;
 
   --on-accent: #06131c;
 
