@@ -1,7 +1,8 @@
-/* Tabs: one tab bar, used by the credentials views and the project surfaces.
-   Follows the tab pattern properly — arrow keys move between tabs and only the
-   selected tab is in the tab order. The data-tabgroup marker tells the global
-   keyboard handler to leave left and right arrows alone in here. */
+/* Tabs: one tab bar, used by the credentials views, the project surfaces, and
+   the Experience tokens. Follows the tab pattern properly — arrow keys move
+   between tabs and only the selected tab is in the tab order. The
+   data-tabgroup marker tells the global keyboard handler to leave left and
+   right arrows alone in here. */
 
 import { el, on } from '../core/dom.js';
 
@@ -15,7 +16,8 @@ const NEXT_KEYS = ['ArrowRight', 'ArrowDown'];
  * @param {(id: string) => void} props.onSelect
  * @param {string} props.label Accessible name for the tab list.
  * @param {string} props.panelId Id of the element the tabs control.
- * @param {'bar'|'inline'} [props.variant]
+ * @param {'bar'|'segmented'} [props.variant] `segmented` is one
+ *   scrolling row with a filled selected token; see css/components/tabs.css.
  * @returns {{ element: HTMLElement, select: (id: string) => void, destroy: () => void }}
  */
 export function createTabs({ items, selectedId, onSelect, label, panelId, variant = 'bar' }) {

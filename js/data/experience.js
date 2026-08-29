@@ -33,6 +33,7 @@ export const roles = Object.freeze([
       Object.freeze({
         id: 'contract-studio',
         title: 'Contract Studio',
+        tokenLabel: 'Contract generator',
         role: 'Power Apps canvas app with a generation flow',
         summary:
           'A guided contract generation workflow that replaced manual template editing, with versioning built into the data model.',
@@ -61,6 +62,7 @@ export const roles = Object.freeze([
       }),
 
       Object.freeze({
+        tokenLabel: 'Automation workflows',
         id: 'attendance-suite',
         title: 'Attendance Automation Suite',
         role: '4 cloud flows · Power Automate, SharePoint, Teams',
@@ -84,6 +86,7 @@ export const roles = Object.freeze([
         diagramCaption:
           'Four scheduled flows keep the current month’s Excel file up to date and post late arrival notifications to a Teams group chat. On the first of every month a fresh file is created and the flows switch to it on their own, so counts reset without anyone touching them.',
       }),
+        tokenLabel: 'Power BI dashboard',
 
       Object.freeze({
         id: 'recruitment-analytics',
@@ -494,8 +497,7 @@ export const experienceCopy = Object.freeze({
   overviewLabel: 'Overview',
   diagramScrollLabel: 'Diagram, scrolls sideways',
   lead: 'One internship, three systems built and left running. Pick a system to read how it works.',
-  systemsEyebrow: 'DELIVERED SYSTEMS \u00b7 POWER PLATFORM',
-  systemsCountSuffix: 'SEPARATE SYSTEMS',
+  systemsLine: 'Three systems, all in production',
   systemsTabsLabel: 'Delivered systems',
   inProduction: 'IN PRODUCTION',
   systemLabel: 'SYSTEM',

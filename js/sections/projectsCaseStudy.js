@@ -81,6 +81,7 @@ function createSurfaces(project) {
   });
 
   show(project.surfaces[0].id);
+    variant: 'segmented',
 
   const element = el('div', { class: 'project__surfaces' }, [
     createSectionEyebrow({ text: eyebrows.built }),

@@ -27,7 +27,7 @@ export const projects = Object.freeze([
     surfaces: Object.freeze([
       Object.freeze({
         id: 'web',
-        label: 'WEB DASHBOARD',
+        label: 'Web dashboard',
         caption: 'For the Head of the Construction Services Division',
         items: Object.freeze([
           'Project creation and engineer assignment',
@@ -39,7 +39,7 @@ export const projects = Object.freeze([
       }),
       Object.freeze({
         id: 'mobile',
-        label: 'MOBILE APP',
+        label: 'Mobile app',
         caption: 'For assigned Project Engineers in the field',
         items: Object.freeze([
           'Geotagged proof of work capture',
@@ -49,14 +49,15 @@ export const projects = Object.freeze([
         ]),
       }),
       Object.freeze({
-        id: 'foundation',
-        label: 'SHARED FOUNDATION',
+        id: 'ai-layer',
+        label: 'AI layer',
         caption: 'Shared foundation under both surfaces',
         items: Object.freeze([
-          'Multi tenant architecture with a four tier role hierarchy and tenant isolation through custom claims plus Firestore and Storage rules',
           'Milestone generation and title validation on Claude Haiku 4.5, structured through forced tool use and server side validation',
           'Vision based proof of work verification on Claude Sonnet, triggered automatically on upload',
           'Retrieval based milestone selection over a 20 project SME validated corpus',
+      /* The AI work under both surfaces, split out of the shared foundation
+         so it is one token rather than three lines inside another. */
           'Tamper evident server side image stamping with geotag and timestamp burn in',
         ]),
       }),
@@ -66,6 +67,14 @@ export const projects = Object.freeze([
       Object.freeze({
         label: 'WEB DASHBOARD',
         items: Object.freeze(['React + Vite', 'Firebase Hosting']),
+        ]),
+      }),
+      Object.freeze({
+        id: 'foundation',
+        label: 'Shared foundation',
+        caption: 'Shared foundation under both surfaces',
+        items: Object.freeze([
+          'Multi tenant architecture with a four tier role hierarchy and tenant isolation through custom claims plus Firestore and Storage rules',
       }),
       Object.freeze({ label: 'MOBILE APP', items: Object.freeze(['React Native', 'Gradle']) }),
       Object.freeze({

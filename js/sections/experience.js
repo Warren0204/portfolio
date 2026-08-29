@@ -1,15 +1,17 @@
 /* Experience.
 
-   The role is stated once and stays on screen; the three systems delivered
-   inside it are a tab strip over one detail panel. That replaces the old
+   The role is stated once and stays on screen. Inside its card, a row of
+   tokens switches one detail panel between an overview of the role and each
+   of the three systems delivered in it. That replaces the old
    accordion-then-dialog arrangement, which put a recruiter two clicks and a
-   modal away from the only thing they came to read. Tabs keep every system one
-   click deep, keep the page a sane length, and — unlike an accordion — never
-   leave the reader scrolling past three collapsed headers wondering whether
-   there is anything underneath.
+   modal away from the only thing they came to read, and the tab strip that
+   later sat below the role card and read as a row of tags. Tokens keep every
+   system one click deep, keep the page a sane length, and, unlike an
+   accordion, never leave the reader scrolling past three collapsed headers
+   wondering whether there is anything underneath.
 
-   One system is open on arrival, because an empty panel with three unlabelled
-   choices teaches nothing about what is in them. */
+   The overview is open on arrival: the role in its own words, with each
+   system one tap away. */
 
 import { el, replaceChildren } from '../core/dom.js';
 import { createBadge } from '../components/badge.js';
@@ -26,9 +28,14 @@ import { createDiagram } from './experienceDiagram.js';
 
 const { eyebrows } = experienceCopy;
 const PANEL_ID = 'experience-system';
+const OVERVIEW_ID = 'overview';
 
-/** The role itself: what it was, where, and what I was doing there. */
-function createRoleCard(role) {
+/**
+ * The role itself: what it was and where, then the token row and the panel it
+ * drives, all in one card so the systems read as part of the role rather than
+ * as a list underneath it.
+ */
+function createRoleCard(role, tokens, panel) {
   return el('div', { class: 'experience__role' }, [
     el('div', { class: 'experience__role-meta' }, [
       el('span', { class: 'experience__role-kind', text: role.kind }),
@@ -37,7 +44,21 @@ function createRoleCard(role) {
     ]),
     el('h3', { class: 'experience__role-title', text: role.title }),
     el('p', { class: 'experience__role-org', text: role.organisation }),
-    el('p', { class: 'prose experience__role-summary', text: role.summary }),
+    el('div', { class: 'experience__tokens' }, [
+      el('p', {
+        class: 'eyebrow eyebrow--muted experience__tokens-label',
+        text: experienceCopy.systemsLine,
+      }),
+      tokens,
+    ]),
+    panel,
+  ]);
+}
+
+/** The overview: the role in its own words, the NDA note, and what I was doing there. */
+function createOverviewPanel(role) {
+  return el('div', { class: 'system-detail' }, [
+    el('p', { class: 'prose', text: role.summary }),
     role.disclosure
       ? el('aside', { class: 'experience__disclosure' }, [
           createSectionEyebrow({ text: role.disclosure.eyebrow, tone: 'accent' }),
@@ -134,18 +155,21 @@ export function createExperienceSection() {
 
   let current = null;
 
-  function show(systemId) {
+  function show(id) {
     if (current) current.diagram?.destroy();
 
-    const index = role.systems.findIndex((system) => system.id === systemId);
-    const system = role.systems[index];
-    current = createSystemPanel(system, {
-      index: padCount(index + 1),
-      total: padCount(total),
-    });
+    if (id === OVERVIEW_ID) {
+      current = { element: createOverviewPanel(role), diagram: null };
+    } else {
+      const index = role.systems.findIndex((system) => system.id === id);
+      current = createSystemPanel(role.systems[index], {
+        index: padCount(index + 1),
+        total: padCount(total),
+      });
+    }
 
     replaceChildren(panel, current.element);
-    panel.setAttribute('aria-labelledby', `tab-${PANEL_ID}-${systemId}`);
+    panel.setAttribute('aria-labelledby', `tab-${PANEL_ID}-${id}`);
 
     // The panel just changed height by hundreds of pixels. Every trigger below
     // it on the page is now measuring against a layout that no longer exists.
@@ -153,17 +177,18 @@ export function createExperienceSection() {
   }
 
   const tabs = createTabs({
-    items: role.systems.map((system, index) => ({
-      id: system.id,
-      label: `${padCount(index + 1)} · ${system.title}`,
-    })),
-    selectedId: role.systems[0].id,
+    items: [
+      { id: OVERVIEW_ID, label: experienceCopy.overviewLabel },
+      ...role.systems.map((system) => ({ id: system.id, label: system.tokenLabel })),
+    ],
+    selectedId: OVERVIEW_ID,
     onSelect: show,
     label: experienceCopy.systemsTabsLabel,
     panelId: PANEL_ID,
+    variant: 'segmented',
   });
 
-  show(role.systems[0].id);
+  show(OVERVIEW_ID);
 
   const head = createSectionHead({
     eyebrow: experienceCopy.eyebrow,
@@ -172,22 +197,9 @@ export function createExperienceSection() {
     headingId: 'experience-heading',
   });
 
-  const roleCard = createRoleCard(role);
+  const roleCard = createRoleCard(role, tabs.element, panel);
 
-  const systemsHead = el('div', { class: 'experience__systems-head' }, [
-    createSectionEyebrow({ text: experienceCopy.systemsEyebrow }),
-    el('span', { class: 'experience__rule', attrs: { 'aria-hidden': 'true' } }),
-    el('p', {
-      class: 'eyebrow eyebrow--dim',
-      text: `${total} ${experienceCopy.systemsCountSuffix}`,
-    }),
-  ]);
-
-  const element = el('div', { class: 'well experience' }, [
-    head,
-    roleCard,
-    el('div', { class: 'experience__systems' }, [systemsHead, tabs.element, panel]),
-  ]);
+  const element = el('div', { class: 'well experience' }, [head, roleCard]);
 
   let reveals = [];
 
@@ -198,7 +210,6 @@ export function createExperienceSection() {
       reveals = [
         revealOnScroll(Array.from(head.children), { trigger: head }),
         revealOnScroll(roleCard, { y: 30 }),
-        revealOnScroll([systemsHead, tabs.element], { trigger: systemsHead }),
       ];
     },
 

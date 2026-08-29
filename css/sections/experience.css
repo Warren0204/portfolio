@@ -59,10 +59,6 @@
   letter-spacing: 0.08em;
 }
 
-.experience__role-summary {
-  margin-top: var(--space-4);
-}
-
 /* The NDA note. Bordered on one edge rather than boxed: it is context for the
    summary above it, not a warning. */
 .experience__disclosure {
@@ -90,18 +86,14 @@
   margin-top: 10px;
 }
 
-/* The systems */
+/* The token row, inside the role card under the title and organisation. */
 
-.experience__systems {
-  margin-top: var(--space-7);
+.experience__tokens {
+  margin-top: var(--space-5);
 }
 
-.experience__systems-head {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-3);
-  align-items: baseline;
-  margin-bottom: var(--space-4);
+.experience__tokens-label {
+  margin-bottom: var(--space-3);
 }
 
 .system__number {
