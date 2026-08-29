@@ -1,21 +1,23 @@
-/* Type scale and the three families. Sora carries headings and the wordmark,
-   Hanken Grotesk carries body at 15.5px minimum, IBM Plex Mono carries every
-   machine-voice label: eyebrows, tags, counts, timestamps. Instrument Serif
-   appears only as the italic tail of a headline, at most once per chapter. */
+/* Type scale and the two families. Sora carries headings, the wordmark, and
+   the one emphasised phrase a headline is allowed; Hanken Grotesk carries body
+   at 16px and every label. A label reads as a label by being uppercase and
+   tracked out, not by being a different face. */
 
 :root {
-  --font-display: 'Sora', sans-serif;
-  --font-body: 'Hanken Grotesk', sans-serif;
-  --font-mono: 'IBM Plex Mono', monospace;
-  --font-serif: 'Instrument Serif', serif;
+  --font-display: 'Sora', 'Hanken Grotesk', system-ui, sans-serif;
+  --font-body: 'Hanken Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
-  --text-body: 15.5px;
+  /* Labels are the body face; the label recipe does the work. Kept as its own
+     token so the consumers need no edit and the choice stays in one place. */
+  --font-mono: var(--font-body);
+
+  --text-body: 16px;
   --text-body-lg: 17px;
   --text-lead: 16.5px;
   --text-small: 14.5px;
   --text-meta: 11.5px;
 
-  /* The floor. Mono, uppercase and tracked out is the least legible
+  /* The floor. Uppercase and tracked out is the least legible
      setting on the page, so it does not go below 11px however tempting
      the density is. */
   --text-eyebrow: 11px;
@@ -66,14 +68,13 @@ body {
   text-wrap: pretty;
 }
 
-/* The one emphasised phrase a chapter is allowed. */
+/* The one emphasised phrase a chapter is allowed: the display face, a step
+   lighter than the headline around it, in the accent. The class name is older
+   than the face. */
 .serif-tail {
   color: var(--accent-ink);
-  font-family: var(--font-serif);
-  font-size: 1.07em;
-  font-style: italic;
-  font-weight: 400;
-  letter-spacing: -0.01em;
+  font-family: var(--font-display);
+  font-weight: 600;
 }
 
 /* Inline text links in running copy carry an underline, so they read as links

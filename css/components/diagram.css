@@ -105,7 +105,7 @@
 .diagram__text--hub {
   fill: var(--text);
   font-size: 16px;
-  font-weight: 650;
+  font-weight: 600;
 }
 
 .diagram__text--meta {
@@ -139,5 +139,5 @@
 .diagram__step-label {
   fill: var(--on-accent);
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 600;
 }

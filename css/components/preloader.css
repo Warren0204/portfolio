@@ -75,10 +75,10 @@
 .preloader__line {
   display: block;
   max-width: 14ch;
-  color: var(--text);
-  font-family: var(--font-serif);
+  color: var(--accent-ink);
+  font-family: var(--font-display);
   font-size: clamp(40px, 9vw, 120px);
-  font-style: italic;
+  font-weight: 600;
   letter-spacing: -0.025em;
 
   /* Flush line box, so the two halves read as one continuous sentence. */
