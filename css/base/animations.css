@@ -169,3 +169,17 @@
     transform: scale(1);
   }
 }
+
+/* Home scroll cue: the line breathes wider and back. */
+@keyframes cue-slide {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scaleX(0.6);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}

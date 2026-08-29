@@ -35,8 +35,6 @@ export const roles = Object.freeze([
         title: 'Contract Studio',
         tokenLabel: 'Contract generator',
         role: 'Power Apps canvas app with a generation flow',
-        summary:
-          'A guided contract generation workflow that replaced manual template editing, with versioning built into the data model.',
         problem:
           'Employment contracts were manual template edits: slow, inconsistent, without version control, exposed to overwrite risk, and at risk of storing sensitive salary figures where they should not live.',
         built: Object.freeze([
@@ -62,12 +60,10 @@ export const roles = Object.freeze([
       }),
 
       Object.freeze({
-        tokenLabel: 'Automation workflows',
         id: 'attendance-suite',
         title: 'Attendance Automation Suite',
+        tokenLabel: 'Automation workflows',
         role: '4 cloud flows · Power Automate, SharePoint, Teams',
-        summary:
-          'A self maintaining attendance and disciplinary pipeline that replaced daily manual monitoring across the company.',
         problem:
           'Lateness monitoring and monthly disciplinary tracking were fully manual: checking files daily, messaging team leads by hand, counting late instances per employee, and remembering which escalation stage applied. Weekend gaps and month boundaries meant lates slipped through, and enforcement was inconsistent by nature.',
         built: Object.freeze([
@@ -86,14 +82,12 @@ export const roles = Object.freeze([
         diagramCaption:
           'Four scheduled flows keep the current month’s Excel file up to date and post late arrival notifications to a Teams group chat. On the first of every month a fresh file is created and the flows switch to it on their own, so counts reset without anyone touching them.',
       }),
-        tokenLabel: 'Power BI dashboard',
 
       Object.freeze({
         id: 'recruitment-analytics',
         title: 'Recruitment Analytics and Referral Dashboard',
+        tokenLabel: 'Power BI dashboard',
         role: 'ATS sync flow, Office Scripts, and a 4 page Power BI report',
-        summary:
-          'A daily sync that turns the applicant tracking list into a self updating analytics product for HR.',
         problem:
           'There was no live visibility into the recruitment pipeline or the employee referral program. Reporting meant manual exports, and the referral raffle was administered by hand.',
         built: Object.freeze([
@@ -494,11 +488,11 @@ export const diagrams = Object.freeze({
 export const experienceCopy = Object.freeze({
   eyebrow: 'WHERE I HAVE SHIPPED',
   heading: 'Experience',
-  overviewLabel: 'Overview',
-  diagramScrollLabel: 'Diagram, scrolls sideways',
   lead: 'One internship, three systems built and left running. Pick a system to read how it works.',
   systemsLine: 'Three systems, all in production',
   systemsTabsLabel: 'Delivered systems',
+  overviewLabel: 'Overview',
+  diagramScrollLabel: 'Diagram, scrolls sideways',
   inProduction: 'IN PRODUCTION',
   systemLabel: 'SYSTEM',
   ofLabel: 'OF',

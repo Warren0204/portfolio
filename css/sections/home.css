@@ -295,19 +295,6 @@
   transform-origin: left center;
 }
 
-@keyframes cue-slide {
-  0%,
-  100% {
-    opacity: 0.35;
-    transform: scaleX(0.6);
-  }
-
-  50% {
-    opacity: 1;
-    transform: scaleX(1);
-  }
-}
-
 /* The cue points at a scroll that is already obvious on a short screen, and
    there is no room to spend on it. */
 @media (height < 720px) {

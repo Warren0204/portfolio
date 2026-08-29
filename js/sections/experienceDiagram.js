@@ -87,7 +87,7 @@ export function createDiagram(spec, caption) {
 
   const figure = el('figure', { class: 'diagram__figure' }, [
     scroller,
-    el('figcaption', { class: 'diagram__hint eyebrow eyebrow--dim', text: spec.scrollHint }),
+    el('figcaption', { class: 'diagram__hint eyebrow eyebrow--muted', text: spec.scrollHint }),
   ]);
 
   const element = el('div', { class: 'diagram' }, [

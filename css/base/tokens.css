@@ -156,8 +156,6 @@
   /* Layering. Every z-index in the project is one of these. */
   --z-stage: 1;
   --z-sticky: 6;
-  --z-tab-bar: 7;
-  --z-menu: 15;
   --z-header: 20;
   --z-modal: 90;
   --z-zoom: 120;

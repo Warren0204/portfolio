@@ -7,10 +7,6 @@
   text-transform: uppercase;
 }
 
-.eyebrow--dim {
-  color: var(--muted);
-}
-
 .eyebrow--muted {
   color: var(--muted);
 }

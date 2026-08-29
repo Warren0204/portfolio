@@ -27,20 +27,6 @@
   transform: translateY(-3px);
 }
 
-.card--explore {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-  padding: var(--space-4) 18px;
-}
-
-.card--system {
-  display: flex;
-  flex-direction: column;
-  min-height: 250px;
-  padding: clamp(18px, 2.4vw, 24px);
-}
-
 .card--track {
   display: flex;
   flex-direction: column;

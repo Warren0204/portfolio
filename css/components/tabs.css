@@ -35,15 +35,6 @@
   color: var(--accent-ink);
 }
 
-/* Inline variant sits inside a card rather than above a chapter. */
-.tabs--inline .tabs__tab {
-  border-color: rgba(var(--line-rgb), 0.12);
-  font-size: var(--text-meta);
-}
-
-.tabs--inline .tabs__tab--selected {
-  background: var(--raised);
-}
 /* The segmented row: one horizontal strip that scrolls rather than wraps, so
    four tokens read as one control at 320px. The selected token is filled, the
    rest are outlined. */
