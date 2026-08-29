@@ -11,7 +11,7 @@
    the standard it answers to — rather than as a 40 here that quietly missed
    it. */
 .tabs__tab {
-  padding: 9px 15px;
+  padding: 10px 20px;
   border: 1px solid rgba(var(--line-rgb), 0.14);
   border-radius: var(--radius-sm);
   color: var(--muted);

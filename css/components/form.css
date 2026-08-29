@@ -122,6 +122,13 @@
   padding-inline: var(--space-6);
 }
 
+/* One column on a phone means one full-width action. */
+@media (width < 560px) {
+  .contact-form__submit {
+    align-self: stretch;
+  }
+}
+
 .contact-form__submit[aria-busy='true'] {
   cursor: progress;
   opacity: 0.75;

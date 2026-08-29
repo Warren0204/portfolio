@@ -491,6 +491,8 @@ export const diagrams = Object.freeze({
 export const experienceCopy = Object.freeze({
   eyebrow: 'WHERE I HAVE SHIPPED',
   heading: 'Experience',
+  overviewLabel: 'Overview',
+  diagramScrollLabel: 'Diagram, scrolls sideways',
   lead: 'One internship, three systems built and left running. Pick a system to read how it works.',
   systemsEyebrow: 'DELIVERED SYSTEMS \u00b7 POWER PLATFORM',
   systemsCountSuffix: 'SEPARATE SYSTEMS',

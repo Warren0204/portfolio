@@ -14,6 +14,7 @@
 }
 
 .button--primary {
+  min-height: 48px;
   background: var(--accent-ink);
   color: var(--on-accent);
   font-weight: 600;

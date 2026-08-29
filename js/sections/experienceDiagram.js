@@ -74,7 +74,16 @@ function animateDiagram(figure, parts) {
 export function createDiagram(spec, caption) {
   const parts = createDiagramSvg(spec);
 
-  const scroller = el('div', { class: 'diagram__scroll' }, parts.element);
+  // Focusable, so a keyboard can scroll the drawing sideways; the label says
+  // what the box is, since a bare scrollable region announces nothing.
+  const scroller = el(
+    'div',
+    {
+      class: 'diagram__scroll',
+      attrs: { tabindex: '0', role: 'group', 'aria-label': experienceCopy.diagramScrollLabel },
+    },
+    parts.element
+  );
 
   const figure = el('figure', { class: 'diagram__figure' }, [
     scroller,
