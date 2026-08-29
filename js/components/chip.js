@@ -46,7 +46,7 @@ export function createChip({ label, size = 'sm' }) {
           src: logo,
           alt: '',
           'aria-hidden': 'true',
-          loading: 'lazy',
+          loading: size === 'md' ? 'eager' : 'lazy',
           decoding: 'async',
           width: size === 'md' ? 26 : 22,
           height: size === 'md' ? 26 : 22,

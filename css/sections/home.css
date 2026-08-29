@@ -146,8 +146,9 @@
 
    At full width the face ate the whole first screen and pushed the summary and
    the calls to action below the fold, which is the opposite of what a hero is
-   for — so it stays small and left-aligned, on the same edge as everything
-   else, and reads as a byline photo. But a fixed 184px stayed 52% of a 320px
+   for — so it stays small, and centred rather than left-anchored: on a real
+   phone the left anchor read as a block with half the column empty beside it.
+   But a fixed 184px stayed 52% of a 320px
    phone and became 34% of a 600px window, which is exactly when it stopped
    reading as a byline photo and started reading as an image someone forgot to
    size. A percentage is the same intent at every width.
@@ -158,7 +159,7 @@
    wins, the way the 640px rule it replaces did. */
 .home__portrait {
   position: relative;
-  justify-self: start;
+  justify-self: center;
   width: min(320px, 52%);
 }
 
@@ -166,6 +167,54 @@
   .home__portrait {
     justify-self: center;
     width: min(320px, 100%);
+  }
+}
+
+/* Phones, below the 440 band: the portrait leads the column as a small circle
+   inside the brand ring, and the intro centres under it. 132px is the cap that
+   keeps the 400x400 source from being upscaled up to DPR 3. */
+@media (width < 440px) {
+  .home__portrait {
+    order: -1;
+    justify-self: center;
+    width: min(132px, 40vw);
+  }
+
+  .home__portrait .image-frame {
+    overflow: visible;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+  }
+
+  .home__portrait .image-frame__media {
+    aspect-ratio: 1 / 1;
+    padding: 3px;
+    border-radius: 50%;
+    background: var(--brand-gradient);
+    box-shadow: var(--shadow-md);
+  }
+
+  .home__portrait .image-frame__img {
+    display: block;
+    border-radius: 50%;
+  }
+
+  .home__portrait .image-frame__wash {
+    display: none;
+  }
+
+  .home__portrait .image-frame__caption {
+    padding: var(--space-2) 0 0;
+    border-top: 0;
+  }
+
+  .home__intro {
+    text-align: center;
+  }
+
+  .home__intro .typewriter {
+    justify-content: center;
   }
 }
 

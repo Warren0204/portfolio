@@ -84,7 +84,6 @@ export function createHomeSection() {
         revealNow(headline.words, { y: 34, stagger: 0.035, duration: 0.7 }),
         revealNow(typewriter.element, { delay: 0.1, y: 14 }),
         revealNow([summary, actions, tools], { delay: 0.35, stagger: 0.1 }),
-        revealNow(portrait, { delay: 0.2, y: 40, duration: 1 }),
         parallax(portrait, 50),
         revealOnScroll(stats.items, { trigger: stats.element, y: 24, stagger: 0.09 }),
       ];
