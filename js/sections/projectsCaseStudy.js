@@ -5,7 +5,13 @@
    Nothing here is behind a disclosure any more. The old version put the entire
    study behind an "open case study" button, which meant the page's strongest
    evidence rendered as a single collapsed row — an eight-second skim came away
-   with a title and nothing else. */
+   with a title and nothing else.
+
+   The study sits in the same card shell as the compact card, so every project
+   is one bounded object with the same numbered identity line, and it closes
+   with its status block behind a hairline. On a phone a slim identity strip
+   stays under the header while the card scrolls, because a long run of open
+   blocks otherwise gives no clue what they belong to. */
 
 import { el, replaceChildren } from '../core/dom.js';
 import { createBulletList } from '../components/bulletList.js';
@@ -15,17 +21,14 @@ import { createStatusDot } from '../components/statusDot.js';
 import { createTabs } from '../components/tabs.js';
 import { refreshTriggers } from '../core/animate.js';
 import { projectsCopy } from '../data/projects.js';
+import { createProjectMeta } from './projectsMeta.js';
 
 const { eyebrows } = projectsCopy;
 
-/** Identity: what kind of project, when, what it is called, and my part in it. */
-function createHeader(project) {
+/** Identity: the numbered strip, what it is called, and my part in it. */
+function createHeader(project, index) {
   return el('header', { class: 'project__header' }, [
-    el('div', { class: 'project__meta' }, [
-      el('span', { class: 'project__tag', text: project.tag }),
-      el('span', { class: 'project__rule', attrs: { 'aria-hidden': 'true' } }),
-      el('span', { class: 'project__period', text: project.period }),
-    ]),
+    createProjectMeta(project, index),
     el('h3', { class: 'project__title', text: project.title }),
     el('p', { class: 'project__summary', text: project.summary }),
     el('div', { class: 'project__roles' }, [
@@ -78,10 +81,10 @@ function createSurfaces(project) {
     onSelect: show,
     label: eyebrows.surfaces,
     panelId,
+    variant: 'segmented',
   });
 
   show(project.surfaces[0].id);
-    variant: 'segmented',
 
   const element = el('div', { class: 'project__surfaces' }, [
     createSectionEyebrow({ text: eyebrows.built }),
@@ -121,11 +124,12 @@ function createStack(project) {
 
 /**
  * @param {object} project One entry from `projects` in js/data/projects.js.
+ * @param {number} index Position in that array; the identity line numbers from it.
  * @returns {{ element: HTMLElement, blocks: HTMLElement[], destroy: () => void }}
  *   `blocks` are the pieces the section staggers in on scroll.
  */
-export function createCaseStudy(project) {
-  const header = createHeader(project);
+export function createCaseStudy(project, index) {
+  const header = createHeader(project, index);
   const narrative = createNarrative(project);
   const surfaces = createSurfaces(project);
   const stack = createStack(project);
@@ -138,10 +142,21 @@ export function createCaseStudy(project) {
     ]),
   ]);
 
-  const blocks = [header, narrative, surfaces.element, stack, status];
+  // The footer closes the card behind a hairline, so the study visibly ends
+  // before whatever comes next.
+  const footer = el('div', { class: 'project__footer' }, status);
+
+  const blocks = [header, narrative, surfaces.element, stack, footer];
+
+  // Phones only, see projects.css: stays under the header while the card
+  // scrolls and leaves with the card. Not a block, so it never animates.
+  const strip = el('p', {
+    class: 'project__strip eyebrow eyebrow--muted',
+    text: `${project.title} · ${project.tag}`,
+  });
 
   return {
-    element: el('article', { class: 'project' }, blocks),
+    element: el('article', { class: 'project' }, el('div', { class: 'card' }, [strip, ...blocks])),
     blocks,
     destroy: surfaces.destroy,
   };
