@@ -130,7 +130,7 @@ export const profile = Object.freeze({
        recruiter who needs any of those will just leave if there is no address.
 
        Ordered by how likely each is to be wanted. */
-    routesEyebrow: 'OR REACH ME DIRECTLY',
+    routesEyebrow: 'Or reach me directly',
     routes: Object.freeze([
       Object.freeze({
         id: 'email',

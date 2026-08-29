@@ -133,7 +133,7 @@ export const diagrams = Object.freeze({
     title: 'Late automation ecosystem diagram',
     description:
       'Flow 1, New Month File Creator, runs on the first of each month at 12:00 AM and duplicates the attendance template to create the monthly Excel file. Flow 2, Attendance Sync, runs daily at 7:00 AM, reads the source file and writes data into the current month’s Excel file. Flow 3, Daily Late Notification, runs daily at 8:00 AM, reads daily lates from the current month’s Excel file and posts to the Microsoft Teams group chat mentioning the team lead. Flow 4, HR Late Threshold Alert, runs daily at 8:15 AM, counts monthly data and posts to the same group chat mentioning HR and the team lead.',
-    scrollHint: 'SCROLL HORIZONTALLY TO VIEW THE FULL DIAGRAM ON SMALL SCREENS',
+    scrollHint: 'Scroll sideways to see the whole diagram',
 
     /* Connectors. `line` uses x1/y1/x2/y2, `polyline` uses points. */
     edges: Object.freeze([
@@ -261,7 +261,7 @@ export const diagrams = Object.freeze({
     title: 'Contract Studio generation flow diagram',
     description:
       'HR opens Contract Studio, a Power Apps canvas app. Step 1, the employee dashboard, offers search, filter, and generation status badges. Step 2, the finalization form, shows fields conditional on employment type, full time or contractor, and captures compensation without storing it. After a review, the generation flow runs in Power Automate. It reads the correct Word template, full time or contractor, and produces step 3, a versioned .docx numbered one above the highest version already stored. The document is saved to the SharePoint document library alongside the employee record, and the record status flips to Generated.',
-    scrollHint: 'SCROLL HORIZONTALLY TO VIEW THE FULL DIAGRAM ON SMALL SCREENS',
+    scrollHint: 'Scroll sideways to see the whole diagram',
 
     edges: Object.freeze([
       Object.freeze({ type: 'line', x1: 560, y1: 104, x2: 560, y2: 150 }),
@@ -385,7 +385,7 @@ export const diagrams = Object.freeze({
     title: 'Recruitment analytics and referral pipeline diagram',
     description:
       'The applicant tracking list in SharePoint is the source. Step 1, the recruitment sync flow, runs daily in Power Automate and calls an Office Script that shapes the rows. The result is the analytics dataset, an Excel Online file rebuilt every day. Step 2, a scheduled Power BI refresh, runs thirty minutes later and publishes the four page report: Leaderboard, Quarterly Summary, Monthly Summary, and Applicant Detail. Step 3, the raffle entry logic, reads the same dataset and awards stage weighted entries per recruitment milestone, capped per referral.',
-    scrollHint: 'SCROLL HORIZONTALLY TO VIEW THE FULL DIAGRAM ON SMALL SCREENS',
+    scrollHint: 'Scroll sideways to see the whole diagram',
 
     edges: Object.freeze([
       Object.freeze({ type: 'line', x1: 560, y1: 104, x2: 560, y2: 150 }),

@@ -8,7 +8,7 @@
 export const chapters = Object.freeze([
   Object.freeze({
     id: 'home',
-    label: 'HOME',
+    label: 'Home',
     menuLabel: 'Home',
     route: '#/',
     title: 'Warren Villagonzalo Gallardo — Power Platform Developer and Data Analyst',
@@ -17,7 +17,7 @@ export const chapters = Object.freeze([
   }),
   Object.freeze({
     id: 'projects',
-    label: 'PROJECTS',
+    label: 'Projects',
     menuLabel: 'Projects',
     route: '#/projects',
     title: 'Projects — Warren Villagonzalo Gallardo',
@@ -26,7 +26,7 @@ export const chapters = Object.freeze([
   }),
   Object.freeze({
     id: 'experience',
-    label: 'EXPERIENCE',
+    label: 'Experience',
     menuLabel: 'Experience',
     route: '#/experience',
     title: 'Experience — Warren Villagonzalo Gallardo',
@@ -35,7 +35,7 @@ export const chapters = Object.freeze([
   }),
   Object.freeze({
     id: 'credentials',
-    label: 'CREDENTIALS',
+    label: 'Credentials',
     menuLabel: 'Credentials',
     route: '#/credentials',
     title: 'Credentials — Warren Villagonzalo Gallardo',
@@ -44,7 +44,7 @@ export const chapters = Object.freeze([
   }),
   Object.freeze({
     id: 'contact',
-    label: 'CONTACT',
+    label: 'Contact',
     menuLabel: 'Contact',
     route: '#/contact',
     title: 'Contact — Warren Villagonzalo Gallardo',
