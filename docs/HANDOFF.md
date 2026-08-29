@@ -109,6 +109,15 @@ comment there explains why the number is not the one a screen spec suggests.
 `python3 -m http.server 5173` serves the site the same way; the only thing
 lost is the clean 404 on `/_vercel/insights/script.js`.
 
+**`tools/serve.ps1` will not start under the default execution policy.** This
+machine reports `Restricted` at every scope, so `powershell -File` refuses the
+script before it runs. Start it with a process-scoped bypass, which changes
+nothing on the system:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/serve.ps1     # http://localhost:5173
+```
+
 **`tools/serve.ps1` sends no cache headers**, so Chrome will happily reuse a
 module it fetched before you edited it. When a change appears to do nothing,
 disable the cache before concluding the change was wrong.
@@ -138,12 +147,67 @@ attribution** — every commit here is authored by Warren.
 Two or three words is a real constraint, not a style note: if a message needs
 more, the commit is doing more than one thing and should be split.
 
+### 2026-08-30: the Phase 2 pass
+
+A run of small commits from one recon report (`recon-report.md`, kept out of
+the repo), landed in three batches and one follow-up and checked on localhost
+between batches.
+
+What changed: the phone hero is a centred 132px circle in the brand ring with
+the intro under it; the portrait paints without an entrance tween and is
+preloaded from the head. Touch targets clear 44px everywhere, the submit
+button fills the column on a phone, new-tab links carry a glyph and
+`noreferrer`, and text links are underlined. Experience opens on an Overview
+token inside the role card, with the three systems as segmented tokens; the
+TranspiraFund surfaces use the same control and gained an AI layer token.
+Projects is a numbered list of two cards, the capstone and a DataCamp guided
+project, each closing behind a hairline, with a sticky identity strip on
+phones. Copy went sentence case in the data with uppercase kept in CSS.
+Dark-mode accents are desaturated. Two font families instead of four. Dead
+CSS, tokens and data pruned.
+
+Why: the recon found the portrait left-anchored with half the column empty on
+every real phone, the primary action below the fold, the systems hidden behind
+tag-like tabs, and no visible boundary between one project and the next.
+
+Decisions, so nobody re-opens them:
+
+- D1 Phone hero: a centred circle, capped at 132px so the 400px source is never upscaled, portrait first in the column.
+- D2 Machine voice: uppercase tracked labels stay, applied by CSS; the data is sentence case.
+- D3 Fonts: Sora 600 and 700 plus Hanken Grotesk 400, 500 and 600, and nothing else; IBM Plex Mono and Instrument Serif dropped.
+- D4 DataCamp card: second in the list, tag Guided project, chips SQL, PostgreSQL and DataCamp DataLab, badge Completed in green, link Open notebook with the external glyph.
+- D5 Dark accents: the desaturated set from the recon, every ink still above 8:1 on its ground.
+- D6 TranspiraFund tokens: the same segmented control; an AI layer surface holds only the existing items that named Claude, retrieval, or verification.
+- D7 Experience default: Overview first; token labels only, no counts.
+- D8 Contact ending: the details line stays the close; the footer is a contentinfo landmark, and on a phone the form comes before the routes.
+
+Left open: fallback font metrics (`size-adjust`, `ascent-override`) need
+measured values; `tools/og-card.html` still names the old faces for the OG
+image; the `serif-tail` class name has outlived the serif.
+
 ### The log so far
 
 Read newest first. Use these as the pattern for anything new.
 
 | Message                                     | What it covered                                                                                                                                 |
 | ------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Update handoff log`                        | This entry                                                                                                                                      |
+| `Mark visited tabs`                         | A section already read keeps a faint trace of the marker in the phone tab bar                                                                   |
+| `Prune dead code`                           | Card, tab, dot and eyebrow variants with no consumer, two z-index tokens, unread system summaries; the cue keyframes moved to animations.css    |
+| `Consolidate fonts`                         | Two families from Google Fonts instead of four; labels are Hanken in the label recipe; the serif tail is Sora 600; body 16px                    |
+| `Desaturate dark accents`                   | Dark accent, green and red inks about 15 percent less saturated, each still above 8:1 on its ground                                             |
+| `Group project cards`                       | Both projects in one card shell with a numbered identity line and a hairline footer; a sticky identity strip on phones                          |
+| `Snap spacing scale`                        | Off-scale paddings and gaps moved to tokens; the section gap tighter on phones; eyebrows closer to what they label                              |
+| `Tidy contact ending`                       | The footer is a contentinfo landmark; on a phone the form comes before the routes; a tighter footer gap                                         |
+| `Tidy microcopy`                            | Sentence case in the data with uppercase kept in CSS; shorter hints and labels; nav labels uppercased by the stylesheet                         |
+| `Add DataCamp card`                         | A compact card for the guided project, second in the list, with its notebook link and a Completed badge                                         |
+| `Add segmented tabs`                        | Experience opens on an Overview token inside the role card; TranspiraFund surfaces use the same control and gain an AI layer token              |
+| `Tighten nested radii`                      | Chip logos and the certificate thumb no longer rounder than the container they sit in; chip borders one step lighter                            |
+| `Flatten gradients`                         | The frame wash, section hairline and scroll cue are flat tints; the ambient wash, portrait ring and progress bar remain                         |
+| `Retire pure white`                         | Near-white and near-black tokens where #fff and rgba(0, 0, 0) were, except the white logo ground                                                |
+| `Add link glyphs`                           | External and download icons as inline SVG, noreferrer on every new-tab link, underlined text links in running copy                              |
+| `Raise touch targets`                       | Availability chip, tabs, zoom buttons, skip link and primary buttons at or above 44px; full-width submit on a phone; focusable diagram scroller |
+| `Center phone portrait`                     | The phone hero as a centred circle in the brand ring, portrait first, preloaded from the head, no entrance tween; hero logo chips eager         |
 | `Add thumbnail source`                      | An 800px credential thumbnail behind `srcset`/`sizes`; a client at DPR 2 or less takes 48KB where it used to take 188KB                         |
 | `Fix modal lock`                            | The scroll lock named body and so never reached the viewport; the zoom body now fills its dialog, so the certificate centres on a phone         |
 | `Raise touch targets`                       | Tab buttons and the wordmark to the 44px floor through `.target`; nav links get a 44px hit area without a 44px box, so the underline stays put  |
@@ -199,17 +263,13 @@ wraps to two rows below about 700px wide: 16% of a 393x852 screen and 24% of a
 respectively. Measured, not estimated. The cheap levers are hiding
 `.zoom__eyebrow` and tightening the bar's block padding on a short screen.
 
-**Font CLS is the largest layout-shift source left on the site.** Four
-families, eight faces, from fonts.googleapis.com with `display=swap`, no
+**Font CLS is the largest layout-shift source left on the site.** Two
+families, five faces, from fonts.googleapis.com with `display=swap`, no
 preload and no metric-adjusted fallback, on a hero headline at
 `clamp(31px, 5vw, 62px)`. The real fix is `size-adjust` and `ascent-override`
 fallback faces, about four `@font-face` blocks. `display=optional` removes the
 shift in a one-line edit but shows a first-time visitor the whole page in
 fallback type. Self-hosting is the biggest win and the biggest change.
-
-**`--z-tab-bar` is now unused.** `Unstick credentials tabs` took its last
-consumer; the bottom bar itself sits at `--z-header`. Left in place rather than
-pruned inside a responsiveness pass.
 
 ## Decided, so nobody re-opens it
 
