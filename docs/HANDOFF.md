@@ -227,6 +227,36 @@ Left open: the uppercase copy still in the data (see Still outstanding), and
 the residual layout shift below the fold that an average-width match cannot
 remove (also below).
 
+### 2026-08-30: the tab bar redesign
+
+The phone bottom navigation only. Each tab was a numeral over a label with a
+lit rail above the current one; it is now an icon in a pill over the label,
+the way a native tab bar marks place. The show condition, the z-index, the
+nav's aria-label, and the scroll-spy and router wiring are unchanged, and
+nothing at 920px and wider moved. Checked without a browser: lint and
+Prettier clean, label widths computed from the Hanken advance widths, and the
+new glyphs' winding checked by shoelace.
+
+What changed: the bar is 64px plus the home-indicator inset (56px on a phone
+held sideways), in the header's translucent recipe with a 0.16 hairline and
+no shadow, and --tab-bar-space reserves exactly that box. Each tab is a
+full-height column, 63px under the hairline, with a 56x32 pill holding a 24px
+glyph and an 11px Hanken label. The current tab fills the pill with the
+accent at 0.14 (0.2 in dark) and sets icon and label in the accent ink; a
+section already read keeps its icon in the text colour. The pill scales to
+0.94 on press, and not under reduced motion. aria-current is "page". Four
+glyphs joined icon.js (house, folder, briefcase, award); Contact reuses the
+envelope.
+
+Decisions, continuing the numbering above:
+
+- D12 Label size: 11px, and 10.5px below 360px only. Credentials measures 57px at 11px against 56px of room in a 320px tab; at 10.5px it is 55.
+- D13 Sideways: the bar is 56px and the tab's block padding halves to 4px, because 55px under the hairline holds the pill, the gap and the label with nothing to spare.
+- D14 Contact's glyph is the existing envelope. A second envelope would have been the same drawing under a new name.
+- D15 The pill tint is a token, --tab-bar-pill, with its light and dark values in tokens.css, so no component file branches on the theme.
+- D16 The focus ring is the site's own, drawn 4px inward, so it never runs off the bottom of a screen that has no inset.
+- D17 The press is the pill's own 0.94 rule rather than the 0.985 recipe in utilities/touch.css, which scales a whole control.
+
 ### The log so far
 
 Read newest first. Use these as the pattern for anything new.
@@ -234,6 +264,9 @@ Read newest first. Use these as the pattern for anything new.
 | Message                                     | What it covered                                                                                                                                  |
 | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `Update handoff log`                        | This entry                                                                                                                                       |
+| `Redesign tab bar`                          | Icon pills over labels in a 64px translucent bar; numerals and rail gone; the pill is the indicator and a visited icon takes the text colour     |
+| `Add nav icons`                             | House, folder, briefcase and award glyphs on the 24 grid, and an `icon` field per chapter; Contact reuses the envelope                           |
+| `Update handoff log`                        | The follow-up pass entry                                                                                                                         |
 | `Correct stale notes`                       | README's Projects row, ARCHITECTURE's shell and content tables, and the brand-gradient comment in tokens.css, each saying what the code does now |
 | `Caption AI layer`                          | The AI layer token carried the Shared foundation caption; it now has its own, in the summary's words                                             |
 | `Name surfaces panel`                       | The TranspiraFund tabpanel takes `aria-labelledby` from the selected token, as the Experience and Credentials panels already did                 |
@@ -340,11 +373,6 @@ tab labels. The eyebrow and label recipes already apply
 visible change; the Credentials tab strip has no uppercase rule of its own, so
 its labels would change look and need the rule first. A data-only sweep, one
 commit.
-
-**The recon files stay out of the repo on purpose.**
-`portfolio-recon-prompt-phase1.md` and `recon-report.md` sit untracked in the
-root; `npm run format:check` flags both, and that is the only warning it
-should ever print. Do not add them, format them, or ignore them without asking.
 
 ## Decided, so nobody re-opens it
 
