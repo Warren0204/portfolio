@@ -29,7 +29,9 @@ powershell -File tools/serve.ps1     # http://localhost:5173
 ```
 
 **With Node**, `npm install` fetches the dev tooling only — eslint, prettier,
-stylelint. There is deliberately no dev server dependency: `tools/serve.ps1` is
+stylelint. Node 24 has been on this machine since 2026-08-30, so `npm ci`,
+`npm run lint`, and `npm run format:check` all work here; run them before a
+commit. There is deliberately no dev server dependency: `tools/serve.ps1` is
 it. Vite was removed because the only thing it did was serve files, and a real
 `vite build` actively breaks this site (see DEPLOYMENT.md).
 
@@ -181,58 +183,111 @@ Decisions, so nobody re-opens them:
 - D7 Experience default: Overview first; token labels only, no counts.
 - D8 Contact ending: the details line stays the close; the footer is a contentinfo landmark, and on a phone the form comes before the routes.
 
-Left open: fallback font metrics (`size-adjust`, `ascent-override`) need
-measured values; `tools/og-card.html` still names the old faces for the OG
-image; the `serif-tail` class name has outlived the serif.
+Left open at the time, and closed by the follow-up pass below: fallback font
+metrics needed measured values; `tools/og-card.html` still named the old faces;
+the `serif-tail` class name had outlived the serif.
+
+### 2026-08-30: the follow-up pass
+
+The Phase 2 commits were checked before anything else was added: `npm run
+lint` clean, no console errors, no horizontal overflow, and no stuck reveals
+at 320, 360, 390, 412, 430, 768, 1280 and 1440 wide plus 852x393 landscape, in
+both themes, driven over the DevTools protocol against `tools/serve.ps1`. Three
+Phase 2 modules were left unformatted and were run through Prettier. A review
+of the range then found one real regression and two gaps, all fixed below.
+
+What changed: the headline tail is upright — Sora has no italic, and the
+`<em>` default had been slanting it synthetically. Four metric-matched
+fallback faces (local Arial with Hanken's and Sora's own metrics laid over it)
+sit behind the two families, so the first paint and the web-font paint share
+one geometry: with the font requests blocked, the hero headline, summary,
+actions and stats land at the same pixel rows as with the fonts, at 390 and at
+1280 wide. `tools/font-metrics.js` reproduces the numbers. The lightbox bar
+on a phone is 104px, down from 135. The DataCamp card's link is a 44px row.
+The OG card source uses the two families and the current dark tokens, and
+`og-cover.jpg` was regenerated from it. The contact form reveals on its own
+trigger. The TranspiraFund surfaces panel is named by its token. The AI layer
+token has its own caption. README, ARCHITECTURE and a tokens comment say what
+the code now does.
+
+Why the contact fix mattered: Phase 2 moved the routes card below the form on
+a phone with `order`, but the form's reveal was still keyed to that card. On
+a real phone with motion enabled the whole form sat at opacity 0 while it was
+the thing on screen, until the card a full screen further down came into
+view. Measured: at 390x844 the form occupied 101 to 816px of the viewport and
+was invisible.
+
+Decisions, continuing the numbering above:
+
+- D9 Tail: upright. A synthesised oblique is a face the site does not load; the emphasis is the accent colour and the 600 weight step. One line in typography.css reverts it.
+- D10 Fallback faces: Arial only, because it is on every Windows, macOS and iOS device and its metrics could be measured here. No Android stand-in: Roboto was not on this machine to measure, and a wrong size-adjust is worse than none. Self-hosting was not taken; it remains the larger win and is listed below.
+- D11 The AI layer caption: "Milestone planning and photo verification under both surfaces", built from the summary's own words rather than a new claim.
+
+Left open: the uppercase copy still in the data (see Still outstanding), and
+the residual layout shift below the fold that an average-width match cannot
+remove (also below).
 
 ### The log so far
 
 Read newest first. Use these as the pattern for anything new.
 
-| Message                                     | What it covered                                                                                                                                 |
-| ------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| `Update handoff log`                        | This entry                                                                                                                                      |
-| `Mark visited tabs`                         | A section already read keeps a faint trace of the marker in the phone tab bar                                                                   |
-| `Prune dead code`                           | Card, tab, dot and eyebrow variants with no consumer, two z-index tokens, unread system summaries; the cue keyframes moved to animations.css    |
-| `Consolidate fonts`                         | Two families from Google Fonts instead of four; labels are Hanken in the label recipe; the serif tail is Sora 600; body 16px                    |
-| `Desaturate dark accents`                   | Dark accent, green and red inks about 15 percent less saturated, each still above 8:1 on its ground                                             |
-| `Group project cards`                       | Both projects in one card shell with a numbered identity line and a hairline footer; a sticky identity strip on phones                          |
-| `Snap spacing scale`                        | Off-scale paddings and gaps moved to tokens; the section gap tighter on phones; eyebrows closer to what they label                              |
-| `Tidy contact ending`                       | The footer is a contentinfo landmark; on a phone the form comes before the routes; a tighter footer gap                                         |
-| `Tidy microcopy`                            | Sentence case in the data with uppercase kept in CSS; shorter hints and labels; nav labels uppercased by the stylesheet                         |
-| `Add DataCamp card`                         | A compact card for the guided project, second in the list, with its notebook link and a Completed badge                                         |
-| `Add segmented tabs`                        | Experience opens on an Overview token inside the role card; TranspiraFund surfaces use the same control and gain an AI layer token              |
-| `Tighten nested radii`                      | Chip logos and the certificate thumb no longer rounder than the container they sit in; chip borders one step lighter                            |
-| `Flatten gradients`                         | The frame wash, section hairline and scroll cue are flat tints; the ambient wash, portrait ring and progress bar remain                         |
-| `Retire pure white`                         | Near-white and near-black tokens where #fff and rgba(0, 0, 0) were, except the white logo ground                                                |
-| `Add link glyphs`                           | External and download icons as inline SVG, noreferrer on every new-tab link, underlined text links in running copy                              |
-| `Raise touch targets`                       | Availability chip, tabs, zoom buttons, skip link and primary buttons at or above 44px; full-width submit on a phone; focusable diagram scroller |
-| `Center phone portrait`                     | The phone hero as a centred circle in the brand ring, portrait first, preloaded from the head, no entrance tween; hero logo chips eager         |
-| `Add thumbnail source`                      | An 800px credential thumbnail behind `srcset`/`sizes`; a client at DPR 2 or less takes 48KB where it used to take 188KB                         |
-| `Fix modal lock`                            | The scroll lock named body and so never reached the viewport; the zoom body now fills its dialog, so the certificate centres on a phone         |
-| `Raise touch targets`                       | Tab buttons and the wordmark to the 44px floor through `.target`; nav links get a 44px hit area without a 44px box, so the underline stays put  |
-| `Shrink landscape portrait`                 | The hero portrait and its grid track sized from viewport height on a phone held sideways, where the frame was taller than the screen            |
-| `Cap dialog height`                         | `min(88svh, 100%)`, so a dialog cannot be taller than the screen it is centred in once the backdrop's own padding is counted                    |
-| `Inset for cutouts`                         | One rule answering `env(safe-area-inset-left/right)` for the header, tab bar, well and dialogs, via an `--edge-pad` each states for itself      |
-| `Key shell to height`                       | The phone shell keyed to a short touch screen as well as a narrow one, so a landscape phone keeps its tab bar instead of taking the desktop nav |
-| `Unstick credentials tabs`                  | The Credentials tab strip was sticky underneath the header and never once visible; it sits in normal flow now                                   |
-| `Drop SQL chip`                             | Hero tech stack down to seven; SQL is still claimed in the Credentials data group, where it reads alongside PostgreSQL and DAX                  |
-| `Center frame caption`                      | A caption narrower than its own text centres both lines instead of ragging left inside a centred block                                          |
-| `Stack hero actions`                        | One action per row below 560px, so the hierarchy is carried by weight rather than by width                                                      |
-| `Rebalance hero grid`                       | A third hero arrangement from 440px: portrait beside the headline, body across both columns. Fixes the orphaned portrait and the clipped chips  |
-| `Reserve tab bar`                           | `--tab-bar-space`, reserved once on `.stage`, replacing the bar-aware padding that only Contact had                                             |
-| `Consolidate colour tokens`                 | 27 ad-hoc colours retired into tokens; 4 text levels folded to 2; 10 dead tokens removed                                                        |
-| `Rebalance contact layout`                  | One grid for the whole section, routes card raised level with the heading                                                                       |
-| `Add header chip`                           | Availability chip in the header from 1080px, reading the contact section's data                                                                 |
-| `Add hCaptcha verification to contact form` | hCaptcha in front of the Web3Forms submit, rendered explicitly and lazily. Longer than the rule allows — kept because it was specified verbatim |
-| `Readability and contact`                   | Light-theme ink re-tuned to 7:1, 11px type floor, dark by default, Contact routes rebuilt, NDA note added                                       |
-| `Dedupe contact copy`                       | Removed repeated timezone, work arrangement, and contact details inside the Contact section                                                     |
-| `Prune dead code`                           | Removed exports, modules, and CSS orphaned by the redesign; Home's third CTA now scrolls to Contact                                             |
-| `Optimize images`                           | Logos and the certificate re-encoded to WebP, 1.73 MB down to 235 KB                                                                            |
-| `Document domain decision`                  | Recorded that the site stays on the vercel.app URL, so it stops reading as unfinished work                                                      |
-| `Phase 2 redesign`                          | Five sliding chapters became one scrolling page: GSAP motion, scroll-drawn diagrams, contact form, new wordmark                                 |
-| `Phase 1 portfolio`                         | The original build                                                                                                                              |
-| `Initial commit`                            | Repository created                                                                                                                              |
+| Message                                     | What it covered                                                                                                                                  |
+| ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `Update handoff log`                        | This entry                                                                                                                                       |
+| `Correct stale notes`                       | README's Projects row, ARCHITECTURE's shell and content tables, and the brand-gradient comment in tokens.css, each saying what the code does now |
+| `Caption AI layer`                          | The AI layer token carried the Shared foundation caption; it now has its own, in the summary's words                                             |
+| `Name surfaces panel`                       | The TranspiraFund tabpanel takes `aria-labelledby` from the selected token, as the Experience and Credentials panels already did                 |
+| `Fix contact reveal`                        | The form and the routes card each reveal on their own trigger; the shared one sat below the fold on a phone and held the form invisible          |
+| `Refresh OG card`                           | `tools/og-card.html` in the two families and the current dark tokens; `og-cover.jpg` regenerated from it                                         |
+| `Compact zoom bar`                          | The lightbox bar on a phone: eyebrow hidden below 700px and block padding on the scale, 135px down to 104                                        |
+| `Raise link target`                         | The compact card's Open notebook link is a 44px row, the one target on the page that was still under the floor                                   |
+| `Add fallback faces`                        | Four metric-matched local Arial stand-ins behind Hanken and Sora; the hero no longer moves when the web fonts land                               |
+| `Add metrics tool`                          | `tools/font-metrics.js`: reads head, hhea, OS/2, cmap and hmtx from a TTF and prints size-adjust and the three overrides                         |
+| `Keep tail upright`                         | `font-style: normal` on the headline tail; Sora has no italic and the `<em>` default was a synthesised slant                                     |
+| `Rename tail class`                         | `serif-tail` is `display-tail`; the serif left in the font consolidation                                                                         |
+| `Format sections`                           | Prettier over the three modules the Phase 2 pass left unformatted                                                                                |
+| `Update handoff log`                        | The Phase 2 pass entry                                                                                                                           |
+| `Mark visited tabs`                         | A section already read keeps a faint trace of the marker in the phone tab bar                                                                    |
+| `Prune dead code`                           | Card, tab, dot and eyebrow variants with no consumer, two z-index tokens, unread system summaries; the cue keyframes moved to animations.css     |
+| `Consolidate fonts`                         | Two families from Google Fonts instead of four; labels are Hanken in the label recipe; the serif tail is Sora 600; body 16px                     |
+| `Desaturate dark accents`                   | Dark accent, green and red inks about 15 percent less saturated, each still above 8:1 on its ground                                              |
+| `Group project cards`                       | Both projects in one card shell with a numbered identity line and a hairline footer; a sticky identity strip on phones                           |
+| `Snap spacing scale`                        | Off-scale paddings and gaps moved to tokens; the section gap tighter on phones; eyebrows closer to what they label                               |
+| `Tidy contact ending`                       | The footer is a contentinfo landmark; on a phone the form comes before the routes; a tighter footer gap                                          |
+| `Tidy microcopy`                            | Sentence case in the data with uppercase kept in CSS; shorter hints and labels; nav labels uppercased by the stylesheet                          |
+| `Add DataCamp card`                         | A compact card for the guided project, second in the list, with its notebook link and a Completed badge                                          |
+| `Add segmented tabs`                        | Experience opens on an Overview token inside the role card; TranspiraFund surfaces use the same control and gain an AI layer token               |
+| `Tighten nested radii`                      | Chip logos and the certificate thumb no longer rounder than the container they sit in; chip borders one step lighter                             |
+| `Flatten gradients`                         | The frame wash, section hairline and scroll cue are flat tints; the ambient wash, portrait ring and progress bar remain                          |
+| `Retire pure white`                         | Near-white and near-black tokens where #fff and rgba(0, 0, 0) were, except the white logo ground                                                 |
+| `Add link glyphs`                           | External and download icons as inline SVG, noreferrer on every new-tab link, underlined text links in running copy                               |
+| `Raise touch targets`                       | Availability chip, tabs, zoom buttons, skip link and primary buttons at or above 44px; full-width submit on a phone; focusable diagram scroller  |
+| `Center phone portrait`                     | The phone hero as a centred circle in the brand ring, portrait first, preloaded from the head, no entrance tween; hero logo chips eager          |
+| `Add thumbnail source`                      | An 800px credential thumbnail behind `srcset`/`sizes`; a client at DPR 2 or less takes 48KB where it used to take 188KB                          |
+| `Fix modal lock`                            | The scroll lock named body and so never reached the viewport; the zoom body now fills its dialog, so the certificate centres on a phone          |
+| `Raise touch targets`                       | Tab buttons and the wordmark to the 44px floor through `.target`; nav links get a 44px hit area without a 44px box, so the underline stays put   |
+| `Shrink landscape portrait`                 | The hero portrait and its grid track sized from viewport height on a phone held sideways, where the frame was taller than the screen             |
+| `Cap dialog height`                         | `min(88svh, 100%)`, so a dialog cannot be taller than the screen it is centred in once the backdrop's own padding is counted                     |
+| `Inset for cutouts`                         | One rule answering `env(safe-area-inset-left/right)` for the header, tab bar, well and dialogs, via an `--edge-pad` each states for itself       |
+| `Key shell to height`                       | The phone shell keyed to a short touch screen as well as a narrow one, so a landscape phone keeps its tab bar instead of taking the desktop nav  |
+| `Unstick credentials tabs`                  | The Credentials tab strip was sticky underneath the header and never once visible; it sits in normal flow now                                    |
+| `Drop SQL chip`                             | Hero tech stack down to seven; SQL is still claimed in the Credentials data group, where it reads alongside PostgreSQL and DAX                   |
+| `Center frame caption`                      | A caption narrower than its own text centres both lines instead of ragging left inside a centred block                                           |
+| `Stack hero actions`                        | One action per row below 560px, so the hierarchy is carried by weight rather than by width                                                       |
+| `Rebalance hero grid`                       | A third hero arrangement from 440px: portrait beside the headline, body across both columns. Fixes the orphaned portrait and the clipped chips   |
+| `Reserve tab bar`                           | `--tab-bar-space`, reserved once on `.stage`, replacing the bar-aware padding that only Contact had                                              |
+| `Consolidate colour tokens`                 | 27 ad-hoc colours retired into tokens; 4 text levels folded to 2; 10 dead tokens removed                                                         |
+| `Rebalance contact layout`                  | One grid for the whole section, routes card raised level with the heading                                                                        |
+| `Add header chip`                           | Availability chip in the header from 1080px, reading the contact section's data                                                                  |
+| `Add hCaptcha verification to contact form` | hCaptcha in front of the Web3Forms submit, rendered explicitly and lazily. Longer than the rule allows — kept because it was specified verbatim  |
+| `Readability and contact`                   | Light-theme ink re-tuned to 7:1, 11px type floor, dark by default, Contact routes rebuilt, NDA note added                                        |
+| `Dedupe contact copy`                       | Removed repeated timezone, work arrangement, and contact details inside the Contact section                                                      |
+| `Prune dead code`                           | Removed exports, modules, and CSS orphaned by the redesign; Home's third CTA now scrolls to Contact                                              |
+| `Optimize images`                           | Logos and the certificate re-encoded to WebP, 1.73 MB down to 235 KB                                                                             |
+| `Document domain decision`                  | Recorded that the site stays on the vercel.app URL, so it stops reading as unfinished work                                                       |
+| `Phase 2 redesign`                          | Five sliding chapters became one scrolling page: GSAP motion, scroll-drawn diagrams, contact form, new wordmark                                  |
+| `Phase 1 portfolio`                         | The original build                                                                                                                               |
+| `Initial commit`                            | Repository created                                                                                                                               |
 
 Verbs that fit the shape: `Add`, `Fix`, `Remove`, `Prune`, `Optimize`,
 `Dedupe`, `Document`, `Rename`, `Restore`. A bare noun phrase is fine too when
@@ -257,19 +312,39 @@ end: 180x180 against a crest that pins to its 84px floor on every phone and
 wants 252 device pixels there. Upscaling either produces bytes, not detail.
 **Both need a higher-resolution original before anything else is worth doing.**
 
-**The certificate lightbox header is 135px tall on a phone.** `.modal__bar`
-wraps to two rows below about 700px wide: 16% of a 393x852 screen and 24% of a
-320x568 one, against a certificate that is only 273px and 216px tall
-respectively. Measured, not estimated. The cheap levers are hiding
-`.zoom__eyebrow` and tightening the bar's block padding on a short screen.
+**Self-hosting the fonts is the remaining font win.** The metric-matched
+fallbacks stop the swap from moving the first screen, but the swap itself
+still happens, and it costs a round trip to fonts.googleapis.com and another to
+fonts.gstatic.com before either family can paint. Both families are served as
+variable fonts — one woff2 per family for the Latin range — so self-hosting is
+two files under `assets/`, two `@font-face` blocks, and two `<link
+rel="preload">` tags, with the fallback faces staying as they are. Both are
+OFL-licensed. The reason it was not done: it changes what the CDN cache and the
+Google Fonts versioning do for free, and that is a decision for the owner.
 
-**Font CLS is the largest layout-shift source left on the site.** Two
-families, five faces, from fonts.googleapis.com with `display=swap`, no
-preload and no metric-adjusted fallback, on a hero headline at
-`clamp(31px, 5vw, 62px)`. The real fix is `size-adjust` and `ascent-override`
-fallback faces, about four `@font-face` blocks. `display=optional` removes the
-shift in a one-line edit but shows a first-time visitor the whole page in
-fallback type. Self-hosting is the biggest win and the biggest change.
+**A little layout still shifts below the fold when the fonts land.** The
+fallback faces match the web faces on average width, not word by word, so a
+line here and there still wraps differently: measured with the font requests
+blocked, the hero is identical, but the evidence strip at 1280 wide is 19px
+taller in the fallback and the Projects section at 390 wide about 54px taller.
+Both are out of the first viewport, so they cost nothing on the metric that
+matters; closing them would mean per-string tuning or self-hosting.
+
+**The data still carries uppercase copy.** D2 says the data is sentence case
+and the stylesheet does the uppercasing, and that holds for the nav, the
+Experience tokens and the microcopy the pass touched. It does not yet hold for
+the eyebrows (`CONTACT`, `SEND A MESSAGE`, `EDUCATION`), the availability
+status, the stat labels, the scroll cue, the theme labels or the Credentials
+tab labels. The eyebrow and label recipes already apply
+`text-transform: uppercase`, so most of those could go sentence case with no
+visible change; the Credentials tab strip has no uppercase rule of its own, so
+its labels would change look and need the rule first. A data-only sweep, one
+commit.
+
+**The recon files stay out of the repo on purpose.**
+`portfolio-recon-prompt-phase1.md` and `recon-report.md` sit untracked in the
+root; `npm run format:check` flags both, and that is the only warning it
+should ever print. Do not add them, format them, or ignore them without asking.
 
 ## Decided, so nobody re-opens it
 
