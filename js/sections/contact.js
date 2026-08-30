@@ -133,9 +133,16 @@ export function createContactSection() {
     element,
 
     armReveal() {
+      // The form and the routes card each reveal on their own trigger. They
+      // used to share one keyed to the routes card, which was fine while the
+      // card sat above the form — but a phone now puts it below by `order`,
+      // and a reveal waiting on it held the form invisible while the form was
+      // the thing on screen. Above 900px the two sit side by side and still
+      // arrive together.
       reveals = [
         revealOnScroll([...Array.from(head.children), availabilityCard], { trigger: head }),
-        revealOnScroll([routes, form.element], { trigger: routes, y: 30, stagger: 0.12 }),
+        revealOnScroll(form.element, { y: 30 }),
+        revealOnScroll(routes, { y: 30 }),
       ];
     },
 
