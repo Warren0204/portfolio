@@ -82,15 +82,50 @@ export const projects = Object.freeze([
 
     stackGroups: Object.freeze([
       Object.freeze({
-        label: 'WEB DASHBOARD',
-        items: Object.freeze(['React + Vite', 'Firebase Hosting']),
+        label: 'Web dashboard',
+        items: Object.freeze([
+          'React',
+          'Vite',
+          'JavaScript',
+          'Tailwind CSS',
+          'React Router',
+          'Firebase Hosting',
+        ]),
       }),
-      Object.freeze({ label: 'MOBILE APP', items: Object.freeze(['React Native', 'Gradle']) }),
       Object.freeze({
-        label: 'BACKEND AND AI',
-        items: Object.freeze(['Firebase', 'Node.js 22', 'Claude API']),
+        label: 'Mobile app (Android)',
+        items: Object.freeze([
+          'React Native (bare)',
+          'TypeScript',
+          'React Navigation',
+          'Reanimated',
+          'Firebase App Distribution',
+        ]),
       }),
-      Object.freeze({ label: 'DESIGN', items: Object.freeze(['Figma']) }),
+      Object.freeze({
+        label: 'Backend',
+        items: Object.freeze([
+          'Cloud Functions (Node.js)',
+          'Firebase Authentication',
+          'Cloud Firestore',
+          'Cloud Storage',
+          'sharp (photo stamping)',
+          'Nodemailer (OTP email)',
+          'Nominatim (reverse geocoding)',
+        ]),
+      }),
+      Object.freeze({
+        label: 'AI',
+        items: Object.freeze([
+          'Claude API',
+          'Claude Haiku (milestones, classification)',
+          'Claude Sonnet vision (photo verification)',
+        ]),
+      }),
+      Object.freeze({
+        label: 'Tools',
+        items: Object.freeze(['Git and GitHub', 'Claude Code', 'Figma', 'Draw.io']),
+      }),
     ]),
   }),
 
