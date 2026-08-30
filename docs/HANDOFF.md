@@ -257,6 +257,43 @@ Decisions, continuing the numbering above:
 - D16 The focus ring is the site's own, drawn 4px inward, so it never runs off the bottom of a screen that has no inset.
 - D17 The press is the pill's own 0.94 rule rather than the 0.985 recipe in utilities/touch.css, which scales a whole control.
 
+### 2026-08-30: projects parity, contact tidy, desktop smooth scroll
+
+Twelve commits from one recon report (`recon-2026-08-30.md`, kept out of the
+repo), run one batch per reply and checked on localhost between each. Projects,
+the Contact ending, and the two hero calls to action. Experience and Credentials
+were not touched.
+
+What changed: the identity chips lost their numbers and the middot with them,
+and the 74ch reading measure moved off `.project__header` onto its three text
+children, so the identity line spans the card content box on both cards instead
+of stopping at the measure on one of them. Below 440 that line is two
+deterministic rows: chip and rule, then the date left under it. The TranspiraFund
+stack is five sentence-case groups and 24 chips, rendered without product marks.
+The compact card's footer reads badge left, link right. The DataCamp link lost
+its trailing `/edit`. Contact lost its footer entirely, so the routes card closes
+the page, and the availability card fills the column below 900. The two hero
+actions navigate through the router rather than through the browser's fragment
+step, and the modified-click guard the header and the tab bar each carried is now
+one export in `js/core/dom.js`. Every em dash in a user-facing string is gone.
+
+Left open: the comments and the docs prose still carry em dashes, and the hero
+availability signal is deferred rather than dropped. Both are below.
+
+Decisions, continuing the numbering above:
+
+- D18 Project numerals removed, and the middot separator with them: two cards are not a sequence, so `01` and `02` carried no information. `padCount` stays in core/format.js, because Experience still numbers its systems.
+- D19 The 74ch measure moved off `.project__header` onto its title, summary and roles. The header also holds the identity line, which is why one card's line stopped at the reading measure while the other ran to the card edge.
+- D20 Below 440 the identity line is two rows on both cards, stated as `flex: 1 0 100%` on the date rather than left to wrap. Wrapping depended on how long each card's own chip and date happened to be, so the two disagreed at 320, 360 and 390.
+- D21 Badge left, link right, in a card footer that carries both. The case study footer holds only its status block, so there is nothing there for the convention to order and it was left alone.
+- D22 The DataCamp URL is the notebook without the trailing `/edit`, so a logged-out visitor lands on the notebook rather than an editor. Supersedes that part of D4.
+- D23 Contact's byline and its whole footer are gone, landmark included; the routes card closes the page and there is no `contentinfo` on the site any more. Supersedes D8. A colophon with a source link was built in `1e2810c` and removed in `4d71085` inside this same session, so neither commit is live work.
+- D24 The availability card fills the column below 900 through one declaration, `justify-self: stretch`. `display` needed no change: a grid item is blockified, so the `inline-flex` above it already computed to `flex`.
+- D25 The hero availability signal is deferred, not dropped. Below 440 the portrait is 128px wide at a 320 viewport, and `CEBU CITY, PHILIPPINES` alone needs a 204px figure to stay on one line, so a dot plus "Open to work" cannot share that row.
+- D26 The two hero actions route through `onNavigate`, as the header nav and the tab bar always have. They stay real links and only a plain left click is taken over. `isModifiedClick` is one export in `js/core/dom.js` rather than three copies, and `chapterById` retired with the change.
+- D27 `stackGroups` is five sentence-case groups and 24 chips, which clears D2 for that data. Marks are off in that block through a `mark: false` option on `createChip`: only two labels were in the logo map, and a mark on those two singled them out for a reason a reader cannot infer. SDKs, CLIs, build tooling, secret storage, Zod and sharp came out as plumbing that other chips already imply. `ae0c8a5`, `c5606e8`, `363498c`.
+- D28 Every em dash in a user-facing string is now a middot or a full stop: ten of them, across `index.html`, `js/data/navigation.js` and `js/data/profile.js`. `acd9e28`. Comments and docs prose were deliberately left, and are on the outstanding list.
+
 ### The log so far
 
 Read newest first. Use these as the pattern for anything new.
@@ -264,6 +301,19 @@ Read newest first. Use these as the pattern for anything new.
 | Message                                     | What it covered                                                                                                                                  |
 | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `Update handoff log`                        | This entry                                                                                                                                       |
+| `Route hero actions`                        | The two hero calls to action navigate through the router; `isModifiedClick` hoisted into core/dom.js and `chapterById` retired                   |
+| `Remove contact footer`                     | The footer goes entirely, landmark included; the routes card closes the page                                                                     |
+| `Widen availability card`                   | `justify-self: stretch` below 900, so the card shares the form fields left edge and width                                                        |
+| `Replace footer byline`                     | A colophon and a source link, superseded by `Remove contact footer` in the same session                                                          |
+| `Reorder card footer`                       | Badge left and link right on the compact card; the link stays inside its paragraph so the underline survives                                     |
+| `Widen identity line`                       | The 74ch measure moved onto the header text children, and a two-row identity line below 440                                                      |
+| `Drop project numerals`                     | `01` and `02` and the middot out of the identity chips, and the index argument out of four modules                                               |
+| `Sweep visible dashes`                      | The ten em dashes in user-facing strings become middots and full stops                                                                           |
+| `Drop sharp chip`                           | `sharp (photo stamping)` out of the Backend group                                                                                                |
+| `Fix notebook link`                         | The DataCamp URL loses its trailing `/edit`                                                                                                      |
+| `Drop stack marks`                          | A `mark: false` option on `createChip`, so the BUILT WITH block renders as plain text                                                            |
+| `Rewrite stack groups`                      | Five sentence-case groups replacing four uppercase ones on the TranspiraFund card                                                                |
+| `Update handoff log`                        | The tab bar redesign entry                                                                                                                       |
 | `Redesign tab bar`                          | Icon pills over labels in a 64px translucent bar; numerals and rail gone; the pill is the indicator and a visited icon takes the text colour     |
 | `Add nav icons`                             | House, folder, briefcase and award glyphs on the 24 grid, and an `icon` field per chapter; Contact reuses the envelope                           |
 | `Update handoff log`                        | The follow-up pass entry                                                                                                                         |
@@ -365,7 +415,8 @@ matters; closing them would mean per-string tuning or self-hosting.
 
 **The data still carries uppercase copy.** D2 says the data is sentence case
 and the stylesheet does the uppercasing, and that holds for the nav, the
-Experience tokens and the microcopy the pass touched. It does not yet hold for
+Experience tokens, the microcopy the pass touched and, from this session, the
+project stack group labels. It does not yet hold for
 the eyebrows (`CONTACT`, `SEND A MESSAGE`, `EDUCATION`), the availability
 status, the stat labels, the scroll cue, the theme labels or the Credentials
 tab labels. The eyebrow and label recipes already apply
@@ -373,6 +424,30 @@ tab labels. The eyebrow and label recipes already apply
 visible change; the Credentials tab strip has no uppercase rule of its own, so
 its labels would change look and need the rule first. A data-only sweep, one
 commit.
+
+**Em dashes are gone from the copy but not from the code.** The rule is that
+none appear anywhere, and a tokenizer count across every tracked file outside
+`js/vendor/` splits them three ways. The ten in user-facing strings are closed,
+at `acd9e28`. What remains is 161 in comments across 52 files, heaviest in
+`css/layout/page.css`, `css/base/tokens.css` and `css/sections/home.css`, and 51
+in the prose of `README.md`, `docs/ARCHITECTURE.md`, `docs/DEPLOYMENT.md` and
+this file, which holds 18 of them while carrying the rule. Include
+`js/components/header.js:1`, which still opens "The fixed section bar" for a
+header that is sticky. Two sweeps, one for comments and one for docs, neither
+touching behaviour.
+
+**The README has not been read since the repo went public.** Nothing on the site
+links to it, but the repository is public and the source is reachable, so it is
+read by anyone who looks. It has not been checked against what the code now does
+in this session or the two before it.
+
+**The tab title and the hero copy have not been reviewed against the lanes being
+targeted.** Both say "Power Platform Developer and Data Analyst", in
+`index.html:15`, `index.html:25`, `js/data/navigation.js:16` and
+`js/data/profile.js:10`. That is accurate for what has shipped and it is not
+obviously the phrase an AI automation or junior AI engineer search is looking
+for. It is a copy and positioning decision, not a code change, and it wants its
+own session.
 
 ## Decided, so nobody re-opens it
 
