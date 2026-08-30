@@ -69,10 +69,15 @@ body {
 }
 
 /* The one emphasised phrase a chapter is allowed: the display face, a step
-   lighter than the headline around it, in the accent. */
+   lighter than the headline around it, in the accent. It sits in an <em>, and
+   font-style is stated because the element's default is italic — Sora has no
+   italic face, so left alone the browser slants the upright one, and a
+   synthesised oblique is a face the site does not load. The emphasis is
+   carried by the colour and the weight step. */
 .display-tail {
   color: var(--accent-ink);
   font-family: var(--font-display);
+  font-style: normal;
   font-weight: 600;
 }
 
