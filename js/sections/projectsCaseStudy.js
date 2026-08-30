@@ -112,10 +112,13 @@ function createStack(project) {
       project.stackGroups.map((group) =>
         el('div', { class: 'project__stack-group' }, [
           createSectionEyebrow({ text: group.label, tone: 'accent' }),
+          // No marks here. This block is an inventory, and only the labels that
+          // happen to be in the logo map would carry one, which singles them out
+          // for a reason a reader cannot infer.
           el(
             'div',
             { class: 'chip-row' },
-            group.items.map((item) => createChip({ label: item }))
+            group.items.map((item) => createChip({ label: item, mark: false }))
           ),
         ])
       )

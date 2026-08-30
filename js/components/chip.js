@@ -1,6 +1,10 @@
 /* Chip: a mono tag. With a recognised tool name it gains the logo variant and
    carries that product's mark. Maps a label to an asset path — presentation,
-   not copy, so it belongs here rather than in js/data/. */
+   not copy, so it belongs here rather than in js/data/.
+
+   A caller can decline the mark with `mark: false`, for a block that should
+   read as one uniform inventory rather than a row where the few labels that
+   happen to be in the map above are singled out by carrying a logo. */
 
 import { el } from '../core/dom.js';
 
@@ -32,14 +36,15 @@ function logoPathFor(label) {
  * @param {object} props
  * @param {string} props.label
  * @param {'sm'|'md'} [props.size] md carries a larger mark, used on Home.
+ * @param {boolean} [props.mark] False renders plain text with no product mark.
  * @returns {HTMLElement}
  */
-export function createChip({ label, size = 'sm' }) {
-  const logo = logoPathFor(label);
+export function createChip({ label, size = 'sm', mark = true }) {
+  const logo = mark ? logoPathFor(label) : null;
   const classes = ['chip'];
   if (logo) classes.push('chip--logo', `chip--${size}`);
 
-  const mark = logo
+  const logoImage = logo
     ? el('img', {
         class: 'chip__logo',
         attrs: {
@@ -55,7 +60,7 @@ export function createChip({ label, size = 'sm' }) {
     : null;
 
   return el('span', { class: classes.join(' ') }, [
-    mark,
+    logoImage,
     el('span', { class: 'chip__label', text: label }),
   ]);
 }
