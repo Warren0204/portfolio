@@ -45,6 +45,26 @@
   opacity: 0.5;
 }
 
+/* On a phone the card fills the column, so it shares the form's left edge and
+   the form's width rather than sitting at about half of it with dead space to
+   its right.
+
+   One declaration, because only one thing was holding it narrow. A grid item's
+   display is blockified, so the inline-flex above already computes to flex in
+   both bands and changing it would do nothing at all. What shrink-wraps the box
+   is justify-self: start, which sizes a grid item to its content instead of to
+   its area; stretch is the default that rule overrode. If .availability ever
+   stops being a grid item, the inline-flex becomes live again and this stops
+   applying, so the two belong together.
+
+   900 is the width the grid itself switches on further down, not a new
+   breakpoint. */
+@media (width < 900px) {
+  .availability {
+    justify-self: stretch;
+  }
+}
+
 /* Layout
 
    One grid for the whole section rather than a full-width header above a
