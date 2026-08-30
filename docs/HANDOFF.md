@@ -294,6 +294,7 @@ Decisions, continuing the numbering above:
 - D27 `stackGroups` is five sentence-case groups and 24 chips, which clears D2 for that data. Marks are off in that block through a `mark: false` option on `createChip`: only two labels were in the logo map, and a mark on those two singled them out for a reason a reader cannot infer. SDKs, CLIs, build tooling, secret storage, Zod and sharp came out as plumbing that other chips already imply. `ae0c8a5`, `c5606e8`, `363498c`.
 - D28 Every em dash in a user-facing string is now a middot or a full stop: ten of them, across `index.html`, `js/data/navigation.js` and `js/data/profile.js`. `acd9e28`. Comments and docs prose were deliberately left, and are on the outstanding list.
 - D29 The role line under "Team of four" is prose, not the mono label recipe beside it: family, size and tone are the summary's, because it is a sentence and that recipe is for three words. It sits on its own row inside the roles row through a 100% flex basis, and inside the same 74ch measure as the title and the summary.
+- D30 The project management track now matches the project card it describes: four members, not three, and the Cebu City engineering division that sponsored the capstone rather than "a real government client". It was neither a client relationship nor a three person team, and the card has said "Team of four" all along.
 
 ### The log so far
 
@@ -301,6 +302,7 @@ Read newest first. Use these as the pattern for anything new.
 
 | Message                                     | What it covered                                                                                                                                  |
 | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `Fix track copy`                            | The project management track reads four members and a sponsoring division, matching the TranspiraFund card                                       |
 | `Add role line`                             | One sentence under "Team of four" on how the team was run, set as prose inside the roles row                                                     |
 | `Update handoff log`                        | This entry                                                                                                                                       |
 | `Route hero actions`                        | The two hero calls to action navigate through the router; `isModifiedClick` hoisted into core/dom.js and `chapterById` retired                   |

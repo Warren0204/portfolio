@@ -63,13 +63,13 @@ export const tracks = Object.freeze([
     kicker: 'TRACK 01',
     name: 'Project management and coordination',
     summary:
-      'Led a three member capstone team end to end and ran department wide events as operations lead, now formalising the practice against an industry standard.',
+      'Led a four member capstone team end to end and ran department wide events as operations lead, now formalising the practice against an industry standard.',
     fundamentals: Object.freeze([
       'Scoping and breaking work down: turning a stakeholder’s described problem into phases, deliverables, and a schedule a small team can actually hold.',
-      'Running a team through delivery: assigning by strength, tracking progress, and keeping a three member capstone on schedule to a real government client.',
+      'Running a team through delivery: assigning by strength, tracking progress, and keeping a four member capstone on schedule for the city engineering division that sponsored it.',
       'Stakeholder communication: requirements gathering, demo and validation sessions, and translating technical constraints into plain terms for non technical decision makers.',
       'Documentation and handover: writing the specifications, user guides, and turnover material a system needs to survive without its builder.',
-      'Risk and change handling: spotting scope and dependency risk early, then re planning around it instead of absorbing it silently.',
+      'Risk and change handling: spotting scope and dependency risk early and re planning around it rather than absorbing it.',
     ]),
     certWhy:
       'Formalises the vocabulary and artefacts behind what I already ran in practice: charters, work breakdown, stakeholder management, and the difference between Agile and waterfall delivery.',
