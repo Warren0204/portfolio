@@ -1,0 +1,100 @@
+/* The identity line a card opens with: what kind of thing this is, a rule, then
+   when it ran. Experience and both project cards use it, so a reader scrolling
+   from one card to the next reads the same row rather than two dialects of it.
+
+   It used to be two rule sets saying the same thing in two section files, and
+   they drifted: a phone override landed on the Projects copy alone and broke
+   that line into two rows below 440 while the Experience card kept one, which
+   on a phone reads as the project cards being broken. One recipe with three
+   consumers, so the two cannot disagree again.
+
+   One row at every width, and structurally so rather than by arithmetic that
+   holds until a chip gets one word longer. The row does not wrap, the chip and
+   the date neither wrap inside themselves nor shrink, and the rule takes
+   whatever is left. The worst case is therefore a short rule, never a date
+   stacked under the chip and never a date clipped by the card's clip-path. */
+
+.identity-line {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+/* Uppercase is the recipe's job, not the data's. Experience's strings happen to
+   be capitals already and the projects' are sentence case as the data
+   convention asks, so stating it here is what makes both read as one label. */
+.identity-line__kind {
+  flex: none;
+  padding: 4px 10px;
+  border: 1px solid rgba(var(--accent-rgb), 0.4);
+  border-radius: var(--radius-sm);
+  color: var(--accent-ink);
+  font-family: var(--font-mono);
+  font-size: var(--text-eyebrow);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* `min-width: 0`, not the 20px floor both copies used to carry. A floor on the
+   one item that is free to give ground does not hold a minimum, it pushes the
+   row wider than the card, and on a row that never wraps that overflow is
+   clipped away. Letting the rule reach zero keeps the failure inside the card,
+   and the two blocks at the foot of this file keep it from being reached at
+   any width a phone actually has. */
+.identity-line__rule {
+  flex: 1;
+  min-width: 0;
+  height: 1px;
+  background: rgba(var(--line-rgb), 0.14);
+}
+
+/* The auto margin is what holds the date at the right edge on the one screen
+   where the rule is gone. Everywhere else the rule takes the free space first
+   and this resolves to nothing. */
+.identity-line__period {
+  flex: none;
+  margin-left: auto;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-eyebrow);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Small phones. "Capstone project" beside "2025 to 2026" is the longest pair on
+   the page, and at the recipe above it leaves about 8px of rule at 360 and does
+   not fit at all at 320. One step down in size, tracking, chip padding and gap
+   buys back roughly 45px and keeps the row whole.
+
+   It applies to the Experience card too, which on its own strings does not need
+   it. That is the point: the component exists so the three cards read as one
+   row, and a card that held its size while the two above it shrank would break
+   that at the only width where it would ever show. */
+@media (width <= 360px) {
+  .identity-line {
+    gap: var(--space-2);
+  }
+
+  .identity-line__kind {
+    padding: 4px 8px;
+  }
+
+  .identity-line__kind,
+  .identity-line__period {
+    font-size: var(--text-eyebrow-compact);
+    letter-spacing: 0.12em;
+  }
+}
+
+/* At 320 the compact recipe still leaves the longest pair around 12px of rule,
+   which is the stub this change exists to remove. The rule carries the least of
+   anything in the row, so it goes and the chip and the date hold the two ends
+   on their own. */
+@media (width <= 320px) {
+  .identity-line__rule {
+    display: none;
+  }
+}

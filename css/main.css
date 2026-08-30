@@ -33,6 +33,7 @@
 @import url('components/typewriter.css');
 @import url('components/preloader.css');
 @import url('components/tab-bar.css');
+@import url('components/identity-line.css');
 
 /* Sections */
 @import url('sections/home.css');

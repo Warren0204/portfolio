@@ -17,6 +17,7 @@ import { el, replaceChildren } from '../core/dom.js';
 import { createBadge } from '../components/badge.js';
 import { createBulletList } from '../components/bulletList.js';
 import { createChip } from '../components/chip.js';
+import { createIdentityLine } from '../components/identityLine.js';
 import { createSectionEyebrow } from '../components/sectionEyebrow.js';
 import { createSectionHead } from '../components/sectionHead.js';
 import { createStatusDot } from '../components/statusDot.js';
@@ -37,11 +38,7 @@ const OVERVIEW_ID = 'overview';
  */
 function createRoleCard(role, tokens, panel) {
   return el('div', { class: 'experience__role' }, [
-    el('div', { class: 'experience__role-meta' }, [
-      el('span', { class: 'experience__role-kind', text: role.kind }),
-      el('span', { class: 'experience__rule', attrs: { 'aria-hidden': 'true' } }),
-      el('span', { class: 'experience__role-period', text: role.period }),
-    ]),
+    createIdentityLine({ kind: role.kind, period: role.period }),
     el('h3', { class: 'experience__role-title', text: role.title }),
     el('p', { class: 'experience__role-org', text: role.organisation }),
     el('div', { class: 'experience__tokens' }, [

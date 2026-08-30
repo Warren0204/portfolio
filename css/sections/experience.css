@@ -9,37 +9,6 @@
   box-shadow: var(--shadow-sm);
 }
 
-.experience__role-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-3);
-  align-items: center;
-}
-
-.experience__role-kind {
-  padding: 4px 10px;
-  border: 1px solid rgba(var(--accent-rgb), 0.4);
-  border-radius: var(--radius-sm);
-  color: var(--accent-ink);
-  font-family: var(--font-mono);
-  font-size: var(--text-eyebrow);
-  letter-spacing: 0.16em;
-}
-
-.experience__role-period {
-  color: var(--muted);
-  font-family: var(--font-mono);
-  font-size: var(--text-eyebrow);
-  letter-spacing: 0.16em;
-}
-
-.experience__rule {
-  flex: 1;
-  min-width: 20px;
-  height: 1px;
-  background: rgba(var(--line-rgb), 0.14);
-}
-
 .experience__role-title {
   margin-top: var(--space-4);
   color: var(--text);

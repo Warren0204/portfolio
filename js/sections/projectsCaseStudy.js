@@ -16,19 +16,19 @@
 import { el, replaceChildren } from '../core/dom.js';
 import { createBulletList } from '../components/bulletList.js';
 import { createChip } from '../components/chip.js';
+import { createIdentityLine } from '../components/identityLine.js';
 import { createSectionEyebrow } from '../components/sectionEyebrow.js';
 import { createStatusDot } from '../components/statusDot.js';
 import { createTabs } from '../components/tabs.js';
 import { refreshTriggers } from '../core/animate.js';
 import { projectsCopy } from '../data/projects.js';
-import { createProjectMeta } from './projectsMeta.js';
 
 const { eyebrows } = projectsCopy;
 
 /** Identity: the strip, what it is called, and my part in it. */
 function createHeader(project) {
   return el('header', { class: 'project__header' }, [
-    createProjectMeta(project),
+    createIdentityLine({ kind: project.tag, period: project.period }),
     el('h3', { class: 'project__title', text: project.title }),
     el('p', { class: 'project__summary', text: project.summary }),
     el('div', { class: 'project__roles' }, [

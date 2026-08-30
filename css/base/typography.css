@@ -21,8 +21,12 @@
 
   /* The floor. Uppercase and tracked out is the least legible
      setting on the page, so it does not go below 11px however tempting
-     the density is. */
+     the density is. The one exception is stated beside it: at 360 and under,
+     the identity line has a chip and a date to fit on one row inside a 248px
+     card, and 11px cannot do that without breaking the row in two. Nothing
+     else is allowed to reach for it. */
   --text-eyebrow: 11px;
+  --text-eyebrow-compact: 10px;
 
   --leading-body: 1.6;
   --leading-tight: 1.25;

@@ -8,7 +8,7 @@ import { el } from '../core/dom.js';
 import { createBadge } from '../components/badge.js';
 import { createChip } from '../components/chip.js';
 import { createIcon } from '../components/icon.js';
-import { createProjectMeta } from './projectsMeta.js';
+import { createIdentityLine } from '../components/identityLine.js';
 
 /**
  * @param {object} project One entry from `projects` in js/data/projects.js
@@ -37,7 +37,7 @@ export function createProjectCard(project) {
   );
 
   const card = el('div', { class: 'card' }, [
-    createProjectMeta(project),
+    createIdentityLine({ kind: project.tag, period: project.period }),
     el('h3', { class: 'project__title', text: project.title }),
     el('p', { class: 'project__summary', text: project.summary }),
     el('p', { class: 'project__context', text: project.context }),
