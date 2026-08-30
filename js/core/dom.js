@@ -71,6 +71,21 @@ export function on(target, type, handler, options) {
   return () => target.removeEventListener(type, handler, options);
 }
 
+/**
+ * True for a click the browser should keep for itself: new tab, new window,
+ * download, or any button but the primary one.
+ *
+ * Three places take over a plain left click on a real link and have to let
+ * every other click through untouched, so the test is stated here once rather
+ * than copied into each of them.
+ *
+ * @param {MouseEvent} event
+ * @returns {boolean}
+ */
+export function isModifiedClick(event) {
+  return event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0;
+}
+
 export function qs(selector, scope = document) {
   return scope.querySelector(selector);
 }

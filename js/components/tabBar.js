@@ -8,13 +8,9 @@
    header nav is the only other way to jump, and a reader four screens into the
    experience section should not have to scroll back up to leave it. */
 
-import { el } from '../core/dom.js';
+import { el, isModifiedClick } from '../core/dom.js';
 import { createIcon } from './icon.js';
 import { chapters } from '../data/navigation.js';
-
-function isModifiedClick(event) {
-  return event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0;
-}
 
 /**
  * @param {object} options

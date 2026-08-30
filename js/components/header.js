@@ -10,17 +10,12 @@
    and it is deliberately not gated on the motion preference: it reports a
    position rather than performing an animation. */
 
-import { el } from '../core/dom.js';
+import { el, isModifiedClick } from '../core/dom.js';
 import { createStatusDot } from './statusDot.js';
 import { createThemeToggle } from './themeToggle.js';
 import { onScrollProgress } from '../core/animate.js';
 import { chapters } from '../data/navigation.js';
 import { profile } from '../data/profile.js';
-
-/** True for a click the browser should keep: new tab, new window, download. */
-function isModifiedClick(event) {
-  return event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0;
-}
 
 /**
  * @param {object} options

@@ -44,12 +44,20 @@ function boot() {
     contact: createContactSection,
   };
 
+  /* The hero's two in-page calls to action navigate through the router, the
+     same as the header nav and the bottom tab bar do. The router cannot exist
+     yet: it is built from the section elements, which is what the loop below
+     is making. So the builders are handed a thunk instead, and it resolves to
+     the real function when someone clicks, long after this has returned. Home
+     is the only builder that reads it; the other four ignore the argument. */
+  const navigate = (index) => router.navigate(index);
+
   /* Every section is in the document at once now, so each is a real <section>
      landmark named by its own heading rather than a panel that has to be made
      inert when it is not the current one. */
   const sections = {};
   const panels = chapters.map((chapter) => {
-    const built = builders[chapter.id]();
+    const built = builders[chapter.id]({ onNavigate: navigate });
     sections[chapter.id] = built;
 
     return el(

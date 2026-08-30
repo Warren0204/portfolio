@@ -59,11 +59,6 @@ export const chapters = Object.freeze([
   }),
 ]);
 
-/** @returns {object} the chapter with this id. */
-export function chapterById(id) {
-  return chapters.find((chapter) => chapter.id === id);
-}
-
 /** @returns {number} chapter index for a hash, or 0 when it matches nothing. */
 export function indexForRoute(hash) {
   const normalized = hash === '' || hash === '#' ? '#/' : hash;

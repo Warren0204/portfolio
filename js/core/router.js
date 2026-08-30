@@ -73,8 +73,10 @@ export function createRouter({ store, sections }) {
     store.set({ chapterIndex: index });
     describeChapter(index);
 
-    // scroll-margin-top on the section clears the fixed header, so the caller
-    // never has to know how tall it is. See css/layout/page.css.
+    // scroll-padding-top on html insets the whole scrollport, so the caller
+    // never has to know how tall the header is. It is stated there once and
+    // deliberately not repeated as a scroll-margin-top here; the header is
+    // sticky rather than fixed. See css/layout/page.css.
     target.scrollIntoView({
       behavior: prefersReducedMotion() ? 'auto' : 'smooth',
       block: 'start',

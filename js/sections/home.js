@@ -17,13 +17,16 @@ import { heroTools } from '../data/skills.js';
 import { createActions, createHeadline, createStats } from './homeIntro.js';
 
 /**
+ * @param {object} options
+ * @param {(index: number) => void} options.onNavigate Moves the page to a
+ *   chapter by index, for the two calls to action that jump down the page.
  * @returns {{ element: HTMLElement, armReveal: () => void, destroy: () => void }}
  */
-export function createHomeSection() {
+export function createHomeSection({ onNavigate }) {
   const typewriter = createTypewriter({ phrases: profile.heroPhrases });
   const headline = createHeadline();
   const summary = el('p', { class: 'home__summary', text: profile.summary });
-  const actions = createActions();
+  const actions = createActions({ onNavigate });
 
   const tools = el(
     'div',

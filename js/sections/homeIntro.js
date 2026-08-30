@@ -6,9 +6,9 @@
    Contact — two identical status strips on one page read as an oversight
    rather than as emphasis. */
 
-import { el } from '../core/dom.js';
+import { el, isModifiedClick } from '../core/dom.js';
 import { createIcon } from '../components/icon.js';
-import { chapterById } from '../data/navigation.js';
+import { chapters } from '../data/navigation.js';
 import { profile } from '../data/profile.js';
 
 /**
@@ -62,20 +62,45 @@ export function createHeadline() {
  * scrolls is a small lie, and small lies are what make an interface feel
  * untrustworthy.
  *
- * All three are plain links. Changing the hash is enough: the router listens
- * for `hashchange` and does the smooth scroll, so these need no click handler
- * and keep every behaviour a link should have — middle-click, copy, open in a
- * new tab.
+ * All three are real links to real destinations and stay that way, so
+ * middle-click, copy link and open in a new tab keep working. What changed is
+ * who answers a plain left click.
  *
+ * The two in-page actions used to have no handler at all, on the reasoning that
+ * changing the hash was enough because the router listens for `hashchange`.
+ * That was true as far as it went, and it left these two on a different path
+ * from the header nav and the tab bar: the browser runs its own fragment step
+ * first, and because no element has the id `/projects`, that step scrolls the
+ * document to the beginning before the router has said anything. They now call
+ * `onNavigate`, which is what the other two navigations have always done.
+ *
+ * @param {object} options
+ * @param {(index: number) => void} options.onNavigate Moves the page to a
+ *   chapter by index. Wired in js/main.js.
  * @returns {HTMLElement}
  */
-export function createActions() {
+export function createActions({ onNavigate }) {
+  /* Both in-page actions are the same shape, so the difference between them is
+     the chapter, the class and the label rather than a second copy of this. */
+  function jump(id, className, label) {
+    const index = chapters.findIndex((chapter) => chapter.id === id);
+
+    return el('a', {
+      class: className,
+      text: label,
+      attrs: { href: chapters[index].route },
+      on: {
+        click: (event) => {
+          if (isModifiedClick(event)) return;
+          event.preventDefault();
+          onNavigate(index);
+        },
+      },
+    });
+  }
+
   return el('div', { class: 'home__actions' }, [
-    el('a', {
-      class: 'button button--primary',
-      text: profile.ctas.viewProjects,
-      attrs: { href: chapterById('projects').route },
-    }),
+    jump('projects', 'button button--primary', profile.ctas.viewProjects),
     el(
       'a',
       {
@@ -85,11 +110,7 @@ export function createActions() {
       // The glyph says this one saves a file rather than moving down the page.
       [profile.ctas.downloadCv, createIcon('download', 18, { inline: true })]
     ),
-    el('a', {
-      class: 'button button--ghost',
-      text: profile.ctas.getInTouch,
-      attrs: { href: chapterById('contact').route },
-    }),
+    jump('contact', 'button button--ghost', profile.ctas.getInTouch),
   ]);
 }
 
