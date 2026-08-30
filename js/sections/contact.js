@@ -74,6 +74,39 @@ function createRoute(route) {
   );
 }
 
+/* The page's closing line and the one link that goes with it, inside the one
+   contentinfo landmark on the page. The role is explicit: a <footer> inside
+   <main> is not a landmark on its own.
+
+   The link sits in its own paragraph rather than inline in the line above,
+   because a 44px target inside running text throws the line box. That
+   paragraph is load-bearing rather than decorative: the underline comes from
+   the `p a` rule in base/typography.css, so an <a> outside a <p> would lose
+   it silently. */
+function createColophon() {
+  const { line, link } = contact.colophon;
+
+  return el('footer', { class: 'contact__footer', attrs: { role: 'contentinfo' } }, [
+    el('p', { class: 'contact__colophon', text: line }),
+    el(
+      'p',
+      {},
+      el(
+        'a',
+        {
+          class: 'contact__source',
+          attrs: {
+            href: link.href,
+            target: link.external ? '_blank' : null,
+            rel: link.external ? 'noopener noreferrer' : null,
+          },
+        },
+        [link.label, link.external ? createIcon('external', 14, { inline: true }) : null]
+      )
+    ),
+  ]);
+}
+
 function createRoutes() {
   return el('div', { class: 'contact__routes' }, [
     createSectionEyebrow({ text: contact.routesEyebrow, tone: 'accent' }),
@@ -115,17 +148,7 @@ export function createContactSection() {
     form.element,
   ]);
 
-  const element = el('div', { class: 'well contact' }, [
-    grid,
-    // The one contentinfo landmark on the page, carrying the details a
-    // visitor would otherwise hunt for in a footer. The role is explicit: a
-    // <footer> inside <main> is not a landmark on its own.
-    el(
-      'footer',
-      { class: 'contact__footer', attrs: { role: 'contentinfo' } },
-      el('p', { class: 'contact__details', text: contact.details })
-    ),
-  ]);
+  const element = el('div', { class: 'well contact' }, [grid, createColophon()]);
 
   let reveals = [];
 
