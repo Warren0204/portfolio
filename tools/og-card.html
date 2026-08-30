@@ -26,7 +26,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@1&family=Sora:wght@600;700&display=block"
+      href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=Sora:wght@600;700&display=block"
     />
     <style>
       *,
@@ -62,15 +62,15 @@
         height: 630px;
         padding: 62px 70px;
         background:
-          radial-gradient(720px 460px at 88% 16%, rgba(126, 208, 240, 0.18), transparent 66%),
-          radial-gradient(560px 420px at 2% 96%, rgba(90, 208, 166, 0.08), transparent 70%), #0b1219;
+          radial-gradient(720px 460px at 88% 16%, rgba(131, 199, 226, 0.18), transparent 66%),
+          radial-gradient(560px 420px at 2% 96%, rgba(104, 202, 168, 0.08), transparent 70%), #0b1219;
       }
 
       /* An edge of its own, for wherever a platform crops or mats the image. */
       .card::after {
         position: absolute;
         inset: 18px;
-        border: 1px solid rgba(255, 255, 255, 0.09);
+        border: 1px solid rgba(241, 245, 249, 0.09);
         border-radius: 12px;
         content: '';
       }
@@ -95,10 +95,12 @@
         height: 38px;
       }
 
+      /* Labels are the body face in the site's label recipe: uppercase,
+         tracked out, a step heavier. */
       .brand span {
         color: #b4c1cd;
-        font-family: 'IBM Plex Mono', monospace;
         font-size: 13px;
+        font-weight: 500;
         letter-spacing: 0.18em;
       }
 
@@ -109,11 +111,11 @@
         align-items: center;
         align-self: flex-start;
         padding: 9px 17px;
-        border: 1px solid rgba(90, 208, 166, 0.35);
+        border: 1px solid rgba(104, 202, 168, 0.35);
         border-radius: 999px;
-        background: rgba(90, 208, 166, 0.09);
-        font-family: 'IBM Plex Mono', monospace;
+        background: rgba(104, 202, 168, 0.09);
         font-size: 13px;
+        font-weight: 500;
         letter-spacing: 0.08em;
       }
 
@@ -122,11 +124,11 @@
         height: 8px;
         border-radius: 999px;
         background: #48c79a;
-        box-shadow: 0 0 0 4px rgba(90, 208, 166, 0.28);
+        box-shadow: 0 0 0 4px rgba(104, 202, 168, 0.28);
       }
 
       .availability__status {
-        color: #5ad0a6;
+        color: #68caa8;
         font-weight: 600;
       }
 
@@ -156,7 +158,7 @@
         height: 1px;
         margin: 26px 0;
         border: 0;
-        background: rgba(255, 255, 255, 0.16);
+        background: rgba(241, 245, 249, 0.16);
       }
 
       .headline {
@@ -168,19 +170,21 @@
         text-wrap: pretty;
       }
 
-      /* The one emphasised phrase the card is allowed. */
+      /* The one emphasised phrase the card is allowed: the display face, a
+         step lighter than a headline, in the accent — .display-tail on the
+         page. Upright, because Sora has no italic to load. */
       .headline em {
-        color: #7ed0f0;
-        font-family: 'Instrument Serif', serif;
-        font-size: 1.12em;
-        font-style: italic;
+        color: #83c7e2;
+        font-family: 'Sora', sans-serif;
+        font-style: normal;
+        font-weight: 600;
       }
 
       .tracks {
         margin-top: 36px;
-        color: #98a6b3;
-        font-family: 'IBM Plex Mono', monospace;
+        color: #b4c1cd;
         font-size: 13px;
+        font-weight: 500;
         letter-spacing: 0.14em;
       }
 
@@ -210,7 +214,7 @@
         display: block;
         width: 100%;
         height: 100%;
-        border: 1px solid rgba(255, 255, 255, 0.14);
+        border: 1px solid rgba(241, 245, 249, 0.14);
         border-radius: 8px;
         background: #131c26;
         object-fit: cover;
