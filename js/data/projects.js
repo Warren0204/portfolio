@@ -62,7 +62,7 @@ export const projects = Object.freeze([
       Object.freeze({
         id: 'ai-layer',
         label: 'AI layer',
-        caption: 'Shared foundation under both surfaces',
+        caption: 'Milestone planning and photo verification under both surfaces',
         items: Object.freeze([
           'Milestone generation and title validation on Claude Haiku 4.5, structured through forced tool use and server side validation',
           'Vision based proof of work verification on Claude Sonnet, triggered automatically on upload',
