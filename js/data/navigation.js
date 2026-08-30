@@ -1,4 +1,4 @@
-/* Section order, labels, and routes. Index order is the reading order, which on
+/* Section order, labels, icons, and routes. Index order is the reading order, which on
    a single scrolling page is literally top to bottom. Adding a section means
    appending one object here and one module in js/sections/.
 
@@ -10,6 +10,8 @@ export const chapters = Object.freeze([
     id: 'home',
     label: 'Home',
     menuLabel: 'Home',
+    /* The phone tab bar's glyph, a key in js/components/icon.js. */
+    icon: 'house',
     route: '#/',
     title: 'Warren Villagonzalo Gallardo — Power Platform Developer and Data Analyst',
     description:
@@ -19,6 +21,7 @@ export const chapters = Object.freeze([
     id: 'projects',
     label: 'Projects',
     menuLabel: 'Projects',
+    icon: 'folder',
     route: '#/projects',
     title: 'Projects — Warren Villagonzalo Gallardo',
     description:
@@ -28,6 +31,7 @@ export const chapters = Object.freeze([
     id: 'experience',
     label: 'Experience',
     menuLabel: 'Experience',
+    icon: 'briefcase',
     route: '#/experience',
     title: 'Experience — Warren Villagonzalo Gallardo',
     description:
@@ -37,6 +41,7 @@ export const chapters = Object.freeze([
     id: 'credentials',
     label: 'Credentials',
     menuLabel: 'Credentials',
+    icon: 'award',
     route: '#/credentials',
     title: 'Credentials — Warren Villagonzalo Gallardo',
     description:
@@ -46,6 +51,7 @@ export const chapters = Object.freeze([
     id: 'contact',
     label: 'Contact',
     menuLabel: 'Contact',
+    icon: 'email',
     route: '#/contact',
     title: 'Contact — Warren Villagonzalo Gallardo',
     description:

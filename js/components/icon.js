@@ -1,8 +1,8 @@
 /* The project's small icon set, as inline SVG.
 
-   Inline rather than an icon font or sprite sheet: there are eight of them, they
+   Inline rather than an icon font or sprite sheet: there are twelve of them, they
    need to inherit `currentColor` so they follow the theme without a second set
-   of rules, and a font would be a network request for eight glyphs.
+   of rules, and a font would be a network request for twelve glyphs.
 
    Every icon here is decorative — each one sits beside a visible text label —
    so they are all `aria-hidden`. If one is ever used without a label, it needs
@@ -11,7 +11,7 @@
 const SVG_NS = 'http://www.w3.org/2000/svg';
 
 /* All paths are drawn on a 24x24 grid. The two brand marks are the official
-   logotypes; the other six are drawn to match their weight, as filled shapes
+   logotypes; the other ten are drawn to match their weight, as filled shapes
    about two units thick rather than strokes, so one `fill` rule covers all. */
 const PATHS = Object.freeze({
   email:
@@ -40,6 +40,24 @@ const PATHS = Object.freeze({
   /* Two corner arrows pulling apart: enlarges. */
   expand:
     'M14 3h7v7h-2V6.41l-4.29 4.3-1.42-1.42L17.59 5H14V3ZM10 21H3v-7h2v3.59l4.29-4.3 1.42 1.42L6.41 19H10v2Z',
+
+  /* The phone tab bar's destinations, each a hollow outline two units thick
+     like the envelope above, which the Contact tab reuses. The outer contour
+     runs clockwise and the inner one the other way, so one fill leaves the
+     hole. */
+
+  /* A gabled house. */
+  house: 'M12 3l8 7v10H4V10l8-7Zm0 2.65L6 10.9V18h12v-7.1L12 5.65Z',
+
+  /* A folder with its tab raised. */
+  folder: 'M2 3h8l2 3h10v15H2V3Zm2 2v14h16V8h-9L9 5H4Z',
+
+  /* A case with a handle. */
+  briefcase: 'M2 8h20v12H2V8Zm2 2v8h16v-8H4ZM8 4h8v4h-2V6h-4v2H8V4Z',
+
+  /* A medal over a swallow-tailed ribbon. */
+  award:
+    'M12 2.5a6.5 6.5 0 1 1 0 13a6.5 6.5 0 1 1 0-13Zm0 2a4.5 4.5 0 1 0 0 9a4.5 4.5 0 1 0 0-9ZM8.5 14.2h7L17 22l-5-2.8L7 22l1.5-7.8Z',
 });
 
 /**
