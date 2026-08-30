@@ -7,10 +7,6 @@
   margin-top: var(--space-7);
 }
 
-.project__header {
-  max-width: 74ch;
-}
-
 .project__meta {
   display: flex;
   flex-wrap: wrap;
@@ -43,6 +39,23 @@
   min-width: 20px;
   height: 1px;
   background: rgba(var(--line-rgb), 0.14);
+}
+
+/* Below the phone band the identity line is two rows on both cards: the chip
+   with the rule running out to the content edge, then the date underneath it,
+   left aligned.
+
+   Stated rather than left to wrap. Wrapping depended on how long each card's
+   own chip and date happened to be, so at 320, 360 and 390 one card wrapped
+   and the other did not. A 100% basis always starts a new line whatever the
+   text measures, and the auto margin has to go with it or the date would sit
+   pinned right on a row of its own. 440 is the phone band the hero and the
+   card padding already answer to. */
+@media (width < 440px) {
+  .project__period {
+    flex: 1 0 100%;
+    margin-left: 0;
+  }
 }
 
 .project__title {
@@ -80,6 +93,24 @@
   font-family: var(--font-mono);
   font-size: var(--text-eyebrow);
   letter-spacing: 0.14em;
+}
+
+/* The 74ch measure belongs to the prose, not to the block.
+
+   It used to sit on .project__header, which also holds .project__meta, so the
+   case study's identity line stopped at the reading measure while the compact
+   card's ran to the card edge: one component, two widths, and the gap widened
+   with the viewport. Naming the text children leaves the measure exactly where
+   it was for everything a reader reads, and lets the identity line span the
+   card on both.
+
+   Below the three rules it narrows, not above them: these selectors outrank
+   the bare classes, and stylelint's no-descending-specificity reads a stronger
+   selector placed first as a mistake waiting to happen. */
+.project__header .project__title,
+.project__header .project__summary,
+.project__header .project__roles {
+  max-width: 74ch;
 }
 
 /* Problem beside solution. The claim of a case study is that the second one
@@ -179,11 +210,11 @@
   transform: translateY(-2px);
 }
 
-/* Every project is one card, so the list reads as numbered, bounded objects
-   rather than a run of open blocks. The padding is a variable so the sticky
-   strip can bleed to the card's edges; clip-path rather than overflow keeps
-   the corners rounded without making the card a scroll container, which
-   would break the strip's position: sticky. */
+/* Every project is one card, so the list reads as bounded objects rather than
+   a run of open blocks. The padding is a variable so the sticky strip can
+   bleed to the card's edges; clip-path rather than overflow keeps the corners
+   rounded without making the card a scroll container, which would break the
+   strip's position: sticky. */
 
 .project > .card {
   --card-pad: clamp(20px, 3vw, 30px);
