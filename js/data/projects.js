@@ -123,7 +123,7 @@ export const projects = Object.freeze([
         items: Object.freeze([
           'Claude API',
           'Claude Haiku (milestones, classification)',
-          'Claude Sonnet vision (photo verification)',
+          'Claude Sonnet (photo verification)',
         ]),
       }),
       Object.freeze({
