@@ -172,6 +172,15 @@ body {
   }
 }
 
+/* A phone held sideways has little height to give, so the bar drops to 56px
+   there. Only the shell's second branch: a narrow phone upright keeps the
+   full bar. --tab-bar-space follows, because it is computed from this. */
+@media ((height < 470px) and (pointer: coarse)) {
+  :root {
+    --tab-bar-height: 56px;
+  }
+}
+
 /* A dialog owns the screen while it is open, and the page behind it must not
    scroll underneath.
 

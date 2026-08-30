@@ -101,6 +101,9 @@
   --ok-glow: rgba(var(--ok-rgb), 0.24);
   --accent-glow: rgba(var(--accent-rgb), 0.22);
 
+  /* The pill behind the current tab's icon in the phone tab bar. */
+  --tab-bar-pill: rgba(var(--accent-rgb), 0.14);
+
   /* The scrim behind a dialog, opaque enough to hide what is beneath it. */
   --modal-scrim: rgba(3, 10, 20, 0.62);
 
@@ -164,7 +167,7 @@
   /* Shell. The phone bar is shorter, and its navigation moves to the bottom. */
   --header-height: 64px;
   --header-height-phone: 56px;
-  --tab-bar-height: 58px;
+  --tab-bar-height: 64px;
 
   /* How much of the bottom of the screen the tab bar occupies, or 0 where it
      is not rendered at all. The bar is fixed, so it overlays the scrolling
@@ -208,6 +211,7 @@
   /* Dark needs a stronger halo to read against the deep background. */
   --ok-glow: rgba(var(--ok-rgb), 0.45);
   --accent-glow: rgba(var(--accent-rgb), 0.42);
+  --tab-bar-pill: rgba(var(--accent-rgb), 0.2);
 
   --header-bg: rgba(11, 18, 25, 0.82);
 

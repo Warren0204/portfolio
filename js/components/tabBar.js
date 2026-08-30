@@ -9,6 +9,7 @@
    experience section should not have to scroll back up to leave it. */
 
 import { el } from '../core/dom.js';
+import { createIcon } from './icon.js';
 import { chapters } from '../data/navigation.js';
 
 function isModifiedClick(event) {
@@ -39,8 +40,9 @@ export function createTabBar({ mount, store, onNavigate }) {
         },
       },
       [
-        el('span', { class: 'tab-bar__marker', attrs: { 'aria-hidden': 'true' } }),
-        el('span', { class: 'tab-bar__index', text: String(index + 1).padStart(2, '0') }),
+        // The pill the icon sits in is the indicator. createIcon marks the
+        // SVG aria-hidden, so the label alone names the tab.
+        el('span', { class: 'tab-bar__icon' }, createIcon(chapter.icon, 24)),
         el('span', { class: 'tab-bar__label', text: chapter.menuLabel }),
       ]
     )
@@ -57,7 +59,7 @@ export function createTabBar({ mount, store, onNavigate }) {
       const isCurrent = tabIndex === index;
       tab.classList.toggle('tab-bar__tab--current', isCurrent);
       tab.classList.toggle('tab-bar__tab--visited', !isCurrent && visited.has(tabIndex));
-      if (isCurrent) tab.setAttribute('aria-current', 'true');
+      if (isCurrent) tab.setAttribute('aria-current', 'page');
       else tab.removeAttribute('aria-current');
     });
   }
