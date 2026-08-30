@@ -4,8 +4,10 @@
    tracked out, not by being a different face. */
 
 :root {
-  --font-display: 'Sora', 'Hanken Grotesk', system-ui, sans-serif;
-  --font-body: 'Hanken Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-display:
+    'Sora', 'Sora Fallback', 'Hanken Grotesk', 'Hanken Grotesk Fallback', system-ui, sans-serif;
+  --font-body:
+    'Hanken Grotesk', 'Hanken Grotesk Fallback', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
   /* Labels are the body face; the label recipe does the work. Kept as its own
      token so the consumers need no edit and the choice stays in one place. */
@@ -25,6 +27,63 @@
   --leading-body: 1.6;
   --leading-tight: 1.25;
   --tracking-mono: 0.14em;
+}
+
+/* Stand-ins for the two web faces, so the swap moves nothing.
+
+   Both families arrive from Google Fonts with display=swap, which means the
+   first paint is in whatever local face the stack falls to — and Arial is
+   narrower than either, so the hero headline set in it took three lines where
+   Sora takes four, and every line below it jumped 32px when Sora landed. The
+   four faces here are local Arial with the web face's metrics laid over it:
+   size-adjust scales Arial until its average lowercase advance matches the
+   web face, and the three overrides then give it the web face's own ascent,
+   descent, and line gap. Measured from the served TTFs and the Arial faces
+   with tools/font-metrics.js, which also says how to get the files; re-run it
+   if the Google Fonts version of either family changes.
+
+   Arial ships with Windows, macOS, and iOS. Where it is absent, which mostly
+   means Android, local() finds nothing and the stack moves on to system-ui
+   unadjusted — no worse than before. The 400 face carries 500 as well: the
+   two weights differ by 0.6% in width, not worth a fifth block. */
+@font-face {
+  font-family: 'Hanken Grotesk Fallback';
+  font-weight: 400 500;
+  src: local('Arial'), local('ArialMT');
+  size-adjust: 102.31%;
+  ascent-override: 97.75%;
+  descent-override: 29.62%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Hanken Grotesk Fallback';
+  font-weight: 600;
+  src: local('Arial Bold'), local('Arial-BoldMT');
+  size-adjust: 94.97%;
+  ascent-override: 105.29%;
+  descent-override: 31.9%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Sora Fallback';
+  font-weight: 600;
+  src: local('Arial Bold'), local('Arial-BoldMT');
+  size-adjust: 109.7%;
+  ascent-override: 88.42%;
+  descent-override: 26.44%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Sora Fallback';
+  font-weight: 700;
+  src: local('Arial Bold'), local('Arial-BoldMT');
+  size-adjust: 110.88%;
+  ascent-override: 87.48%;
+  descent-override: 26.15%;
+  line-gap-override: 0%;
 }
 
 body {
