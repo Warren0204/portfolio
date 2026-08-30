@@ -13,7 +13,7 @@ export const chapters = Object.freeze([
     /* The phone tab bar's glyph, a key in js/components/icon.js. */
     icon: 'house',
     route: '#/',
-    title: 'Warren Villagonzalo Gallardo — Power Platform Developer and Data Analyst',
+    title: 'Warren Villagonzalo Gallardo · Power Platform Developer and Data Analyst',
     description:
       'Power Platform developer and data analyst in Cebu City. I put automation and reporting into live operations, then document and hand them over so they keep running.',
   }),
@@ -23,7 +23,7 @@ export const chapters = Object.freeze([
     menuLabel: 'Projects',
     icon: 'folder',
     route: '#/projects',
-    title: 'Projects — Warren Villagonzalo Gallardo',
+    title: 'Projects · Warren Villagonzalo Gallardo',
     description:
       'Case studies from problem to deployment, including TranspiraFund, a monitoring platform built and validated with a city engineering department.',
   }),
@@ -33,7 +33,7 @@ export const chapters = Object.freeze([
     menuLabel: 'Experience',
     icon: 'briefcase',
     route: '#/experience',
-    title: 'Experience — Warren Villagonzalo Gallardo',
+    title: 'Experience · Warren Villagonzalo Gallardo',
     description:
       'The Benchmark365 internship: nine cloud flows, a canvas app, and a four page Power BI report shipped into production and handed to service account ownership.',
   }),
@@ -43,7 +43,7 @@ export const chapters = Object.freeze([
     menuLabel: 'Credentials',
     icon: 'award',
     route: '#/credentials',
-    title: 'Credentials — Warren Villagonzalo Gallardo',
+    title: 'Credentials · Warren Villagonzalo Gallardo',
     description:
       'BSIT from the University of Cebu, the Google AI Professional Certificate, four development tracks, and the skills underneath them.',
   }),
@@ -53,7 +53,7 @@ export const chapters = Object.freeze([
     menuLabel: 'Contact',
     icon: 'email',
     route: '#/contact',
-    title: 'Contact — Warren Villagonzalo Gallardo',
+    title: 'Contact · Warren Villagonzalo Gallardo',
     description:
       'Open to Power Platform and automation development, data analytics, and project coordination roles. Remote, hybrid, or onsite from Cebu City.',
   }),

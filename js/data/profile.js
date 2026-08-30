@@ -193,7 +193,7 @@ export const profile = Object.freeze({
         autocomplete: 'email',
         hint: 'I will only use this to reply.',
         required: 'Enter your email address so I can reply.',
-        invalid: 'That does not look like an email address — check for a typo.',
+        invalid: 'That does not look like an email address. Check for a typo.',
       }),
       message: Object.freeze({
         label: 'Message',
@@ -208,12 +208,12 @@ export const profile = Object.freeze({
 
     /* Every one of the five states the review checklist asks for. */
     successTitle: 'Message sent',
-    successBody: 'Thanks — I have it, and I will reply within a day.',
+    successBody: 'Thanks. I have it and will reply within a day.',
     successAgain: 'Send another message',
     errorTitle: 'That did not send',
     errorBody: 'Something went wrong on the way out. Try again, or email me directly at',
     offlineBody:
-      'You appear to be offline. Reconnect and try again — nothing you typed has been lost.',
+      'You appear to be offline. Reconnect and try again. Nothing you typed has been lost.',
     /* No "above" or "below": the summary sits under the button, the fields it
        refers to are above it, and a live region is read out of place anyway. */
     invalidSummary: 'Check the highlighted fields, then send again.',
