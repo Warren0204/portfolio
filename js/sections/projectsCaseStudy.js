@@ -67,9 +67,17 @@ function createSurfaces(project) {
   const panelId = `surfaces-${project.id}`;
   const caption = el('p', { class: 'project__surface-caption' });
   const list = el('div', { class: 'project__surface-list' });
+  const panel = el(
+    'div',
+    { class: 'project__surface', attrs: { id: panelId, role: 'tabpanel', tabindex: '0' } },
+    [caption, list]
+  );
 
   function show(surfaceId) {
     const surface = project.surfaces.find((entry) => entry.id === surfaceId);
+    // Named by whichever token opened it, as the Experience and Credentials
+    // panels are; the panel takes focus, so it needs a name to announce.
+    panel.setAttribute('aria-labelledby', `tab-${panelId}-${surfaceId}`);
     caption.textContent = surface.caption;
     replaceChildren(list, createBulletList({ items: surface.items }));
     refreshTriggers();
@@ -89,14 +97,7 @@ function createSurfaces(project) {
   const element = el('div', { class: 'project__surfaces' }, [
     createSectionEyebrow({ text: eyebrows.built }),
     tabs.element,
-    el(
-      'div',
-      {
-        class: 'project__surface',
-        attrs: { id: panelId, role: 'tabpanel', tabindex: '0' },
-      },
-      [caption, list]
-    ),
+    panel,
   ]);
 
   return { element, destroy: tabs.destroy };
