@@ -9,7 +9,7 @@
 /* The notebook behind the guided project. One constant, so it can be swapped
    in one line. */
 export const DATACAMP_NOTEBOOK_URL =
-  'https://www.datacamp.com/datalab/w/c51273ae-41ff-47f6-b2ad-df3bc716c6a8/edit';
+  'https://www.datacamp.com/datalab/w/c51273ae-41ff-47f6-b2ad-df3bc716c6a8';
 
 export const projects = Object.freeze([
   Object.freeze({
