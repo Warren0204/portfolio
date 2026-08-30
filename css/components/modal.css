@@ -118,6 +118,18 @@
   cursor: default;
 }
 
+/* Below about 700px the bar wraps to two rows, the heading over the two
+   actions, and at the desktop padding that came to 135px of a 852px screen
+   before the certificate began — measured, and 24% of a 320x568 one. The
+   block padding steps down to the scale and the rows sit closer; the eyebrow
+   goes too, in sections/credentials.css where the zoom's own rules live. */
+@media (width < 700px) {
+  .modal__dialog--zoom .modal__bar {
+    row-gap: var(--space-2);
+    padding-block: var(--space-3);
+  }
+}
+
 /* Scroll is locked behind an open dialog by layout/page.css, which owns the
    scroller. It was stated here as well, and both copies were inert. */
 
