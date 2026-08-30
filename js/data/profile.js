@@ -120,19 +120,6 @@ export const profile = Object.freeze({
        with the same three tracks the sentence goes on to list. The only place
        the work arrangement is stated. */
     body: 'I am open to three kinds of role: Microsoft Power Platform and automation development, data analytics and business intelligence, and project management or coordination. Remote, hybrid, or onsite.',
-    /* The contentinfo landmark. The byline that used to close the page said
-       who and where, and both are already on screen above it: the name is in
-       the header wordmark, the location is under the portrait. What is left is
-       the one thing this page can offer that most cannot, which is itself. */
-    colophon: Object.freeze({
-      line: 'HTML, CSS, and vanilla JavaScript. No framework, no build step.',
-      link: Object.freeze({
-        label: 'View source',
-        href: 'https://github.com/Warren0204/portfolio',
-        external: true,
-      }),
-    }),
-
     /* Direct routes, for the visitor who would rather not fill anything in.
        Offered beside the form, never instead of it — the form cannot attach a
        job description, CC a colleague, or land in someone's ATS thread, and a

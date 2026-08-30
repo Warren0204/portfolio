@@ -271,28 +271,3 @@ a.route .route__value {
   line-height: 1.45;
   text-wrap: pretty;
 }
-
-/* Footer */
-
-.contact__footer {
-  margin-top: var(--space-6);
-  padding-top: var(--space-5);
-  border-top: var(--line);
-}
-
-/* The closing line. Prose rather than the mono label recipe the byline used:
-   that recipe is for labels, and this is a sentence. */
-.contact__colophon {
-  color: var(--muted);
-  font-size: var(--text-small);
-  text-wrap: pretty;
-}
-
-/* The source link, on a row of its own. Inline in the line above, its 44px
-   target would have thrown that line box; here the box has somewhere to go,
-   and the leading it adds is the gap between the two lines. */
-.contact__source {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-}
