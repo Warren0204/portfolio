@@ -33,8 +33,8 @@ function splitWords(value, className) {
 }
 
 /**
- * The headline, with every word individually placeable. The serif tail keeps
- * its own element so the emphasis survives the split.
+ * The headline, with every word individually placeable. The emphasised tail
+ * keeps its own element so the emphasis survives the split.
  *
  * @returns {{ element: HTMLElement, words: HTMLElement[] }}
  */
@@ -42,7 +42,7 @@ export function createHeadline() {
   const lead = splitWords(profile.headline.lead, 'home__word');
   const tail = splitWords(profile.headline.tail, 'home__word');
 
-  const emphasis = el('em', { class: 'serif-tail' }, tail);
+  const emphasis = el('em', { class: 'display-tail' }, tail);
   const element = el('h1', { class: 'home__headline' }, [...lead, ' ', emphasis]);
 
   const words = [...lead, ...tail].filter((node) => node instanceof HTMLElement);

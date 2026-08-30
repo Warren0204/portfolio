@@ -69,9 +69,8 @@ body {
 }
 
 /* The one emphasised phrase a chapter is allowed: the display face, a step
-   lighter than the headline around it, in the accent. The class name is older
-   than the face. */
-.serif-tail {
+   lighter than the headline around it, in the accent. */
+.display-tail {
   color: var(--accent-ink);
   font-family: var(--font-display);
   font-weight: 600;
