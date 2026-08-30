@@ -109,7 +109,6 @@ export const projects = Object.freeze([
           'Firebase Authentication',
           'Cloud Firestore',
           'Cloud Storage',
-          'sharp (photo stamping)',
           'Nodemailer (OTP email)',
           'Nominatim (reverse geocoding)',
         ]),
