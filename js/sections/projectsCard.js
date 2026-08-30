@@ -42,7 +42,11 @@ export function createProjectCard(project, index) {
     el('h3', { class: 'project__title', text: project.title }),
     el('p', { class: 'project__summary', text: project.summary }),
     el('p', { class: 'project__context', text: project.context }),
-    el('div', { class: 'chip-row' }, project.tags.map((tag) => createChip({ label: tag }))),
+    el(
+      'div',
+      { class: 'chip-row' },
+      project.tags.map((tag) => createChip({ label: tag }))
+    ),
     // The footer closes the card: the way in on the left, where it stands on
     // the right, so the badge never stands alone under the body.
     el('div', { class: 'project__footer' }, [

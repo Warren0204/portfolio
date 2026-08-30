@@ -35,10 +35,7 @@ function createZoomHeader(certification, close) {
         attrs: { type: 'button', 'aria-label': credentialsCopy.zoomCloseAria },
         on: { click: close },
       },
-      [
-        el('span', { text: credentialsCopy.zoomClose }),
-        createIcon('close', 14, { inline: true }),
-      ]
+      [el('span', { text: credentialsCopy.zoomClose }), createIcon('close', 14, { inline: true })]
     ),
   ]);
 
