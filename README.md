@@ -15,7 +15,7 @@ One page, five sections, read top to bottom:
 | Section         | What it covers                                                                                                    |
 | --------------- | ----------------------------------------------------------------------------------------------------------------- |
 | **Home**        | Who I am, what I do, and the numbers behind it                                                                    |
-| **Projects**    | TranspiraFund — a monitoring platform built and validated with a city engineering office                          |
+| **Projects**    | TranspiraFund, a monitoring platform built and validated with a city engineering office, and a guided SQL project |
 | **Experience**  | The Benchmark365 internship, and the three systems I shipped into production there, each with its process diagram |
 | **Credentials** | My degree, certifications, the four tracks I am building in, and the skills underneath                            |
 | **Contact**     | A message form, and the direct routes for anyone who would rather not use it                                      |

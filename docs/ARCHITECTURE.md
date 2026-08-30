@@ -117,13 +117,13 @@ Below 920px the site is built as an app, not as a narrowed page. 920 is where
 the five mono nav labels stop fitting beside the wordmark and the theme switch —
 measured, not guessed.
 
-|                 | phone (< 920px)                         | 920px and up                     |
-| --------------- | --------------------------------------- | -------------------------------- |
-| Navigation      | bottom tab bar, in the thumb arc        | section nav in the header        |
-| Header          | slim title bar: short wordmark + theme  | wordmark + nav + theme           |
-| Detail dialog   | bottom sheet with a grab handle         | centred dialog                   |
-| Home            | one column, portrait between the two    | two columns, portrait in its own |
-| Calls to action | full-width primary over two secondaries | inline row                       |
+|                 | phone (< 920px)                        | 920px and up                     |
+| --------------- | -------------------------------------- | -------------------------------- |
+| Navigation      | bottom tab bar, in the thumb arc       | section nav in the header        |
+| Header          | slim title bar: short wordmark + theme | wordmark + nav + theme           |
+| Detail dialog   | bottom sheet with a grab handle        | centred dialog                   |
+| Home            | one column, portrait first as a circle | two columns, portrait in its own |
+| Calls to action | one full-width action per row          | inline row                       |
 
 The header is `position: sticky`, not `fixed`. A fixed element is laid out
 against the initial containing block, which includes the classic scrollbar
@@ -166,6 +166,7 @@ Adding content is a one-object data edit. Nothing in `js/components/`,
 | To add                          | Edit                                       | Append                                                                                                        |
 | ------------------------------- | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------- |
 | A project case study            | `js/data/projects.js`                      | one object to `projects`                                                                                      |
+| A compact project card          | `js/data/projects.js`                      | one object to `projects` with `kind: 'compact'`; it takes the card renderer instead of the case study         |
 | A delivered system under a role | `js/data/experience.js`                    | one object to that role's `systems`                                                                           |
 | A process diagram               | `js/data/experience.js`                    | one entry to `diagrams`, and `diagram: '<key>'` on the system                                                 |
 | A certification                 | `js/data/credentials.js`                   | one object to `certifications`; include `image` to get the click-to-enlarge proof, omit it for a compact card |

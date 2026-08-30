@@ -73,7 +73,7 @@
 
   /* The wordmark's own two stops. This is the ONE sanctioned place where two
      accent stops appear together, and it is limited to exactly three uses: the
-     scroll progress bar, the logo chip, and the hero glow. Both stops are in
+     scroll progress bar, the portrait ring, and the hero glow. Both stops are in
      the accent family — they are the colours of the favicon disc — so this is
      the accent expressed as a surface, not a fifth hue. Do not extend it. */
   --brand-from: #0c9ee8;
