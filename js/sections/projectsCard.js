@@ -1,7 +1,7 @@
 /* One project as a compact card: for work that is real but small, such as a
    guided project, where a full case study would be padding. It shares the
-   card shell and the numbered identity line of the case study so the two read
-   as one list, and says the rest in one surface: what it was, what it was
+   card shell and the identity line of the case study so the two read as one
+   set, and says the rest in one surface: what it was, what it was
    built on, then a footer row with where to open it and where it stands. */
 
 import { el } from '../core/dom.js';
@@ -13,11 +13,10 @@ import { createProjectMeta } from './projectsMeta.js';
 /**
  * @param {object} project One entry from `projects` in js/data/projects.js
  *   with `kind: 'compact'`.
- * @param {number} index Position in that array; the identity line numbers from it.
  * @returns {{ element: HTMLElement, blocks: HTMLElement[], destroy: () => void }}
  *   The same shape as createCaseStudy, so the section treats both alike.
  */
-export function createProjectCard(project, index) {
+export function createProjectCard(project) {
   const links = el(
     'p',
     { class: 'project__links' },
@@ -38,7 +37,7 @@ export function createProjectCard(project, index) {
   );
 
   const card = el('div', { class: 'card' }, [
-    createProjectMeta(project, index),
+    createProjectMeta(project),
     el('h3', { class: 'project__title', text: project.title }),
     el('p', { class: 'project__summary', text: project.summary }),
     el('p', { class: 'project__context', text: project.context }),

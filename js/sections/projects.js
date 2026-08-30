@@ -20,10 +20,9 @@ export function createProjectsSection() {
     headingId: 'projects-heading',
   });
 
-  // A compact entry is one card; everything else is a full case study. The
-  // index numbers the identity line, so the data's order is the page's.
-  const studies = projects.map((project, index) =>
-    project.kind === 'compact' ? createProjectCard(project, index) : createCaseStudy(project, index)
+  // A compact entry is one card; everything else is a full case study.
+  const studies = projects.map((project) =>
+    project.kind === 'compact' ? createProjectCard(project) : createCaseStudy(project)
   );
 
   const element = el('div', { class: 'well projects' }, [

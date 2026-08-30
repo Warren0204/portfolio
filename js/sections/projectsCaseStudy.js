@@ -8,10 +8,10 @@
    with a title and nothing else.
 
    The study sits in the same card shell as the compact card, so every project
-   is one bounded object with the same numbered identity line, and it closes
-   with its status block behind a hairline. On a phone a slim identity strip
-   stays under the header while the card scrolls, because a long run of open
-   blocks otherwise gives no clue what they belong to. */
+   is one bounded object with the same identity line, and it closes with its
+   status block behind a hairline. On a phone a slim identity strip stays under
+   the header while the card scrolls, because a long run of open blocks
+   otherwise gives no clue what they belong to. */
 
 import { el, replaceChildren } from '../core/dom.js';
 import { createBulletList } from '../components/bulletList.js';
@@ -25,10 +25,10 @@ import { createProjectMeta } from './projectsMeta.js';
 
 const { eyebrows } = projectsCopy;
 
-/** Identity: the numbered strip, what it is called, and my part in it. */
-function createHeader(project, index) {
+/** Identity: the strip, what it is called, and my part in it. */
+function createHeader(project) {
   return el('header', { class: 'project__header' }, [
-    createProjectMeta(project, index),
+    createProjectMeta(project),
     el('h3', { class: 'project__title', text: project.title }),
     el('p', { class: 'project__summary', text: project.summary }),
     el('div', { class: 'project__roles' }, [
@@ -128,12 +128,11 @@ function createStack(project) {
 
 /**
  * @param {object} project One entry from `projects` in js/data/projects.js.
- * @param {number} index Position in that array; the identity line numbers from it.
  * @returns {{ element: HTMLElement, blocks: HTMLElement[], destroy: () => void }}
  *   `blocks` are the pieces the section staggers in on scroll.
  */
-export function createCaseStudy(project, index) {
-  const header = createHeader(project, index);
+export function createCaseStudy(project) {
+  const header = createHeader(project);
   const narrative = createNarrative(project);
   const surfaces = createSurfaces(project);
   const stack = createStack(project);
