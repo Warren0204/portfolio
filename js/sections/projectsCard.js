@@ -1,8 +1,8 @@
 /* One project as a compact card: for work that is real but small, such as a
    guided project, where a full case study would be padding. It shares the
    card shell and the identity line of the case study so the two read as one
-   set, and says the rest in one surface: what it was, what it was
-   built on, then a footer row with where to open it and where it stands. */
+   set, and says the rest in one surface: what it was, what it was built on,
+   then a footer row with where it stands and where to open it. */
 
 import { el } from '../core/dom.js';
 import { createBadge } from '../components/badge.js';
@@ -46,11 +46,12 @@ export function createProjectCard(project) {
       { class: 'chip-row' },
       project.tags.map((tag) => createChip({ label: tag }))
     ),
-    // The footer closes the card: the way in on the left, where it stands on
-    // the right, so the badge never stands alone under the body.
+    // The footer closes the card: where it stands on the left, the way in on
+    // the right. The badge qualifies everything above it and the link leaves
+    // the page, so the thing that sends a reader away is last in the row.
     el('div', { class: 'project__footer' }, [
-      links,
       createBadge({ text: project.status.text, tone: project.status.tone }),
+      links,
     ]),
   ]);
 

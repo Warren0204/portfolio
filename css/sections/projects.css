@@ -253,8 +253,9 @@
 }
 
 /* The last row of every card: a hairline, then what closes it. In the case
-   study that is the status block; in the compact card the link on the left and
-   the badge on the right, so the badge never stands alone. */
+   study that is the status block; in the compact card the badge on the left
+   and the link on the right. That order is the convention wherever a card
+   carries both, which today is the compact card alone. */
 .project__footer {
   display: flex;
   flex-wrap: wrap;
@@ -275,7 +276,8 @@
 
 /* The way in. A text link, underlined like any other in running copy, but a
    target: the 44px floor comes from the box rather than from the type, and
-   the footer row centres the badge against it. */
+   the footer row centres the badge against it. It stays inside its <p> so the
+   underline keeps coming from the `p a` rule in base/typography.css. */
 .project__links {
   display: flex;
   flex-wrap: wrap;
