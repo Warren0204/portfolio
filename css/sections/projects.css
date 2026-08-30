@@ -95,6 +95,20 @@
   letter-spacing: 0.14em;
 }
 
+/* The line under the team count. Prose, not the label recipe directly above it:
+   that recipe is 11px and tracked out because it carries three words, and this
+   is a sentence. Family, size and tone are the summary's, so the two read as
+   the same voice.
+
+   The 100% basis gives it a row of its own inside a roles row that otherwise
+   wraps chips, and the row gap there supplies the space above it. */
+.project__team-note {
+  flex: 1 0 100%;
+  color: var(--muted);
+  font-size: var(--text-lead);
+  text-wrap: pretty;
+}
+
 /* The 74ch measure belongs to the prose, not to the block.
 
    It used to sit on .project__header, which also holds .project__meta, so the

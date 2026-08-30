@@ -18,6 +18,11 @@ export const projects = Object.freeze([
     period: '2025 to 2026',
     title: 'TranspiraFund',
     team: 'Team of four',
+    /* One line under the team count, on how the four of us were actually run.
+       Set as prose rather than as a label: the mono recipe beside it is for
+       three words, and this is a sentence. */
+    teamNote:
+      'Ran the team from a Google Sheets task board: Apps Script assigned tasks and an HTML confirm button logged each acknowledgement.',
     roles: Object.freeze(['Project Manager', 'Web and Mobile Developer', 'QA Tester']),
 
     summary:

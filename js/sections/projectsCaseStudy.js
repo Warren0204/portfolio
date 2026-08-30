@@ -39,6 +39,7 @@ function createHeader(project) {
         project.roles.map((role) => el('span', { class: 'chip chip--role', text: role }))
       ),
       el('span', { class: 'project__team', text: project.team }),
+      project.teamNote ? el('p', { class: 'project__team-note', text: project.teamNote }) : null,
     ]),
   ]);
 }
