@@ -105,6 +105,18 @@ export function createActions({ onNavigate }) {
       'a',
       {
         class: 'button button--outline',
+        attrs: { href: profile.cv.href, target: '_blank', rel: 'noopener noreferrer' },
+      },
+      /* A new tab, so the browser's own PDF viewer handles it and brings its
+         zoom and its save control with it. There is no in-page reader here:
+         the one dialog this project has takes an image, not a document, and a
+         hand-built viewer would be worse than the one already installed. */
+      [profile.ctas.viewCv, createIcon('external', 18, { inline: true })]
+    ),
+    el(
+      'a',
+      {
+        class: 'button button--outline',
         attrs: { href: profile.cv.href, download: profile.cv.downloadName },
       },
       // The glyph says this one saves a file rather than moving down the page.

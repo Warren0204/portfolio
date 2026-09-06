@@ -106,29 +106,30 @@
   text-wrap: pretty;
 }
 
-.home__actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-3);
-  margin-top: var(--space-6);
-}
+/* One column, then two. Never a wrap left to chance.
 
-/* One action per row until all three fit on one.
-
-   Every row is the same width, so the hierarchy is carried by weight alone —
-   filled, then outlined, then nothing — instead of by size. The two-up
+   Every cell is the same width, so the hierarchy is carried by weight alone,
+   filled then outlined then nothing, instead of by size. The two-up
    arrangement this replaces gave the primary twice the width of either
    secondary and left the borderless third action centred in a half-empty
    cell, which read as an unfinished row rather than as a third tier.
 
-   Left to wrap on its own the three buttons broke two-then-one, which put the
-   least important action alone on a line looking like the most important one,
-   so this stays declared rather than emergent. The three and their gaps
-   measure 457px, so 560 is the first width with room to spare. */
-@media (width < 560px) {
+   There are four actions now, and the hero column tops out around 626px, so
+   they cannot share one row at any width: measured from 320 to 1920 with the
+   old flex wrap, every width from 560 up broke three-then-one and stranded the
+   quietest action alone on a line looking like the loudest. Two columns keeps
+   both rows full. Below 560 a second column would leave each cell near 169px
+   against a 173px "Download CV", so one per row holds there. */
+.home__actions {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+}
+
+@media (width >= 560px) {
   .home__actions {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 

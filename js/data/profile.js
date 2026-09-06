@@ -103,6 +103,10 @@ export const profile = Object.freeze({
 
   ctas: Object.freeze({
     viewProjects: 'View projects',
+    /* Paired with downloadCv on the same file. Reading it and keeping it are
+       two different intentions, and a reader who only wants to look should not
+       have to put a file on their disk first. */
+    viewCv: 'View CV',
     downloadCv: 'Download CV',
     /* Deliberately not "Email me". This scrolls to the contact form; a label
        promising a mail client and not opening one is a small lie, and on a
