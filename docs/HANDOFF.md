@@ -314,6 +314,7 @@ Read newest first. Use these as the pattern for anything new.
 
 | Message                                     | What it covered                                                                                                                                  |
 | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `Rename TranspiraFund role`                 | The capstone role reads Full Stack Web Developer, and React Native leaves my tech stack; the project stays a web and mobile system               |
 | `Add CV viewer overlay`                     | View CV opens the two page renders in a native dialog instead of a new tab; the hero drops Download CV, which the viewer toolbar now carries     |
 | `Add View CV control`                       | A View CV link beside Download CV, opening the PDF in a new tab; the action row is two columns from 560 up so four never strand one              |
 | `Update CV PDF`                             | The September 2026 cut, same path and filename so every link holds; its certifications are the two earned ones instead of one in progress        |

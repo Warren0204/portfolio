@@ -98,7 +98,6 @@ export const stack = Object.freeze([
     title: 'APPLICATION DEVELOPMENT',
     items: Object.freeze([
       'React + Vite',
-      'React Native',
       'Node.js',
       'TypeScript',
       'Firebase',

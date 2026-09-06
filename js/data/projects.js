@@ -23,7 +23,7 @@ export const projects = Object.freeze([
        three words, and this is a sentence. */
     teamNote:
       'Ran the team from a Google Sheets task board: Apps Script assigned tasks and an HTML confirm button logged each acknowledgement.',
-    roles: Object.freeze(['Project Manager', 'Web and Mobile Developer', 'QA Tester']),
+    roles: Object.freeze(['Project Manager', 'Full Stack Web Developer', 'QA Tester']),
 
     summary:
       'A cross-platform monitoring system, web and mobile, giving a city engineering department one place to track barangay infrastructure projects from creation through field submission to review, with AI assisted milestone planning and photo verification.',
