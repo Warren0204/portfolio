@@ -151,12 +151,12 @@ _is_ the right tool for overflow itself — the header's scrollbar collision at
 
 ## Git conventions
 
-Commit messages are **two or three words**, and they name what changed rather
+Commit messages are **two to four words**, and they name what changed rather
 than what was touched. No scope prefixes, no conventional-commit types, no
 trailing punctuation. **Do not add `Co-Authored-By` or any assistant
 attribution** — every commit here is authored by Warren.
 
-Two or three words is a real constraint, not a style note: if a message needs
+Two to four words is a real constraint, not a style note: if a message needs
 more, the commit is doing more than one thing and should be split.
 
 ### 2026-08-30: the Phase 2 pass
