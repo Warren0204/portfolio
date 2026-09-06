@@ -304,6 +304,7 @@ Read newest first. Use these as the pattern for anything new.
 
 | Message                                     | What it covered                                                                                                                                  |
 | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `Align portfolio copy`                      | The sponsor office is the Construction Services Division in all four strings, and the notebook card is dated August 2026, both matching the CV   |
 | `Add SQL Associate certification`           | The second featured certification, with the certificate page as its proof image, and the data analytics track cert marked earned                 |
 | `Rename Sonnet chip`                        | The AI layer chip drops "vision": photo verification already says it, in the reader words rather than the vendor ones                            |
 | `Match identity lines`                      | The identity line is one component on all three cards, one row at every width, compact at 360 and under; D20 two-row block gone                  |
