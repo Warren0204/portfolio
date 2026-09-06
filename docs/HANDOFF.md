@@ -304,6 +304,7 @@ Read newest first. Use these as the pattern for anything new.
 
 | Message                                     | What it covered                                                                                                                                  |
 | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `Update CV PDF`                             | The September 2026 cut, same path and filename so every link holds; its certifications are the two earned ones instead of one in progress        |
 | `Align portfolio copy`                      | The sponsor office is the Construction Services Division in all four strings, and the notebook card is dated August 2026, both matching the CV   |
 | `Add SQL Associate certification`           | The second featured certification, with the certificate page as its proof image, and the data analytics track cert marked earned                 |
 | `Rename Sonnet chip`                        | The AI layer chip drops "vision": photo verification already says it, in the reader words rather than the vendor ones                            |
