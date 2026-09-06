@@ -1,0 +1,248 @@
+/* The CV viewer: the two page renders of the CV, in a native <dialog>.
+
+   The element brings the top layer, the focus trap, the inert background,
+   Escape, and ::backdrop, so none of that is written here. What is left is a
+   panel above 600px and a full-screen sheet below it, and the toolbar that
+   stays put while the pages move under it.
+
+   Not a variant of components/modal.css. That file styles a div pretending to
+   be a dialog; the two share tokens and nothing else, and folding them together
+   would mean one of them lying about what it is. */
+
+.cv-viewer {
+  /* The ground around the panel. Same job as --edge-pad in modal.css, under a
+     name of its own on purpose: utilities/safe-area.css writes padding onto
+     four named selectors and this is not one of them, so borrowing that name
+     would suggest a rule that never fires. The inset is taken here instead.
+     A landscape iPhone reports 47 to 59px against a 4vw of about 37px, and the
+     panel is centred, so the larger of the two on both sides is the honest
+     gutter. */
+  --cv-ground: max(clamp(16px, 4vw, 40px), var(--safe-l, 0px), var(--safe-r, 0px));
+
+  display: none;
+  flex-direction: column;
+
+  /* Restated, and it is not redundant. A modal dialog is centred by the UA
+     sheet giving it all four insets and `margin: auto`, and base/reset.css
+     zeroes the margin of every element in the document. Author beats UA, so
+     without this line the panel sizes correctly and then sits in the top left
+     corner. Measured: 920x810 at 0,0 on a 1280x900 viewport. */
+  margin: auto;
+  width: min(920px, calc(100% - 2 * var(--cv-ground)));
+
+  /* All three are the UA sheet's, and all three are wrong for this. It caps a
+     dialog at calc(100% - 6px - 2em) on both axes and puts 1em inside it.
+
+     The vh line is the fallback for an engine without dvh, where the whole
+     min() would be invalid and leave no ceiling at all. Same pattern as
+     components/modal.css. dvh rather than that file's svh because this panel
+     is read rather than glanced at: it should take the height that is actually
+     on screen as the browser chrome collapses, not the smallest it could be. */
+  max-width: none;
+  max-height: 90vh;
+  max-height: min(90dvh, calc(100% - 2 * var(--cv-ground)));
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid rgba(var(--line-rgb), 0.16);
+  border-radius: var(--radius-xl);
+  background: var(--bg);
+  color: var(--text);
+  box-shadow: var(--shadow-lg);
+
+  /* Open and close both, from one pair of declarations. `display` and
+     `overlay` are discrete, so they need allow-discrete to hold their open
+     values for the length of the fade rather than snapping on the first frame
+     and taking the panel with them. Doing this in CSS is what keeps the
+     component free of a close timer that has to agree with a duration token. */
+  opacity: 0;
+  transform: scale(0.94);
+  transition:
+    opacity var(--duration-base) var(--ease-out),
+    transform var(--duration-base) var(--ease-out),
+    overlay var(--duration-base) allow-discrete,
+    display var(--duration-base) allow-discrete;
+}
+
+.cv-viewer[open] {
+  display: flex;
+  opacity: 1;
+  transform: scale(1);
+}
+
+.cv-viewer::backdrop {
+  background: var(--modal-scrim);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  transition:
+    opacity var(--duration-base) ease,
+    overlay var(--duration-base) allow-discrete,
+    display var(--duration-base) allow-discrete;
+}
+
+.cv-viewer[open]::backdrop {
+  opacity: 1;
+}
+
+/* The value each side starts from on the one frame it enters the top layer.
+   Without this the transition has no previous value to run from and the panel
+   simply appears. */
+@starting-style {
+  .cv-viewer[open] {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+
+  .cv-viewer[open]::backdrop {
+    opacity: 0;
+  }
+}
+
+/* utilities/motion.css neutralises `*`, which reaches the dialog and not its
+   backdrop: ::backdrop is neither an element nor ::before or ::after. Both are
+   stated here so the pair cannot half-animate. */
+@media (prefers-reduced-motion: reduce) {
+  .cv-viewer,
+  .cv-viewer::backdrop {
+    transition: none;
+  }
+}
+
+/* The toolbar. flex: none against a scrolling body is what pins it: the bar
+   never enters the scroller, so there is no sticky offset to keep in step with
+   a header height. */
+.cv-viewer__bar {
+  display: flex;
+  flex: none;
+  gap: var(--space-3);
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+  border-bottom: var(--line);
+  background: var(--surface);
+}
+
+/* The visible name of the dialog, and the one aria-labelledby points at. The
+   ellipsis is a backstop rather than the plan: the rule at the foot of this
+   file gives the title its own row before it can ever reach it. */
+.cv-viewer__title {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: var(--text-body);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cv-viewer__actions {
+  display: flex;
+  flex: none;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+/* Both controls are recipes from components/button.css. Only their size in a
+   bar this tight is this file's business: the hero padding of 26px puts the
+   pair at 250px, which is most of a 320px screen. The 44px floor is the
+   button's own and is not touched. */
+.cv-viewer__download {
+  gap: var(--space-2);
+  padding: 0 var(--space-4);
+  font-size: var(--text-small);
+}
+
+.cv-viewer__close {
+  width: 44px;
+  padding: 0;
+}
+
+/* The pages, and the only thing here that scrolls. overscroll-behavior stops
+   the page underneath taking over at the last page; it does not touch pinch
+   zoom, which is the browser's and stays that way. */
+.cv-viewer__body {
+  display: grid;
+  gap: var(--space-2);
+  overflow-y: auto;
+  padding: var(--space-4);
+  background: var(--raised);
+  overscroll-behavior: contain;
+}
+
+/* aspect-ratio comes from the source dimensions, inline from the data, so the
+   two boxes are their full height before a byte arrives. The white ground is
+   the page's own: these are documents drawn for white, the same as the
+   certificate scans, so it is the non-theming token rather than a surface. */
+.cv-viewer__page {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-sm);
+  background: var(--surface-logo);
+  box-shadow: var(--shadow-sm);
+}
+
+/* The title over the two actions on a phone, which is the same shape and the
+   same reason as .modal__bar below 700 in components/modal.css.
+
+   440, and it is a second question from the 600 below, so it gets a second
+   number: 600 is where the panel becomes the screen, this is where the toolbar
+   stops fitting on one line. Measured, the title is 163px and the two controls
+   with their gaps are 220, so one row wants 383px of bar interior. It first has
+   it at exactly 430, with nothing to spare, and the title is clipped at every
+   width under that: 147px of 163 at 414, 53px at 320. 440 is the width this
+   project already treats as the end of the phones, in sections/home.css, and it
+   leaves 10px rather than 0.
+
+   The title takes a full row and the actions the next, so the name is whole and
+   the two controls keep the ends of their row. Nothing is dropped to an icon:
+   "Download PDF" is the one place on the page that says what the file is. */
+@media (width < 440px) {
+  .cv-viewer__bar {
+    flex-wrap: wrap;
+    row-gap: var(--space-3);
+  }
+
+  .cv-viewer__title {
+    flex: 1 0 100%;
+    overflow: visible;
+  }
+
+  .cv-viewer__actions {
+    flex: 1;
+    justify-content: space-between;
+  }
+}
+
+/* Below 600 the panel is the screen. A centred box on a phone leaves a strip
+   of scrim down each side that is too narrow to aim at and too wide to ignore,
+   and it costs the pages the width they are there to have. */
+@media (width < 600px) {
+  .cv-viewer {
+    --cv-ground: 0px;
+
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    max-height: none;
+    border: 0;
+    border-radius: 0;
+  }
+
+  /* Full screen means the bar meets the status bar and the pages meet the home
+     indicator, so each takes the physical inset rather than the sheet taking
+     one gutter for both. No media query on the env() calls: they are already
+     0 where there is no cutout. */
+  .cv-viewer__bar {
+    padding-top: calc(var(--space-3) + env(safe-area-inset-top, 0));
+    padding-right: max(var(--space-4), var(--safe-r));
+    padding-left: max(var(--space-4), var(--safe-l));
+  }
+
+  .cv-viewer__body {
+    padding-right: max(var(--space-4), var(--safe-r));
+    padding-bottom: calc(var(--space-4) + env(safe-area-inset-bottom, 0));
+    padding-left: max(var(--space-4), var(--safe-l));
+  }
+}

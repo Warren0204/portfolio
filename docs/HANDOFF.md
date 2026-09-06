@@ -71,6 +71,16 @@ A component never imports a section. Modules stay under about 150 lines.
 **Adding content is a one-object data edit** — a project, a system, a diagram, a
 certification, a skill group. See the table in ARCHITECTURE.md.
 
+**The CV page images and the CV PDF are one artefact.**
+`assets/img/cv/cv-page-1.webp` and `cv-page-2.webp`, with their `-800` mates,
+are renders of `assets/docs/Warren_Gallardo_CV.pdf`. They are regenerated from
+the CV source outside this repository, never from the PDF in it, so nothing here
+can rebuild them. The viewer shows the images and its download hands over the
+PDF: update the PDF alone and the two disagree, silently, with the reader seeing
+the old CV and saving the new one. Update them together. If the render size ever
+changes from 1819x2573, `pageAspectRatio` and the `1819w` descriptors in
+`js/data/profile.js` change with it.
+
 **The theme bootstrap is duplicated on purpose.** The inline script in
 `index.html` mirrors `readStoredTheme()` in `js/components/themeToggle.js`,
 because the attribute has to be set before first paint and module scripts are
@@ -304,6 +314,7 @@ Read newest first. Use these as the pattern for anything new.
 
 | Message                                     | What it covered                                                                                                                                  |
 | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `Add CV viewer overlay`                     | View CV opens the two page renders in a native dialog instead of a new tab; the hero drops Download CV, which the viewer toolbar now carries     |
 | `Add View CV control`                       | A View CV link beside Download CV, opening the PDF in a new tab; the action row is two columns from 560 up so four never strand one              |
 | `Update CV PDF`                             | The September 2026 cut, same path and filename so every link holds; its certifications are the two earned ones instead of one in progress        |
 | `Align portfolio copy`                      | The sponsor office is the Construction Services Division in all four strings, and the notebook card is dated August 2026, both matching the CV   |

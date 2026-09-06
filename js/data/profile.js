@@ -99,15 +99,50 @@ export const profile = Object.freeze({
   cv: Object.freeze({
     href: '/assets/docs/Warren_Gallardo_CV.pdf',
     downloadName: 'Warren_Gallardo_CV.pdf',
+
+    /* The viewer's own copy. The title is visible in the toolbar and is also
+       what names the dialog through aria-labelledby, so it is one string doing
+       both jobs rather than a heading and an aria-label that can drift. */
+    viewerTitle: 'Warren Gallardo, CV',
+    viewerDownload: 'Download PDF',
+    viewerCloseAria: 'Close CV viewer',
+
+    /* Page renders of the PDF above, regenerated with it. See the rule in
+       docs/HANDOFF.md: the two are one artefact and are updated together.
+
+       The native size is 1819x2573, and stating the ratio here is what keeps
+       the panel from resizing under the reader while a page is still on the
+       wire. Change the renders, change this. */
+    pageAspectRatio: '1819 / 2573',
+
+    /* The panel is 920px wide at most with 16px of padding either side, so a
+       page is never drawn wider than 888 CSS px; below 600 the sheet is the
+       screen less the same padding. Both terms overstate by a few pixels,
+       which errs toward the sharper file, the same way the certificate thumbs
+       in js/data/credentials.js do. */
+    pageSizes: '(width >= 600px) min(888px, calc(100vw - 80px)), calc(100vw - 32px)',
+
+    pages: Object.freeze([
+      Object.freeze({
+        src: '/assets/img/cv/cv-page-1.webp',
+        srcset: '/assets/img/cv/cv-page-1-800.webp 800w, /assets/img/cv/cv-page-1.webp 1819w',
+        alt: 'CV page 1 of 2',
+      }),
+      Object.freeze({
+        src: '/assets/img/cv/cv-page-2.webp',
+        srcset: '/assets/img/cv/cv-page-2-800.webp 800w, /assets/img/cv/cv-page-2.webp 1819w',
+        alt: 'CV page 2 of 2',
+      }),
+    ]),
   }),
 
   ctas: Object.freeze({
     viewProjects: 'View projects',
-    /* Paired with downloadCv on the same file. Reading it and keeping it are
-       two different intentions, and a reader who only wants to look should not
-       have to put a file on their disk first. */
+    /* One CV control, not two. Reading it and keeping it are two different
+       intentions, and the one that comes first should not cost a file on the
+       reader's disk; the download is offered inside the viewer, at the point
+       where they have seen what they would be keeping. */
     viewCv: 'View CV',
-    downloadCv: 'Download CV',
     /* Deliberately not "Email me". This scrolls to the contact form; a label
        promising a mail client and not opening one is a small lie, and on a
        phone with no mail app configured a mailto is a dead end. */

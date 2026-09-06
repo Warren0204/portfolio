@@ -38,6 +38,14 @@ html {
      creating a scroll container. Nested scrollers are unaffected, so the
      horizontal scroll on the process diagrams still works. */
   overflow-x: clip;
+
+  /* The dialog lock at the foot of this file turns this scroller off, and on a
+     platform with classic scrollbars it takes their width away with it: the
+     whole page slides sideways as a dialog opens and slides back as it closes.
+     Reserving the gutter costs nothing while the page is scrolling, which on a
+     page this long it always is, and costs exactly that jump when it stops.
+     Where scrollbars overlay the content there is no gutter and this is inert. */
+  scrollbar-gutter: stable;
 }
 
 body {

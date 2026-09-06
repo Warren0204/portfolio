@@ -106,30 +106,37 @@
   text-wrap: pretty;
 }
 
-/* One column, then two. Never a wrap left to chance.
+/* One action per row until all three fit on one.
 
-   Every cell is the same width, so the hierarchy is carried by weight alone,
-   filled then outlined then nothing, instead of by size. The two-up
-   arrangement this replaces gave the primary twice the width of either
-   secondary and left the borderless third action centred in a half-empty
-   cell, which read as an unfinished row rather than as a third tier.
+   Back to three actions, so back to the rule three had. Two columns existed for
+   the fourth: Download CV sat beside View CV naming the same file, no width
+   could hold four on a line, and left to wrap they broke three-then-one and put
+   the quietest action alone on a row looking like the loudest. The download
+   moved into the viewer's toolbar and took that whole problem with it.
 
-   There are four actions now, and the hero column tops out around 626px, so
-   they cannot share one row at any width: measured from 320 to 1920 with the
-   old flex wrap, every width from 560 up broke three-then-one and stranded the
-   quietest action alone on a line looking like the loudest. Two columns keeps
-   both rows full. Below 560 a second column would leave each cell near 169px
-   against a 173px "Download CV", so one per row holds there. */
+   Above the breakpoint the row is a flex wrap that never wraps, so each action
+   is its own width and the hierarchy reads as filled, then outlined, then
+   nothing. Below it every row is the same width instead, and the hierarchy is
+   carried by weight alone.
+
+   560, re-measured for these three. They are 150, 136 and 140 wide, so with two
+   12px gaps the row needs 449px, and the hero column is 489px at a 560px
+   viewport: room to spare, and 480 is not, at 417px. The other place worth
+   checking is 900, where the hero takes its second grid column and the actions
+   lose almost half their width in one step: 483px, still 34px clear. Measured
+   at sixteen widths from 320 to 1920, this is one row from 560 up and one
+   action per row below it, and never anything in between. */
 .home__actions {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
+  display: flex;
+  flex-wrap: wrap;
   gap: var(--space-3);
   margin-top: var(--space-6);
 }
 
-@media (width >= 560px) {
+@media (width < 560px) {
   .home__actions {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 

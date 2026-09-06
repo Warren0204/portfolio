@@ -7,6 +7,7 @@
    rather than as emphasis. */
 
 import { el, isModifiedClick } from '../core/dom.js';
+import { createCvViewer } from '../components/cvViewer.js';
 import { createIcon } from '../components/icon.js';
 import { chapters } from '../data/navigation.js';
 import { profile } from '../data/profile.js';
@@ -54,6 +55,11 @@ export function createHeadline() {
  * is the thing this page exists to get someone to do; the CV and the contact
  * jump are for people who have already decided.
  *
+ * There is one CV action, not two. Download CV is gone from here and lives in
+ * the viewer's toolbar instead: a visitor who has not read the thing yet has no
+ * reason to be asked whether they want to keep it, and two adjacent buttons
+ * naming the same file made the row read as four choices when it offers three.
+ *
  * The third action used to be a `mailto:`. It is now an in-page jump to the
  * contact form, for three reasons: a mailto dead-ends on a phone with no mail
  * client configured, it handed the visitor off the site at the exact moment
@@ -99,29 +105,40 @@ export function createActions({ onNavigate }) {
     });
   }
 
+  /* A real link to the PDF, enhanced rather than replaced. Without script, and
+     for anything that follows href rather than clicking, this is still the CV;
+     with script, a plain left click opens the reader instead and the file is
+     one control further in. Middle click, copy link and open in a new tab keep
+     the document, the same as the other three actions here.
+
+     The glyph is the enlarge mark, not the external one: this no longer leaves
+     the page, and a box-with-an-arrow saying otherwise would be the same small
+     lie the contact label exists to avoid. */
+  const viewer = createCvViewer();
+
+  const viewCv = el(
+    'a',
+    {
+      class: 'button button--outline',
+      attrs: {
+        href: profile.cv.href,
+        'aria-haspopup': 'dialog',
+        'aria-controls': viewer.id,
+      },
+      on: {
+        click: (event) => {
+          if (isModifiedClick(event)) return;
+          event.preventDefault();
+          viewer.open(viewCv);
+        },
+      },
+    },
+    [profile.ctas.viewCv, createIcon('expand', 18, { inline: true })]
+  );
+
   return el('div', { class: 'home__actions' }, [
     jump('projects', 'button button--primary', profile.ctas.viewProjects),
-    el(
-      'a',
-      {
-        class: 'button button--outline',
-        attrs: { href: profile.cv.href, target: '_blank', rel: 'noopener noreferrer' },
-      },
-      /* A new tab, so the browser's own PDF viewer handles it and brings its
-         zoom and its save control with it. There is no in-page reader here:
-         the one dialog this project has takes an image, not a document, and a
-         hand-built viewer would be worse than the one already installed. */
-      [profile.ctas.viewCv, createIcon('external', 18, { inline: true })]
-    ),
-    el(
-      'a',
-      {
-        class: 'button button--outline',
-        attrs: { href: profile.cv.href, download: profile.cv.downloadName },
-      },
-      // The glyph says this one saves a file rather than moving down the page.
-      [profile.ctas.downloadCv, createIcon('download', 18, { inline: true })]
-    ),
+    viewCv,
     jump('contact', 'button button--ghost', profile.ctas.getInTouch),
   ]);
 }
