@@ -45,7 +45,7 @@ export const chapters = Object.freeze([
     route: '#/credentials',
     title: 'Credentials · Warren Villagonzalo Gallardo',
     description:
-      'BSIT from the University of Cebu, the Google AI Professional Certificate, four development tracks, and the skills underneath them.',
+      'BSIT from the University of Cebu, the Google AI Professional Certificate, the DataCamp SQL Associate, four development tracks, and the skills underneath them.',
   }),
   Object.freeze({
     id: 'contact',

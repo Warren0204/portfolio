@@ -304,6 +304,7 @@ Read newest first. Use these as the pattern for anything new.
 
 | Message                                     | What it covered                                                                                                                                  |
 | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `Add SQL Associate certification`           | The second featured certification, with the certificate page as its proof image, and the data analytics track cert marked earned                 |
 | `Rename Sonnet chip`                        | The AI layer chip drops "vision": photo verification already says it, in the reader words rather than the vendor ones                            |
 | `Match identity lines`                      | The identity line is one component on all three cards, one row at every width, compact at 360 and under; D20 two-row block gone                  |
 | `Fix track copy`                            | The project management track reads four members and a sponsoring division, matching the TranspiraFund card                                       |

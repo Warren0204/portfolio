@@ -55,6 +55,31 @@ export const certifications = Object.freeze([
     }),
     verify: 'https://coursera.org/verify/professional-cert/2ANROX2PSCRY',
   }),
+
+  Object.freeze({
+    id: 'sql-associate',
+    scope: 'TRACK 02 · DATA ANALYTICS',
+    title: 'SQL Associate',
+    issuer: 'DataCamp',
+    status: 'EARNED · SEP 2026',
+    why: "The SQL this certification covers is shown on this site in the Analyzing Students' Mental Health notebook, a DataCamp guided project I completed and extended in PostgreSQL.",
+    /* Native width of the source render, so nothing is upscaled. This
+       certificate is flat artwork rather than a photographic scan, so it
+       encodes small: the full file is lighter than the Google thumbnail. The
+       800px rung is kept anyway, so every featured certification carries the
+       same shape of image object, and the sizes hint is the one the card
+       already uses. */
+    image: Object.freeze({
+      src: '/assets/img/credentials/sql-associate.webp',
+      thumbSrcset:
+        '/assets/img/credentials/sql-associate-800.webp 800w, ' +
+        '/assets/img/credentials/sql-associate.webp 1719w',
+      thumbSizes: '(width >= 800px) 300px, calc(100vw - 80px)',
+      alt: 'SQL Associate certificate awarded to Warren Gallardo, September 1 2026, credential SQA0018968424579',
+      aspectRatio: '1719 / 988',
+    }),
+    verify: 'https://www.datacamp.com/certificate/SQA0018968424579',
+  }),
 ]);
 
 export const tracks = Object.freeze([
@@ -99,7 +124,7 @@ export const tracks = Object.freeze([
     certWhy:
       'Certifies the query layer underneath my reporting work: relational modelling and SQL against real datasets, assessed rather than self declared.',
     certs: Object.freeze([
-      Object.freeze({ title: 'SQL Associate', issuer: 'DataCamp', status: 'IN PROGRESS' }),
+      Object.freeze({ title: 'SQL Associate', issuer: 'DataCamp', status: 'EARNED · SEP 2026' }),
     ]),
   }),
 
