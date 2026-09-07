@@ -1,5 +1,5 @@
-/* The looping hero line. Reserves its own height so the headline below it
-   never shifts as the text types and deletes. */
+/* The hero line. Reserves its own height so the headline below it never shifts
+   while the text is being typed. */
 
 .typewriter {
   display: flex;
@@ -18,6 +18,13 @@
   margin-left: var(--space-1);
   background: var(--accent-ink);
   animation: caret-blink 1s steps(1, end) infinite;
+}
+
+/* Once the line is typed the caret has nothing left to do, so it stops. A bar
+   blinking for as long as the page is open is decoration that never resolves,
+   and it sits above the fold. */
+.typewriter--done .typewriter__caret {
+  animation: none;
 }
 
 /* With motion reduced the line is printed, so a blinking caret would be a

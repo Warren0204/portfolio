@@ -1,6 +1,9 @@
-/* The looping hero line. Types at a varying rate so it reads as typing rather
-   than as a machine, holds, deletes fast, then moves to the next phrase.
-   Under reduced motion it never starts: the first phrase is simply printed. */
+/* The hero line. Types once, at a varying rate so it reads as typing rather
+   than as a machine, and then stops: the caret settles and nothing on the first
+   screen moves again. It used to delete itself and cycle, which meant the one
+   line stating the role was unreadable for part of every four second cycle,
+   forever. Under reduced motion it never starts and the line is simply
+   printed. */
 
 import { el } from '../core/dom.js';
 import { TYPEWRITER } from '../core/constants.js';
@@ -29,38 +32,28 @@ export function createTypewriter({ phrases }) {
     [output, caret]
   );
 
+  /* One pass over the first phrase. `phrases` stays an array because the data
+     in js/data/profile.js still models the line as a list; only the first is
+     typed, and nothing follows it. */
+  const phrase = phrases[0];
   let timer = 0;
-  let phraseIndex = 0;
   let shown = '';
-  let deleting = false;
 
   function step() {
-    const phrase = phrases[phraseIndex];
-    let wait;
-
-    if (deleting) {
-      if (shown === '') {
-        deleting = false;
-        phraseIndex = (phraseIndex + 1) % phrases.length;
-        wait = TYPEWRITER.restartMs;
-      } else {
-        shown = shown.slice(0, -1);
-        wait = TYPEWRITER.deleteMs;
-      }
-    } else if (shown.length < phrase.length) {
-      shown = phrase.slice(0, shown.length + 1);
-      wait = TYPEWRITER.typeMinMs + Math.random() * TYPEWRITER.typeJitterMs;
-    } else {
-      deleting = true;
-      wait = TYPEWRITER.holdMs;
+    if (shown.length === phrase.length) {
+      // Typed out. The caret stops blinking rather than disappearing, so the
+      // line keeps the shape it had while it was being written.
+      element.classList.add('typewriter--done');
+      return;
     }
 
+    shown = phrase.slice(0, shown.length + 1);
     output.textContent = shown;
-    timer = window.setTimeout(step, wait);
+    timer = window.setTimeout(step, TYPEWRITER.typeMinMs + Math.random() * TYPEWRITER.typeJitterMs);
   }
 
   if (prefersReducedMotion()) {
-    output.textContent = phrases[0];
+    output.textContent = phrase;
     element.classList.add('typewriter--static');
   } else {
     step();

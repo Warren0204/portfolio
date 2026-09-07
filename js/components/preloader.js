@@ -19,15 +19,25 @@ export function shouldShowPreloader() {
   return !session.has(STORAGE_KEYS.introSeen);
 }
 
-/** Remove the element and release the hold on the chapter animations. */
+/** Release the hold on the chapter animations and drop the loading screen. */
 function finish(root, resolve) {
   document.documentElement.classList.remove('is-preloading');
   root.remove();
   resolve();
 }
 
+/** The screen has come apart and is no longer covering anything readable. */
+function release(root) {
+  root.classList.add('preloader--leaving');
+  document.documentElement.classList.remove('is-preloading');
+}
+
 /**
- * Drive the intro that index.html painted, and resolve once it is gone.
+ * Drive the intro that index.html painted, and resolve as it opens.
+ *
+ * The promise settles when the screen starts coming apart, not when the element
+ * is finally removed, so the page behind it is armed and rising while the two
+ * halves are still travelling.
  *
  * @returns {Promise<void>}
  */
@@ -74,12 +84,16 @@ export function runPreloader() {
       }
 
       // The bar is full: this is the moment the screen comes apart.
-      root.classList.add('preloader--leaving');
-      // Released as the halves start parting, not after they land, so the page
-      // is already rising into view through the seam.
-      document.documentElement.classList.remove('is-preloading');
+      release(root);
 
-      window.setTimeout(() => finish(root, resolve), DURATIONS.introExit);
+      /* Resolved here, as the halves start parting, rather than after they have
+         landed. The caller arms the hero the moment this settles, so waiting
+         out the full exit cost the visitor another 920ms of covered page for
+         no benefit; the entrance now plays through the opening seam, which is
+         what the comment above always claimed. The element is still removed on
+         the timer, because it is still on screen until the halves are gone. */
+      resolve();
+      window.setTimeout(() => root.remove(), DURATIONS.introExit);
     };
 
     frame = requestAnimationFrame(tick);

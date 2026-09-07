@@ -35,10 +35,9 @@ export const DURATIONS = Object.freeze({
   introExit: 920,
 });
 
+/* The hero line types once and stops, so these are the two rates it needs.
+   The hold, delete and restart timings left with the loop. */
 export const TYPEWRITER = Object.freeze({
   typeMinMs: 46,
   typeJitterMs: 46,
-  holdMs: 2100,
-  deleteMs: 24,
-  restartMs: 320,
 });
