@@ -51,31 +51,34 @@ export function createHeadline() {
 }
 
 /**
- * One primary action and one secondary. "View projects" is the primary because
- * it is the thing this page exists to get someone to do; the CV is for someone
- * who has already decided.
- *
- * There were three. The third jumped to the contact form, which the header nav,
- * the phone tab bar and the bottom of the scroll all already reach, so it was a
- * fourth route to one place sitting in the one row that is supposed to say what
- * matters most. A row of three reads as a menu; two read as a choice.
+ * One primary action, two secondary. "View projects" is the primary because it
+ * is the thing this page exists to get someone to do; the CV and the contact
+ * jump are for people who have already decided.
  *
  * There is one CV action, not two. Download CV is gone from here and lives in
  * the viewer's toolbar instead: a visitor who has not read the thing yet has no
  * reason to be asked whether they want to keep it, and two adjacent buttons
- * naming the same file made the row read as three choices when it offers two.
+ * naming the same file made the row read as four choices when it offers three.
  *
- * Both are real links to real destinations and stay that way, so middle-click,
- * copy link and open in a new tab keep working. What changed is who answers a
- * plain left click.
+ * The third action used to be a `mailto:`. It is now an in-page jump to the
+ * contact form, for three reasons: a mailto dead-ends on a phone with no mail
+ * client configured, it handed the visitor off the site at the exact moment
+ * they were interested, and it duplicated the contact section a scroll away.
+ * The label changed with it: a button promising to open mail that instead
+ * scrolls is a small lie, and small lies are what make an interface feel
+ * untrustworthy.
  *
- * "View projects" used to have no handler at all, on the reasoning that changing
- * the hash was enough because the router listens for `hashchange`. That was true
- * as far as it went, and it left it on a different path from the header nav and
- * the tab bar: the browser runs its own fragment step first, and because no
- * element has the id `/projects`, that step scrolls the document to the
- * beginning before the router has said anything. It now calls `onNavigate`,
- * which is what the other navigations have always done.
+ * All three are real links to real destinations and stay that way, so
+ * middle-click, copy link and open in a new tab keep working. What changed is
+ * who answers a plain left click.
+ *
+ * The two in-page actions used to have no handler at all, on the reasoning that
+ * changing the hash was enough because the router listens for `hashchange`.
+ * That was true as far as it went, and it left these two on a different path
+ * from the header nav and the tab bar: the browser runs its own fragment step
+ * first, and because no element has the id `/projects`, that step scrolls the
+ * document to the beginning before the router has said anything. They now call
+ * `onNavigate`, which is what the other two navigations have always done.
  *
  * @param {object} options
  * @param {(index: number) => void} options.onNavigate Moves the page to a
@@ -83,8 +86,8 @@ export function createHeadline() {
  * @returns {HTMLElement}
  */
 export function createActions({ onNavigate }) {
-  /* Kept as a helper rather than inlined: it is the one shape that makes an
-     in-page action behave like a link and still route through the scroller. */
+  /* Both in-page actions are the same shape, so the difference between them is
+     the chapter, the class and the label rather than a second copy of this. */
   function jump(id, className, label) {
     const index = chapters.findIndex((chapter) => chapter.id === id);
 
@@ -106,7 +109,7 @@ export function createActions({ onNavigate }) {
      for anything that follows href rather than clicking, this is still the CV;
      with script, a plain left click opens the reader instead and the file is
      one control further in. Middle click, copy link and open in a new tab keep
-     the document, the same as the action beside it.
+     the document, the same as the other three actions here.
 
      The glyph is the enlarge mark, not the external one: this no longer leaves
      the page, and a box-with-an-arrow saying otherwise would be the same small
@@ -133,13 +136,10 @@ export function createActions({ onNavigate }) {
     [profile.ctas.viewCv, createIcon('expand', 18, { inline: true })]
   );
 
-  /* Two, not three. The rule the hero is written to allows a primary and a
-     secondary, and the third was a fourth route to Contact behind the nav link,
-     the phone tab bar and the end of the scroll. Dropping it also lets the
-     hierarchy read as filled then outlined, with nothing competing under it. */
   return el('div', { class: 'home__actions' }, [
     jump('projects', 'button button--primary', profile.ctas.viewProjects),
     viewCv,
+    jump('contact', 'button button--ghost', profile.ctas.getInTouch),
   ]);
 }
 
