@@ -88,7 +88,7 @@ export const tracks = Object.freeze([
     kicker: 'TRACK 01',
     name: 'Project management and coordination',
     summary:
-      'Led a four member capstone team end to end and ran department wide events as operations lead, now formalising the practice against an industry standard.',
+      'Led a capstone team end to end and ran department wide events as operations lead, now formalising the practice against an industry standard.',
     fundamentals: Object.freeze([
       'Scoping and breaking work down: turning a stakeholder’s described problem into phases, deliverables, and a schedule a small team can actually hold.',
       'Running a team through delivery: assigning by strength, tracking progress, and keeping a four member capstone on schedule for the city engineering division that sponsored it.',
@@ -123,9 +123,7 @@ export const tracks = Object.freeze([
     ]),
     certWhy:
       'Certifies the query layer underneath my reporting work: relational modelling and SQL against real datasets, assessed rather than self declared.',
-    certs: Object.freeze([
-      Object.freeze({ title: 'SQL Associate', issuer: 'DataCamp', status: 'EARNED · SEP 2026' }),
-    ]),
+    certs: Object.freeze([Object.freeze({ id: 'sql-associate' })]),
   }),
 
   Object.freeze({
