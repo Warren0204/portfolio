@@ -85,8 +85,6 @@ export const profile = Object.freeze({
     }),
   ]),
 
-  scrollCue: 'SCROLL',
-
   portrait: Object.freeze({
     src: '/assets/img/portrait.webp',
     alt: 'Warren Gallardo',

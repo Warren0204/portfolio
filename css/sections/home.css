@@ -279,38 +279,6 @@
   text-wrap: pretty;
 }
 
-/* Scroll cue */
-
-.home__cue {
-  display: flex;
-  gap: var(--space-3);
-  align-items: center;
-  margin-top: var(--space-7);
-}
-
-.home__cue-label {
-  color: var(--muted);
-  font-family: var(--font-mono);
-  font-size: var(--text-eyebrow);
-  letter-spacing: 0.28em;
-}
-
-.home__cue-line {
-  width: 54px;
-  height: 1px;
-  background: rgba(var(--line-rgb), 0.4);
-  animation: cue-slide 2.4s var(--ease-out) infinite;
-  transform-origin: left center;
-}
-
-/* The cue points at a scroll that is already obvious on a short screen, and
-   there is no room to spend on it. */
-@media (height < 720px) {
-  .home__cue {
-    display: none;
-  }
-}
-
 /* The portrait on a phone held sideways.
 
    Left alone, the 4:5 frame is sized by its grid track and the track is sized

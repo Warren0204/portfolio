@@ -45,11 +45,6 @@ export function createHomeSection({ onNavigate }) {
 
   const stats = createStats();
 
-  const cue = el('p', { class: 'home__cue', attrs: { 'aria-hidden': 'true' } }, [
-    el('span', { class: 'home__cue-label', text: profile.scrollCue }),
-    el('span', { class: 'home__cue-line' }),
-  ]);
-
   /* Three blocks rather than two, and the split is load-bearing.
 
      On a phone this is the reading order: who is speaking, then the face, then
@@ -67,7 +62,6 @@ export function createHomeSection({ onNavigate }) {
       el('div', { class: 'home__body' }, [summary, actions, tools]),
     ]),
     stats.element,
-    cue,
   ]);
 
   let reveals = [];
