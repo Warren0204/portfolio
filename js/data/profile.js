@@ -33,12 +33,13 @@ export const profile = Object.freeze({
     tail: 'systems that stay standing.',
   }),
 
-  /* The About copy. First person, no numbers, and it says three things: what I
-     am, how I work, and what I am looking for. The numbers are the stat strip's
-     job and the detail is Experience's; repeating either here would be the same
-     fact twice on one screen. */
+  /* The About copy. First person, no numbers: what I am and where I have built
+     it. The numbers are the stat strip's job and the detail is Experience's;
+     repeating either here would be the same fact twice on one screen. The
+     certifications have their own cards in Credentials and the target roles are
+     stated in the Contact paragraph, so neither is claimed twice. */
   summary:
-    'I am an Information Technology graduate in Cebu City. I build business process automation and AI assisted applications. During my internship at an Australian managed service provider I built Power Platform automations and a Power BI dashboard, and for my capstone I built the web application and Firebase backend of a monitoring system validated with a Cebu City government office, where Claude assesses project reports through Anthropic’s API. I hold DataCamp’s SQL Associate and Google AI Professional certifications, and I am looking for junior roles in automation, AI application development, and data analysis.',
+    'I am an Information Technology graduate in Cebu City. I build business process automation and AI assisted applications. During my internship at an Australian managed service provider I built Power Platform automations and a Power BI dashboard, and for my capstone I built the web application and Firebase backend of a monitoring system validated with a Cebu City government office, where Claude assesses project reports through Anthropic’s API.',
 
   /* The evidence strip under the hero. A recruiter reading for eight seconds
      reads numbers, not paragraphs — so these are counts of shipped work, each
