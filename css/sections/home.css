@@ -116,26 +116,26 @@
   text-wrap: pretty;
 }
 
-/* One action per row until all three fit on one.
+/* One action per row until both fit on one.
 
-   Back to three actions, so back to the rule three had. Two columns existed for
-   the fourth: Download CV sat beside View CV naming the same file, no width
-   could hold four on a line, and left to wrap they broke three-then-one and put
-   the quietest action alone on a row looking like the loudest. The download
-   moved into the viewer's toolbar and took that whole problem with it.
+   Two actions now. The third, a jump to the contact form, went with the row it
+   was crowding; the fourth left before it, when Download CV moved into the
+   viewer's toolbar rather than sitting beside View CV naming the same file.
 
    Above the breakpoint the row is a flex wrap that never wraps, so each action
-   is its own width and the hierarchy reads as filled, then outlined, then
-   nothing. Below it every row is the same width instead, and the hierarchy is
-   carried by weight alone.
+   is its own width and the hierarchy reads as filled then outlined. Below it
+   every row is the same width instead, and the hierarchy is carried by weight
+   alone.
 
-   560, re-measured for these three. They are 150, 136 and 140 wide, so with two
-   12px gaps the row needs 449px, and the hero column is 489px at a 560px
-   viewport: room to spare, and 480 is not, at 417px. The other place worth
-   checking is 900, where the hero takes its second grid column and the actions
-   lose almost half their width in one step: 483px, still 34px clear. Measured
-   at sixteen widths from 320 to 1920, this is one row from 560 up and one
-   action per row below it, and never anything in between. */
+   560 is kept from when there were three, and it is now conservative rather
+   than tight: the two are 150 and 136 wide, so with one 12px gap the row needs
+   298px and the hero column offers 489px at a 560px viewport. It would fit from
+   about 480. Left where it is because one full-width action per row is the
+   better phone layout regardless of whether two would squeeze on, and because
+   the number was measured against the widest the row has ever been. Re-measured
+   at fourteen widths from 320 to 1920: one row from 560 up, one action per row
+   below it, nothing in between, and no row ever left holding a single action
+   under a row of two. */
 .home__actions {
   display: flex;
   flex-wrap: wrap;

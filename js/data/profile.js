@@ -124,10 +124,6 @@ export const profile = Object.freeze({
        reader's disk; the download is offered inside the viewer, at the point
        where they have seen what they would be keeping. */
     viewCv: 'View CV',
-    /* Deliberately not "Email me". This scrolls to the contact form; a label
-       promising a mail client and not opening one is a small lie, and on a
-       phone with no mail app configured a mailto is a dead end. */
-    getInTouch: 'Get in touch',
   }),
 
   /* Each line here says one thing, once. Every element has one job: the
