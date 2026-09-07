@@ -69,13 +69,45 @@ export function createHeader({ mount, store, onNavigate }) {
 
   const nav = el('nav', { class: 'header__nav', attrs: { 'aria-label': 'Sections' } }, links);
 
-  /* The availability chip is gone. It was a second route to Contact beside the
-     nav link directly to its left, and its dot said "open to work" in colour
-     alone. The fact it carried now reads once, as text at the top of the hero;
-     the plain "Contact" nav link above is the text link to the same place. */
+  /* The availability chip. Same fact as the contact section's chip and read
+     from the same object in js/data/profile.js, so the two can never drift.
+
+     Shown from 1080px only. Measured, not guessed: the bar has 37px of slack
+     at 920px and 71px at 1080px, and this needs about 130px. It fits at 1080
+     because the wordmark drops to the short name from 1280px down, which frees
+     108px, see css/layout/header.css. Below 1080px it is hidden outright
+     rather than collapsed to a bare dot: an unlabelled dot tells a sighted
+     visitor nothing, and it would be a third tab stop to Contact alongside the
+     nav link and the bottom tab bar.
+
+     The dot it used to open with is gone. The label was always the thing that
+     said what the chip meant. */
+  const contactIndex = chapters.findIndex((chapter) => chapter.id === 'contact');
+  const availability = el(
+    'a',
+    {
+      class: 'header__availability',
+      attrs: {
+        href: chapters[contactIndex].route,
+        'aria-label': profile.availability.shortAria,
+      },
+      on: {
+        click: (event) => {
+          if (isModifiedClick(event)) return;
+          event.preventDefault();
+          onNavigate(contactIndex);
+        },
+      },
+    },
+    el('span', { class: 'header__availability-label', text: profile.availability.short })
+  );
 
   const themeToggle = createThemeToggle({ store });
-  const controls = el('div', { class: 'header__controls' }, [nav, themeToggle.element]);
+  const controls = el('div', { class: 'header__controls' }, [
+    nav,
+    availability,
+    themeToggle.element,
+  ]);
 
   const progressBar = el('span', { class: 'header__progress-bar' });
   const progress = el(

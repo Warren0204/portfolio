@@ -81,16 +81,6 @@
   min-width: 0;
 }
 
-/* The availability line: first thing on the page, above the typing line. It is
-   the eyebrow recipe with nothing added, so it reads as the same kind of label
-   the rest of the site uses, and it wraps to two rows on a narrow phone rather
-   than shrinking below the 11px floor. */
-.home__availability {
-  margin-bottom: var(--space-3);
-  color: var(--muted);
-  text-wrap: balance;
-}
-
 .home__headline {
   margin-top: var(--space-4);
   color: var(--text);

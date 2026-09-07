@@ -1,19 +1,83 @@
-/* Contact: the form and the direct routes. */
+/* Contact: the availability card, the form, and the direct routes. */
+
+/* Availability. A card rather than the old pill: it is the fullest statement of
+   the fact on the page, so it can afford to be read rather than glanced at. */
+
+/* No margin: the grid's row gap owns the spacing between section children now,
+   and a margin here would stack on top of it. */
+.availability {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 6px;
+  justify-self: start;
+  padding: var(--space-4) var(--space-5);
+  border: 1px solid rgba(var(--ok-rgb), 0.32);
+  border-radius: var(--radius-xl);
+  background: rgba(var(--ok-rgb), 0.07);
+}
+
+.availability__status {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  color: var(--ok-ink);
+  font-family: var(--font-mono);
+  font-size: var(--text-eyebrow);
+  font-weight: 600;
+  letter-spacing: var(--tracking-mono);
+}
+
+.availability__detail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  color: var(--muted);
+  font-size: var(--text-small);
+}
+
+.availability__sep {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: currentcolor;
+  opacity: 0.5;
+}
+
+/* On a phone the card fills the column, so it shares the form's left edge and
+   the form's width rather than sitting at about half of it with dead space to
+   its right.
+
+   One declaration, because only one thing was holding it narrow. A grid item's
+   display is blockified, so the inline-flex above already computes to flex in
+   both bands and changing it would do nothing at all. What shrink-wraps the box
+   is justify-self: start, which sizes a grid item to its content instead of to
+   its area; stretch is the default that rule overrode. If .availability ever
+   stops being a grid item, the inline-flex becomes live again and this stops
+   applying, so the two belong together.
+
+   900 is the width the grid itself switches on further down, not a new
+   breakpoint. */
+@media (width < 900px) {
+  .availability {
+    justify-self: stretch;
+  }
+}
 
 /* Layout
 
    One grid for the whole section rather than a full-width header above a
    two-column body. The old shape left the entire right-hand side empty beside
-   the heading and the intro, roughly 40% of the width doing nothing for two
-   elements' height, because the second column could not begin until the form
-   did.
+   the heading, the intro and the status chip, roughly 40% of the width doing
+   nothing for three elements' height, because the second column could not
+   begin until the form did.
 
    Now the routes card starts at the top of the section, so both columns begin
    together and the section reads as a balanced pair. */
 
 /* Below 900px this is a plain single column and the children fall back to DOM
-   order, which is already the order a phone wants: heading, intro, addresses,
-   form. */
+   order, which is already the order a phone wants: heading, intro, chip,
+   addresses, form. */
 .contact__grid {
   display: grid;
   gap: var(--space-6);
@@ -29,9 +93,9 @@
   min-width: 0;
 }
 
-/* On a phone the primary way in comes before the addresses: the form sits
-   above the routes card. Placement by `order` only, so the DOM (and the reveal
-   targets in contact.js) stay where they are. */
+/* On a phone the primary way in comes before the addresses: the availability
+   card and the form sit above the routes card. Placement by `order` only, so
+   the DOM (and the reveal targets in contact.js) stay where they are. */
 @media (width < 900px) {
   .contact__grid > .contact__routes {
     order: 1;
@@ -49,6 +113,7 @@
   .contact__grid {
     grid-template:
       'head routes' auto
+      'chip routes' auto
       'form routes' 1fr
       / minmax(0, 1.3fr) minmax(260px, 0.7fr);
     gap: var(--space-6) clamp(32px, 5vw, 64px);
@@ -57,6 +122,10 @@
 
   .contact__grid > .section-head {
     grid-area: head;
+  }
+
+  .contact__grid > .availability {
+    grid-area: chip;
   }
 
   /* The card sizes to its contents rather than stretching down the column. */

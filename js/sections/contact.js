@@ -20,11 +20,21 @@ import { revealOnScroll } from '../core/animate.js';
 import { profile } from '../data/profile.js';
 import { createContactForm } from './contactForm.js';
 
-const { contact } = profile;
+const { contact, availability } = profile;
 
-/* The availability card that used to open this section is gone. It said the
-   same thing as the line at the top of the hero, a full page below it, and it
-   said it with a pulsing green dot. The hero states it once now. */
+/* The one place on the page that says I am looking, in full. The green dot that
+   used to open the status line is gone: it carried its meaning in colour alone,
+   and the words next to it were already saying it. */
+function createAvailability() {
+  return el('div', { class: 'availability' }, [
+    el('p', { class: 'availability__status' }, el('span', { text: availability.status })),
+    el('p', { class: 'availability__detail' }, [
+      el('span', { text: availability.response }),
+      el('span', { class: 'availability__sep', attrs: { 'aria-hidden': 'true' } }),
+      el('span', { text: availability.window }),
+    ]),
+  ]);
+}
 
 /**
  * One route. Renders as a link when there is somewhere to go, and as plain
@@ -79,22 +89,28 @@ export function createContactSection() {
     headingId: 'contact-heading',
   });
 
+  const availabilityCard = createAvailability();
   const form = createContactForm();
   const routes = createRoutes();
 
-  /* DOM order is heading, intro, the addresses, then the form, and that is the
-     tab order everywhere. On a phone the routes card is moved below the form
-     by `order` in css/sections/contact.css, so the primary way in comes before
-     the addresses; the DOM stays put so the reveal targets below keep pointing
-     at real elements.
+  /* DOM order is heading, intro, status, the addresses, then the form, and
+     that is the tab order everywhere. On a phone the routes card is moved
+     below the form by `order` in css/sections/contact.css, so the primary way
+     in comes before the addresses; the DOM stays put so the reveal targets
+     below keep pointing at real elements.
 
-     Above 900px the same three children are placed by grid area: head and form
-     down the left, routes card spanning the right from the very top.
+     Above 900px the same four children are placed by grid area: head, chip
+     and form down the left, routes card spanning the right from the very top.
 
      The consequence, accepted deliberately: on desktop the four route links
      take focus before the form does, and on a phone the visual order and the
      tab order differ by one card. */
-  const grid = el('div', { class: 'contact__grid' }, [head, routes, form.element]);
+  const grid = el('div', { class: 'contact__grid' }, [
+    head,
+    availabilityCard,
+    routes,
+    form.element,
+  ]);
 
   const element = el('div', { class: 'well contact' }, grid);
 
@@ -111,7 +127,7 @@ export function createContactSection() {
       // the thing on screen. Above 900px the two sit side by side and still
       // arrive together.
       reveals = [
-        revealOnScroll(Array.from(head.children), { trigger: head }),
+        revealOnScroll([...Array.from(head.children), availabilityCard], { trigger: head }),
         revealOnScroll(form.element, { y: 30 }),
         revealOnScroll(routes, { y: 30 }),
       ];
