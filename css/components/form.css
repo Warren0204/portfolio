@@ -118,7 +118,6 @@
 
 .contact-form__submit {
   align-self: flex-start;
-  min-height: 48px;
   padding-inline: var(--space-6);
 }
 

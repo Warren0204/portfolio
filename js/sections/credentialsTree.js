@@ -130,15 +130,6 @@ export function createTrackTree({ tracks }) {
 
   return {
     element,
-
-    /* Back to the first track, without stealing focus the way select() does —
-       nobody clicked anything here. */
-    reset() {
-      if (selectedIndex === 0) return;
-      selectedIndex = 0;
-      render();
-    },
-
     destroy: stopWatching,
   };
 }

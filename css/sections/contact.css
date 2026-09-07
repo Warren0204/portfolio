@@ -19,6 +19,16 @@
   gap: var(--space-6);
 }
 
+/* A grid item floors at its own min-content width unless told otherwise, and
+   the hCaptcha iframe inside the form is a fixed 303px. Without this the whole
+   column is dragged to 302px inside a 280px well at a 320px viewport, and the
+   page scrolls sideways by two pixels. The scale-and-clip rule further down
+   then has something to clip against. Same declaration, same job, as the hero
+   columns in sections/home.css. */
+.contact__grid > * {
+  min-width: 0;
+}
+
 /* On a phone the primary way in comes before the addresses: the form sits
    above the routes card. Placement by `order` only, so the DOM (and the reveal
    targets in contact.js) stay where they are. */

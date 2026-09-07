@@ -6,6 +6,7 @@
 
 import { el } from '../core/dom.js';
 import { createBadge } from '../components/badge.js';
+import { createCard } from '../components/card.js';
 import { createChip } from '../components/chip.js';
 import { createIcon } from '../components/icon.js';
 import { createIdentityLine } from '../components/identityLine.js';
@@ -36,24 +37,26 @@ export function createProjectCard(project) {
     )
   );
 
-  const card = el('div', { class: 'card' }, [
-    createIdentityLine({ kind: project.tag, period: project.period }),
-    el('h3', { class: 'project__title', text: project.title }),
-    el('p', { class: 'project__summary', text: project.summary }),
-    el('p', { class: 'project__context', text: project.context }),
-    el(
-      'div',
-      { class: 'chip-row' },
-      project.tags.map((tag) => createChip({ label: tag }))
-    ),
-    // The footer closes the card: where it stands on the left, the way in on
-    // the right. The badge qualifies everything above it and the link leaves
-    // the page, so the thing that sends a reader away is last in the row.
-    el('div', { class: 'project__footer' }, [
-      createBadge({ text: project.status.text, tone: project.status.tone }),
-      links,
-    ]),
-  ]);
+  const card = createCard({
+    children: [
+      createIdentityLine({ kind: project.tag, period: project.period }),
+      el('h3', { class: 'project__title', text: project.title }),
+      el('p', { class: 'project__summary', text: project.summary }),
+      el('p', { class: 'project__context', text: project.context }),
+      el(
+        'div',
+        { class: 'chip-row' },
+        project.tags.map((tag) => createChip({ label: tag }))
+      ),
+      // The footer closes the card: where it stands on the left, the way in on
+      // the right. The badge qualifies everything above it and the link leaves
+      // the page, so the thing that sends a reader away is last in the row.
+      el('div', { class: 'project__footer' }, [
+        createBadge({ text: project.status.text, tone: project.status.tone }),
+        links,
+      ]),
+    ],
+  });
 
   const element = el('article', { class: 'project project--compact' }, card);
 

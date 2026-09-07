@@ -17,6 +17,7 @@ import { el, replaceChildren } from '../core/dom.js';
 import { createBulletList } from '../components/bulletList.js';
 import { createChip } from '../components/chip.js';
 import { createIdentityLine } from '../components/identityLine.js';
+import { createCard } from '../components/card.js';
 import { createSectionEyebrow } from '../components/sectionEyebrow.js';
 import { createTabs } from '../components/tabs.js';
 import { refreshTriggers } from '../core/animate.js';
@@ -158,7 +159,7 @@ export function createCaseStudy(project) {
   });
 
   return {
-    element: el('article', { class: 'project' }, el('div', { class: 'card' }, [strip, ...blocks])),
+    element: el('article', { class: 'project' }, createCard({ children: [strip, ...blocks] })),
     blocks,
     destroy: surfaces.destroy,
   };
