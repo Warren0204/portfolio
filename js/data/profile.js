@@ -16,29 +16,16 @@ export const profile = Object.freeze({
      link when a send fails. */
   email: 'warrengallardo0204@gmail.com',
 
-  /* Stated once, in Contact. It used to sit in the hero as well, which meant a
-     reader met the same five words twice on one page.
+  /* Stated once, at the top of the hero, in the eyebrow treatment. No pill and
+     no dot: a coloured dot carries its meaning by colour alone, which is the
+     one thing a status indicator may not do, and the words carry it already.
 
-     The work arrangement is not repeated here — the Contact paragraph says
-     "remote, hybrid, or onsite" — and neither is the location, which the
-     footer carries. What is left is the part that changes: am I looking, and
-     how fast will you hear back. */
-  availability: Object.freeze({
-    status: 'OPEN TO WORK',
-    response: 'Replies within a day',
-    window: 'GMT+8',
-
-    /* The header's compact form of the same fact. Sentence case rather than a
-       lowercased copy of `status`: the contact chip's caps are a deliberate
-       mono-label treatment, and the header chip sits beside sentence-case nav
-       furniture. One string per rendering, not one string reused in two cases.
-
-       `shortAria` names the destination, which the visible text alone does
-       not. It contains the visible text verbatim, so it satisfies WCAG 2.5.3
-       Label in Name — a speech-input user saying "open to work" still hits it. */
-    short: 'Open to work',
-    shortAria: 'Open to work, go to contact',
-  }),
+     One string rather than an object, because there is one rendering now. It
+     used to be three: a card in Contact, a pill in the header, and a pill in
+     the hero before that. This is also the only place the location and the
+     time zone appear in rendered copy, which is what puts both on the first
+     screen at every width. */
+  availability: 'Open to work · Cebu City, GMT+8 · Replies within a day',
 
   /* Typewriter line above the headline. */
   heroPhrases: Object.freeze([

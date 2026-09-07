@@ -1,18 +1,6 @@
 /* Every @keyframes in the project. Nothing here runs under
    prefers-reduced-motion — see css/utilities/motion.css. */
 
-/* Status dots: a gentle 2s breath, staggered by animation-delay. */
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-
-  50% {
-    opacity: 0.35;
-  }
-}
-
 /* Panels and cards entering. */
 @keyframes rise {
   from {

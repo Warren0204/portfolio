@@ -18,7 +18,6 @@ import { createBulletList } from '../components/bulletList.js';
 import { createChip } from '../components/chip.js';
 import { createIdentityLine } from '../components/identityLine.js';
 import { createSectionEyebrow } from '../components/sectionEyebrow.js';
-import { createStatusDot } from '../components/statusDot.js';
 import { createTabs } from '../components/tabs.js';
 import { refreshTriggers } from '../core/animate.js';
 import { projectsCopy } from '../data/projects.js';
@@ -138,12 +137,11 @@ export function createCaseStudy(project) {
   const surfaces = createSurfaces(project);
   const stack = createStack(project);
 
+  /* A labelled block like the ones above it, not a tinted strip with a dot.
+     The eyebrow is what says this is the status; green alone could not. */
   const status = el('div', { class: 'project__status' }, [
-    createStatusDot({ tone: 'ok' }),
-    el('div', {}, [
-      createSectionEyebrow({ text: eyebrows.status }),
-      el('p', { class: 'prose', text: project.status }),
-    ]),
+    createSectionEyebrow({ text: eyebrows.status }),
+    el('p', { class: 'prose', text: project.status }),
   ]);
 
   // The footer closes the card behind a hairline, so the study visibly ends

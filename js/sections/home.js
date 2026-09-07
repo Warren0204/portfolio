@@ -11,6 +11,7 @@ import { el } from '../core/dom.js';
 import { createTypewriter } from '../components/typewriter.js';
 import { createChip } from '../components/chip.js';
 import { createImageFrame } from '../components/imageFrame.js';
+import { createSectionEyebrow } from '../components/sectionEyebrow.js';
 import { parallax, revealNow, revealOnScroll } from '../core/animate.js';
 import { profile } from '../data/profile.js';
 import { heroTools } from '../data/skills.js';
@@ -23,6 +24,15 @@ import { createActions, createHeadline, createStats } from './homeIntro.js';
  * @returns {{ element: HTMLElement, armReveal: () => void, destroy: () => void }}
  */
 export function createHomeSection({ onNavigate }) {
+  /* First line of the page, above the typing line and the headline. It is the
+     only rendered statement of the availability, the location and the time
+     zone, which is what puts all three on the first screen at every width. The
+     eyebrow treatment, not a pill: a pill implies a control that does nothing
+     when tapped, and the dot that used to sit in it said "open" in colour
+     alone. */
+  const availability = createSectionEyebrow({ text: profile.availability });
+  availability.classList.add('home__availability');
+
   const typewriter = createTypewriter({ phrases: profile.heroPhrases });
   const headline = createHeadline();
   const summary = el('p', { class: 'home__summary', text: profile.summary });
@@ -63,7 +73,7 @@ export function createHomeSection({ onNavigate }) {
      neither layout is the accidental by-product of the other. */
   const element = el('div', { class: 'well well--home home' }, [
     el('div', { class: 'home__hero' }, [
-      el('div', { class: 'home__intro' }, [typewriter.element, headline.element]),
+      el('div', { class: 'home__intro' }, [availability, typewriter.element, headline.element]),
       el('div', { class: 'home__portrait' }, portrait),
       el('div', { class: 'home__body' }, [summary, actions, tools]),
     ]),
@@ -85,7 +95,7 @@ export function createHomeSection({ onNavigate }) {
         // first and tightly staggered: the headline should read as one line
         // assembling, not as thirteen separate arrivals.
         revealNow(headline.words, { y: 34, stagger: 0.035, duration: 0.7 }),
-        revealNow(typewriter.element, { delay: 0.1, y: 14 }),
+        revealNow([availability, typewriter.element], { delay: 0.1, y: 14, stagger: 0.06 }),
         revealNow([summary, actions, tools], { delay: 0.35, stagger: 0.1 }),
         parallax(portrait, 50),
         revealOnScroll(stats.items, { trigger: stats.element, y: 24, stagger: 0.09 }),

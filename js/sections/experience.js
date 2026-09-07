@@ -20,7 +20,6 @@ import { createChip } from '../components/chip.js';
 import { createIdentityLine } from '../components/identityLine.js';
 import { createSectionEyebrow } from '../components/sectionEyebrow.js';
 import { createSectionHead } from '../components/sectionHead.js';
-import { createStatusDot } from '../components/statusDot.js';
 import { createTabs } from '../components/tabs.js';
 import { padCount } from '../core/format.js';
 import { refreshTriggers, revealOnScroll } from '../core/animate.js';
@@ -128,9 +127,11 @@ function createSystemPanel(system, position) {
 
   if (diagram) children.push(diagram.element);
 
+  /* A labelled block like the two above it, not a tinted strip with a dot. The
+     eyebrow is what says this is the status, which green on its own could not. */
   children.push(
     el('div', { class: 'system-detail__status' }, [
-      createStatusDot({ tone: 'ok' }),
+      createSectionEyebrow({ text: eyebrows.status }),
       el('p', { class: 'prose', text: system.status }),
     ])
   );

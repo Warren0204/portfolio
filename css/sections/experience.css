@@ -150,17 +150,10 @@
   border-top: var(--line-soft);
 }
 
+/* Identical to .system-detail__notes above: the two are the same kind of
+   labelled block and should not look like two different things. */
 .system-detail__status {
-  display: flex;
-  gap: 10px;
-  align-items: baseline;
   margin-top: var(--space-6);
-  padding: var(--space-4) var(--space-5);
-  border: 1px solid rgba(var(--ok-rgb), 0.3);
-  border-radius: var(--radius-lg);
-  background: rgba(var(--ok-rgb), 0.07);
-}
-
-.system-detail__status .status-dot {
-  transform: translateY(-2px);
+  padding-top: var(--space-5);
+  border-top: var(--line-soft);
 }

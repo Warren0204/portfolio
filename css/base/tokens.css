@@ -16,7 +16,7 @@
 
      neutral   bg / surface / raised, line-rgb, text, muted
      accent    accent-ink (+hover, +dot, +rgb) — eyebrows, links, focus, CTAs
-     success   ok-ink / ok-dot / ok-rgb — availability and "in production" only
+     success   ok-ink / ok-rgb: the "in production" badge and its tints
      error     error-ink / error-rgb — form validation only
 
    Two text levels, not four. --dim and --chip-text were a third and fourth
@@ -57,10 +57,8 @@
      #0e86a8 (3.60) purely for margin. */
   --accent-dot: #0c6e8a;
 
-  /* Green is semantic only — availability, "in production", "earned". Never
-     decorative. */
+  /* Green is semantic only: "in production", "earned". Never decorative. */
   --ok-ink: #06543d;
-  --ok-dot: #0f7f5c;
 
   /* Red is validation only. Nothing else on the page may be red. */
   --error-ink: #a1231d;
@@ -97,8 +95,7 @@
   --scrim-ink-muted: rgba(var(--scrim-ink-rgb), 0.6);
   --zoom-bg: #080c11;
 
-  /* Dot halos, derived from the semantic channels. */
-  --ok-glow: rgba(var(--ok-rgb), 0.24);
+  /* Halo, derived from the accent channel. */
   --accent-glow: rgba(var(--accent-rgb), 0.22);
 
   /* The pill behind the current tab's icon in the phone tab bar. */
@@ -151,7 +148,6 @@
   --duration-fast: 160ms;
   --duration-base: 200ms;
   --duration-slow: 340ms;
-  --duration-pulse: 2s;
 
   /* Mirrors DURATIONS.introExit minus its 120ms lead-in. */
   --duration-intro-split: 800ms;
@@ -197,7 +193,6 @@
   --accent-dot: #66b6d6;
 
   --ok-ink: #68caa8;
-  --ok-dot: #48c79a;
 
   --error-ink: #f5a199;
 
@@ -209,7 +204,6 @@
   --on-accent: #06131c;
 
   /* Dark needs a stronger halo to read against the deep background. */
-  --ok-glow: rgba(var(--ok-rgb), 0.45);
   --accent-glow: rgba(var(--accent-rgb), 0.42);
   --tab-bar-pill: rgba(var(--accent-rgb), 0.2);
 

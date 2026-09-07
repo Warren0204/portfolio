@@ -1,4 +1,4 @@
-/* Reduced motion kills all of it: no preloader, no typing, no pulses, no
+/* Reduced motion kills all of it: no preloader, no typing, no
    slides. JavaScript checks the same query at the source — see
    js/core/motion.js — so animations are never started, not just neutralised. */
 
