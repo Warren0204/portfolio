@@ -15,7 +15,7 @@ export const roles = Object.freeze([
       'Technical Writer',
     ]),
     summary:
-      'As the company’s first IT intern, I worked with the People and Culture team to find where manual HR and admin work was eating time, then built the systems to remove it. Nine cloud flows, a canvas app, and a four page Power BI report went into production. I owned both sides of that work: the developer who built the automation, and the analyst who modelled the data, defined the measures, and decided what HR actually needed to see. I documented every build and handed the suite to a company service account, so it keeps running now that the internship has ended.',
+      'As the company’s first IT intern, I worked with the People and Culture team to find where manual HR and admin work was eating time, then built the systems to remove it. I owned both sides of that work: the developer who built the automation, and the analyst who modelled the data, defined the measures, and decided what HR actually needed to see. I documented every build and handed the suite to a company service account, so it keeps running now that the internship has ended.',
 
     /* Stated up front, before any of the detail below it.
 
@@ -87,7 +87,7 @@ export const roles = Object.freeze([
         id: 'recruitment-analytics',
         title: 'Recruitment Analytics and Referral Dashboard',
         tokenLabel: 'Power BI dashboard',
-        role: 'ATS sync flow, Office Scripts, and a 4 page Power BI report',
+        role: 'ATS sync flow, Office Scripts, and a Power BI report',
         problem:
           'There was no live visibility into the recruitment pipeline or the employee referral program. Reporting meant manual exports, and the referral raffle was administered by hand.',
         built: Object.freeze([
@@ -488,7 +488,7 @@ export const diagrams = Object.freeze({
 export const experienceCopy = Object.freeze({
   eyebrow: 'WHERE I HAVE SHIPPED',
   heading: 'Experience',
-  lead: 'One internship, three systems built and left running. Pick a system to read how it works.',
+  lead: 'One internship, and the systems it left running. Pick one to read how it works.',
   systemsLine: 'Three systems, all in production',
   systemsTabsLabel: 'Delivered systems',
   overviewLabel: 'Overview',

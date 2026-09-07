@@ -49,7 +49,6 @@ export function createHomeSection({ onNavigate }) {
     alt: profile.portrait.alt,
     width: profile.portrait.width,
     height: profile.portrait.height,
-    caption: profile.locationCaption,
     figureLabel: profile.portrait.figureLabel,
     eager: true,
   });

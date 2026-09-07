@@ -8,10 +8,6 @@ export const profile = Object.freeze({
      enough to sit beside the nav and the theme switch. */
   shortName: 'Warren Gallardo',
   role: 'Power Platform Developer and Data Analyst',
-  /* The portrait caption. The other addresses live in contact.routes, which is
-     their single source — keeping copies up here meant two places to forget. */
-  locationCaption: 'CEBU CITY, PHILIPPINES',
-
   /* Still needed outside contact.routes: contactForm falls back to a mailto
      link when a send fails. */
   email: 'warrengallardo0204@gmail.com',
@@ -27,19 +23,22 @@ export const profile = Object.freeze({
      screen at every width. */
   availability: 'Open to work · Cebu City, GMT+8 · Replies within a day',
 
-  /* Typewriter line above the headline. */
-  heroPhrases: Object.freeze([
-    'I build automation that runs on its own.',
-    'Power Platform, reporting, and AI-assisted delivery.',
-  ]),
+  /* The one-line role statement, above the headline. One phrase, not two: the
+     second said what the About paragraph a few lines down already says, and a
+     line that retypes itself every few seconds is harder to read, not easier. */
+  heroPhrases: Object.freeze(['Power Platform, reporting, and AI-assisted delivery.']),
 
   headline: Object.freeze({
     lead: 'I modernize how operations run, and build ',
     tail: 'systems that stay standing.',
   }),
 
+  /* The About copy. First person, no numbers, and it says three things: what I
+     am, how I work, and what I am looking for. The numbers are the stat strip's
+     job and the detail is Experience's; repeating either here would be the same
+     fact twice on one screen. */
   summary:
-    'Power Platform developer and data analyst. BSIT graduate in Cebu City. I put automation and reporting into a company’s live operations, then documented and handed them over so they keep running without me. I also led a monitoring platform built and validated with a government engineering office.',
+    'I am an Information Technology graduate in Cebu City. I build business process automation and AI assisted applications. During my internship at an Australian managed service provider I built Power Platform automations and a Power BI dashboard, and for my capstone I built the web application and Firebase backend of a monitoring system validated with a Cebu City government office, where Claude assesses project reports through Anthropic’s API. I hold DataCamp’s SQL Associate and Google AI Professional certifications, and I am looking for junior roles in automation, AI application development, and data analysis.',
 
   /* The evidence strip under the hero. A recruiter reading for eight seconds
      reads numbers, not paragraphs — so these are counts of shipped work, each
@@ -57,11 +56,6 @@ export const profile = Object.freeze({
       value: '3',
       label: 'SYSTEMS SHIPPED',
       detail: 'Built, documented, handed over',
-    }),
-    Object.freeze({
-      value: '4',
-      label: 'PAGE BI REPORT',
-      detail: 'On a scheduled daily refresh',
     }),
     Object.freeze({
       value: '1',
@@ -137,8 +131,8 @@ export const profile = Object.freeze({
   }),
 
   /* Each line here says one thing, once. Every element has one job: the
-     availability card carries status, the paragraph carries what the roles
-     are, the routes carry the addresses, and the footer carries identity. */
+     paragraph carries what the roles are and the routes carry the addresses.
+     The status is stated at the top of the hero and nowhere else. */
   contact: Object.freeze({
     eyebrow: 'CONTACT',
     heading: 'Let’s talk',
@@ -201,7 +195,7 @@ export const profile = Object.freeze({
   contactForm: Object.freeze({
     eyebrow: 'SEND A MESSAGE',
     heading: 'Tell me what you are hiring for',
-    lead: 'I read every message and reply within a day.',
+    lead: 'I read every message.',
 
     fields: Object.freeze({
       name: Object.freeze({

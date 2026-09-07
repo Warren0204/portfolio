@@ -32,7 +32,7 @@ export const projects = Object.freeze([
       'City funded barangay level infrastructure projects in Cebu City were monitored through fragmented manual methods: group chats, verbal updates, and paper reports. The Construction Services Division had no centralized digital system for tracking field progress, validating proof of work, or maintaining an audit trail during the post award implementation phase.',
 
     impact:
-      'A centralized monitoring pipeline that takes a project from creation through field submission to review in one place, replacing group chats and paper reports with an audit trail and real time notifications across both surfaces. Validated by our sponsor user at the Construction Services Division against the workflows their office actually follows, ready to be implemented.',
+      'A centralized monitoring pipeline that takes a project from creation through field submission to review in one place, replacing group chats and paper reports with an audit trail and real time notifications across both surfaces.',
 
     status:
       'Completed and validated with the Construction Services Division under the Cebu City Department of Engineering and Public Works, against the monitoring workflows that office actually follows.',
@@ -141,8 +141,7 @@ export const projects = Object.freeze([
     title: "Analyzing Students' Mental Health",
     summary:
       'PostgreSQL analysis of a 286-record mental health survey from a Japanese international university, testing whether international students show higher depression risk and whether length of stay is a factor. Completed the DataCamp guided project deliverable, then extended it with a data-quality audit, a missing-value investigation, severity and connectedness banding, and a stress comparison.',
-    context:
-      'DataCamp guided project, SQL coursework (Associate Data Engineer in SQL track). Completed and extended.',
+    context: 'SQL coursework, from the Associate Data Engineer in SQL track.',
     tags: Object.freeze(['SQL', 'PostgreSQL', 'DataCamp DataLab']),
     links: Object.freeze([
       Object.freeze({ label: 'Open notebook', href: DATACAMP_NOTEBOOK_URL, external: true }),
