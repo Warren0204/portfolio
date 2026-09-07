@@ -2,52 +2,6 @@
    object to the matching array. `note` is optional and renders as an accented
    qualifier under the group title. */
 
-export const practices = Object.freeze([
-  Object.freeze({
-    title: 'AUTOMATION AND WORKFLOW DESIGN',
-    items: Object.freeze([
-      'Process mapping',
-      'Process auditing',
-      'Process improvement',
-      'Requirements gathering',
-      'Flow design',
-      'Error handling and retries',
-      'Ownership handover',
-    ]),
-  }),
-  Object.freeze({
-    title: 'DATA ANALYSIS AND REPORTING',
-    items: Object.freeze([
-      'Deciding what to measure',
-      'Dashboard design',
-      'Measure and metric definition',
-      'Reporting data models',
-      'Scheduled refresh',
-      'Data validation',
-    ]),
-  }),
-  Object.freeze({
-    title: 'AI ASSISTED BUILDING',
-    items: Object.freeze([
-      'Prompt engineering',
-      'Retrieval design',
-      'Output evaluation',
-      'Agent and tool workflows',
-      'Responsible use',
-    ]),
-  }),
-  Object.freeze({
-    title: 'PROJECT DELIVERY',
-    items: Object.freeze([
-      'Scoping and work breakdown',
-      'Stakeholder communication',
-      'System testing and QA',
-      'Technical documentation',
-      'Turnover material',
-    ]),
-  }),
-]);
-
 export const platforms = Object.freeze([
   Object.freeze({
     title: 'MICROSOFT POWER PLATFORM',
@@ -138,10 +92,6 @@ export const heroTools = Object.freeze([
 
 export const skillsCopy = Object.freeze({
   groups: Object.freeze([
-    Object.freeze({
-      eyebrow: 'PRACTICES · WHAT I DO IN A ROLE',
-      lead: 'The work itself, independent of any one product.',
-    }),
     Object.freeze({
       eyebrow: 'TOOLS · PLATFORMS AND ENVIRONMENTS I WORK IN',
       lead: 'Licensed platforms and the environments the work is delivered inside.',

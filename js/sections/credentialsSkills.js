@@ -1,12 +1,14 @@
-/* The Skills view: three labelled groups of compact chip panels. */
+/* The Skills view: two labelled groups of compact chip panels. */
 
 import { el } from '../core/dom.js';
 import { createCard } from '../components/card.js';
 import { createSectionEyebrow } from '../components/sectionEyebrow.js';
-import { practices, platforms, skillsCopy, stack } from '../data/skills.js';
+import { platforms, skillsCopy, stack } from '../data/skills.js';
 
-/* Order matches skillsCopy.groups: practices, then platforms, then stack. */
-const GROUP_SETS = [practices, platforms, stack];
+/* Order matches skillsCopy.groups by index and nothing else: platforms, then
+   stack. The two arrays must stay the same length and the same order, because a
+   mismatch renders one group's chips under another group's heading in silence. */
+const GROUP_SETS = [platforms, stack];
 
 function createSkillPanels(groups) {
   return el(

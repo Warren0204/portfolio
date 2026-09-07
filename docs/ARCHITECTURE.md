@@ -171,7 +171,7 @@ Adding content is a one-object data edit. Nothing in `js/components/`,
 | A process diagram               | `js/data/experience.js`                    | one entry to `diagrams`, and `diagram: '<key>'` on the system                                                 |
 | A certification                 | `js/data/credentials.js`                   | one object to `certifications`; include `image` to get the click-to-enlarge proof, omit it for a compact card |
 | A track                         | `js/data/credentials.js`                   | one object to `tracks`                                                                                        |
-| A skill group                   | `js/data/skills.js`                        | one object to `practices`, `platforms`, or `stack`                                                            |
+| A skill group                   | `js/data/skills.js`                        | one object to `platforms` or `stack`                                                                          |
 | A section                       | `js/data/navigation.js` and `js/sections/` | one object to `chapters`, one section module registered in `js/main.js`                                       |
 
 Sections are still called chapters in the code. The word predates the scrolling

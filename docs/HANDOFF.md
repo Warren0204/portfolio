@@ -312,90 +312,91 @@ Decisions, continuing the numbering above:
 
 Read newest first. Use these as the pattern for anything new.
 
-| Message                                     | What it covered                                                                                                                                    |
-| ------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `Remove status dots`                        | The dot component and its four usages go; availability reads once as text at the top of the hero, and the two status blocks become labelled blocks |
-| `Rename TranspiraFund role`                 | The capstone role reads Full Stack Web Developer, and React Native leaves my tech stack; the project stays a web and mobile system                 |
-| `Add CV viewer overlay`                     | View CV opens the two page renders in a native dialog instead of a new tab; the hero drops Download CV, which the viewer toolbar now carries       |
-| `Add View CV control`                       | A View CV link beside Download CV, opening the PDF in a new tab; the action row is two columns from 560 up so four never strand one                |
-| `Update CV PDF`                             | The September 2026 cut, same path and filename so every link holds; its certifications are the two earned ones instead of one in progress          |
-| `Align portfolio copy`                      | The sponsor office is the Construction Services Division in all four strings, and the notebook card is dated August 2026, both matching the CV     |
-| `Add SQL Associate certification`           | The second featured certification, with the certificate page as its proof image, and the data analytics track cert marked earned                   |
-| `Rename Sonnet chip`                        | The AI layer chip drops "vision": photo verification already says it, in the reader words rather than the vendor ones                              |
-| `Match identity lines`                      | The identity line is one component on all three cards, one row at every width, compact at 360 and under; D20 two-row block gone                    |
-| `Fix track copy`                            | The project management track reads four members and a sponsoring division, matching the TranspiraFund card                                         |
-| `Add role line`                             | One sentence under "Team of four" on how the team was run, set as prose inside the roles row                                                       |
-| `Update handoff log`                        | This entry                                                                                                                                         |
-| `Route hero actions`                        | The two hero calls to action navigate through the router; `isModifiedClick` hoisted into core/dom.js and `chapterById` retired                     |
-| `Remove contact footer`                     | The footer goes entirely, landmark included; the routes card closes the page                                                                       |
-| `Widen availability card`                   | `justify-self: stretch` below 900, so the card shares the form fields left edge and width                                                          |
-| `Replace footer byline`                     | A colophon and a source link, superseded by `Remove contact footer` in the same session                                                            |
-| `Reorder card footer`                       | Badge left and link right on the compact card; the link stays inside its paragraph so the underline survives                                       |
-| `Widen identity line`                       | The 74ch measure moved onto the header text children, and a two-row identity line below 440                                                        |
-| `Drop project numerals`                     | `01` and `02` and the middot out of the identity chips, and the index argument out of four modules                                                 |
-| `Sweep visible dashes`                      | The ten em dashes in user-facing strings become middots and full stops                                                                             |
-| `Drop sharp chip`                           | `sharp (photo stamping)` out of the Backend group                                                                                                  |
-| `Fix notebook link`                         | The DataCamp URL loses its trailing `/edit`                                                                                                        |
-| `Drop stack marks`                          | A `mark: false` option on `createChip`, so the BUILT WITH block renders as plain text                                                              |
-| `Rewrite stack groups`                      | Five sentence-case groups replacing four uppercase ones on the TranspiraFund card                                                                  |
-| `Update handoff log`                        | The tab bar redesign entry                                                                                                                         |
-| `Redesign tab bar`                          | Icon pills over labels in a 64px translucent bar; numerals and rail gone; the pill is the indicator and a visited icon takes the text colour       |
-| `Add nav icons`                             | House, folder, briefcase and award glyphs on the 24 grid, and an `icon` field per chapter; Contact reuses the envelope                             |
-| `Update handoff log`                        | The follow-up pass entry                                                                                                                           |
-| `Correct stale notes`                       | README's Projects row, ARCHITECTURE's shell and content tables, and the brand-gradient comment in tokens.css, each saying what the code does now   |
-| `Caption AI layer`                          | The AI layer token carried the Shared foundation caption; it now has its own, in the summary's words                                               |
-| `Name surfaces panel`                       | The TranspiraFund tabpanel takes `aria-labelledby` from the selected token, as the Experience and Credentials panels already did                   |
-| `Fix contact reveal`                        | The form and the routes card each reveal on their own trigger; the shared one sat below the fold on a phone and held the form invisible            |
-| `Refresh OG card`                           | `tools/og-card.html` in the two families and the current dark tokens; `og-cover.jpg` regenerated from it                                           |
-| `Compact zoom bar`                          | The lightbox bar on a phone: eyebrow hidden below 700px and block padding on the scale, 135px down to 104                                          |
-| `Raise link target`                         | The compact card's Open notebook link is a 44px row, the one target on the page that was still under the floor                                     |
-| `Add fallback faces`                        | Four metric-matched local Arial stand-ins behind Hanken and Sora; the hero no longer moves when the web fonts land                                 |
-| `Add metrics tool`                          | `tools/font-metrics.js`: reads head, hhea, OS/2, cmap and hmtx from a TTF and prints size-adjust and the three overrides                           |
-| `Keep tail upright`                         | `font-style: normal` on the headline tail; Sora has no italic and the `<em>` default was a synthesised slant                                       |
-| `Rename tail class`                         | `serif-tail` is `display-tail`; the serif left in the font consolidation                                                                           |
-| `Format sections`                           | Prettier over the three modules the Phase 2 pass left unformatted                                                                                  |
-| `Update handoff log`                        | The Phase 2 pass entry                                                                                                                             |
-| `Mark visited tabs`                         | A section already read keeps a faint trace of the marker in the phone tab bar                                                                      |
-| `Prune dead code`                           | Card, tab, dot and eyebrow variants with no consumer, two z-index tokens, unread system summaries; the cue keyframes moved to animations.css       |
-| `Consolidate fonts`                         | Two families from Google Fonts instead of four; labels are Hanken in the label recipe; the serif tail is Sora 600; body 16px                       |
-| `Desaturate dark accents`                   | Dark accent, green and red inks about 15 percent less saturated, each still above 8:1 on its ground                                                |
-| `Group project cards`                       | Both projects in one card shell with a numbered identity line and a hairline footer; a sticky identity strip on phones                             |
-| `Snap spacing scale`                        | Off-scale paddings and gaps moved to tokens; the section gap tighter on phones; eyebrows closer to what they label                                 |
-| `Tidy contact ending`                       | The footer is a contentinfo landmark; on a phone the form comes before the routes; a tighter footer gap                                            |
-| `Tidy microcopy`                            | Sentence case in the data with uppercase kept in CSS; shorter hints and labels; nav labels uppercased by the stylesheet                            |
-| `Add DataCamp card`                         | A compact card for the guided project, second in the list, with its notebook link and a Completed badge                                            |
-| `Add segmented tabs`                        | Experience opens on an Overview token inside the role card; TranspiraFund surfaces use the same control and gain an AI layer token                 |
-| `Tighten nested radii`                      | Chip logos and the certificate thumb no longer rounder than the container they sit in; chip borders one step lighter                               |
-| `Flatten gradients`                         | The frame wash, section hairline and scroll cue are flat tints; the ambient wash, portrait ring and progress bar remain                            |
-| `Retire pure white`                         | Near-white and near-black tokens where #fff and rgba(0, 0, 0) were, except the white logo ground                                                   |
-| `Add link glyphs`                           | External and download icons as inline SVG, noreferrer on every new-tab link, underlined text links in running copy                                 |
-| `Raise touch targets`                       | Availability chip, tabs, zoom buttons, skip link and primary buttons at or above 44px; full-width submit on a phone; focusable diagram scroller    |
-| `Center phone portrait`                     | The phone hero as a centred circle in the brand ring, portrait first, preloaded from the head, no entrance tween; hero logo chips eager            |
-| `Add thumbnail source`                      | An 800px credential thumbnail behind `srcset`/`sizes`; a client at DPR 2 or less takes 48KB where it used to take 188KB                            |
-| `Fix modal lock`                            | The scroll lock named body and so never reached the viewport; the zoom body now fills its dialog, so the certificate centres on a phone            |
-| `Raise touch targets`                       | Tab buttons and the wordmark to the 44px floor through `.target`; nav links get a 44px hit area without a 44px box, so the underline stays put     |
-| `Shrink landscape portrait`                 | The hero portrait and its grid track sized from viewport height on a phone held sideways, where the frame was taller than the screen               |
-| `Cap dialog height`                         | `min(88svh, 100%)`, so a dialog cannot be taller than the screen it is centred in once the backdrop's own padding is counted                       |
-| `Inset for cutouts`                         | One rule answering `env(safe-area-inset-left/right)` for the header, tab bar, well and dialogs, via an `--edge-pad` each states for itself         |
-| `Key shell to height`                       | The phone shell keyed to a short touch screen as well as a narrow one, so a landscape phone keeps its tab bar instead of taking the desktop nav    |
-| `Unstick credentials tabs`                  | The Credentials tab strip was sticky underneath the header and never once visible; it sits in normal flow now                                      |
-| `Drop SQL chip`                             | Hero tech stack down to seven; SQL is still claimed in the Credentials data group, where it reads alongside PostgreSQL and DAX                     |
-| `Center frame caption`                      | A caption narrower than its own text centres both lines instead of ragging left inside a centred block                                             |
-| `Stack hero actions`                        | One action per row below 560px, so the hierarchy is carried by weight rather than by width                                                         |
-| `Rebalance hero grid`                       | A third hero arrangement from 440px: portrait beside the headline, body across both columns. Fixes the orphaned portrait and the clipped chips     |
-| `Reserve tab bar`                           | `--tab-bar-space`, reserved once on `.stage`, replacing the bar-aware padding that only Contact had                                                |
-| `Consolidate colour tokens`                 | 27 ad-hoc colours retired into tokens; 4 text levels folded to 2; 10 dead tokens removed                                                           |
-| `Rebalance contact layout`                  | One grid for the whole section, routes card raised level with the heading                                                                          |
-| `Add header chip`                           | Availability chip in the header from 1080px, reading the contact section's data                                                                    |
-| `Add hCaptcha verification to contact form` | hCaptcha in front of the Web3Forms submit, rendered explicitly and lazily. Longer than the rule allows — kept because it was specified verbatim    |
-| `Readability and contact`                   | Light-theme ink re-tuned to 7:1, 11px type floor, dark by default, Contact routes rebuilt, NDA note added                                          |
-| `Dedupe contact copy`                       | Removed repeated timezone, work arrangement, and contact details inside the Contact section                                                        |
-| `Prune dead code`                           | Removed exports, modules, and CSS orphaned by the redesign; Home's third CTA now scrolls to Contact                                                |
-| `Optimize images`                           | Logos and the certificate re-encoded to WebP, 1.73 MB down to 235 KB                                                                               |
-| `Document domain decision`                  | Recorded that the site stays on the vercel.app URL, so it stops reading as unfinished work                                                         |
-| `Phase 2 redesign`                          | Five sliding chapters became one scrolling page: GSAP motion, scroll-drawn diagrams, contact form, new wordmark                                    |
-| `Phase 1 portfolio`                         | The original build                                                                                                                                 |
-| `Initial commit`                            | Repository created                                                                                                                                 |
+| Message                                     | What it covered                                                                                                                                      |
+| ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Remove practices section`                  | The PRACTICES skill group and its label go; Skills is two evidenced tool inventories, and every claim the group made is made with evidence elsewhere |
+| `Remove status dots`                        | The dot component and its four usages go; availability reads once as text at the top of the hero, and the two status blocks become labelled blocks   |
+| `Rename TranspiraFund role`                 | The capstone role reads Full Stack Web Developer, and React Native leaves my tech stack; the project stays a web and mobile system                   |
+| `Add CV viewer overlay`                     | View CV opens the two page renders in a native dialog instead of a new tab; the hero drops Download CV, which the viewer toolbar now carries         |
+| `Add View CV control`                       | A View CV link beside Download CV, opening the PDF in a new tab; the action row is two columns from 560 up so four never strand one                  |
+| `Update CV PDF`                             | The September 2026 cut, same path and filename so every link holds; its certifications are the two earned ones instead of one in progress            |
+| `Align portfolio copy`                      | The sponsor office is the Construction Services Division in all four strings, and the notebook card is dated August 2026, both matching the CV       |
+| `Add SQL Associate certification`           | The second featured certification, with the certificate page as its proof image, and the data analytics track cert marked earned                     |
+| `Rename Sonnet chip`                        | The AI layer chip drops "vision": photo verification already says it, in the reader words rather than the vendor ones                                |
+| `Match identity lines`                      | The identity line is one component on all three cards, one row at every width, compact at 360 and under; D20 two-row block gone                      |
+| `Fix track copy`                            | The project management track reads four members and a sponsoring division, matching the TranspiraFund card                                           |
+| `Add role line`                             | One sentence under "Team of four" on how the team was run, set as prose inside the roles row                                                         |
+| `Update handoff log`                        | This entry                                                                                                                                           |
+| `Route hero actions`                        | The two hero calls to action navigate through the router; `isModifiedClick` hoisted into core/dom.js and `chapterById` retired                       |
+| `Remove contact footer`                     | The footer goes entirely, landmark included; the routes card closes the page                                                                         |
+| `Widen availability card`                   | `justify-self: stretch` below 900, so the card shares the form fields left edge and width                                                            |
+| `Replace footer byline`                     | A colophon and a source link, superseded by `Remove contact footer` in the same session                                                              |
+| `Reorder card footer`                       | Badge left and link right on the compact card; the link stays inside its paragraph so the underline survives                                         |
+| `Widen identity line`                       | The 74ch measure moved onto the header text children, and a two-row identity line below 440                                                          |
+| `Drop project numerals`                     | `01` and `02` and the middot out of the identity chips, and the index argument out of four modules                                                   |
+| `Sweep visible dashes`                      | The ten em dashes in user-facing strings become middots and full stops                                                                               |
+| `Drop sharp chip`                           | `sharp (photo stamping)` out of the Backend group                                                                                                    |
+| `Fix notebook link`                         | The DataCamp URL loses its trailing `/edit`                                                                                                          |
+| `Drop stack marks`                          | A `mark: false` option on `createChip`, so the BUILT WITH block renders as plain text                                                                |
+| `Rewrite stack groups`                      | Five sentence-case groups replacing four uppercase ones on the TranspiraFund card                                                                    |
+| `Update handoff log`                        | The tab bar redesign entry                                                                                                                           |
+| `Redesign tab bar`                          | Icon pills over labels in a 64px translucent bar; numerals and rail gone; the pill is the indicator and a visited icon takes the text colour         |
+| `Add nav icons`                             | House, folder, briefcase and award glyphs on the 24 grid, and an `icon` field per chapter; Contact reuses the envelope                               |
+| `Update handoff log`                        | The follow-up pass entry                                                                                                                             |
+| `Correct stale notes`                       | README's Projects row, ARCHITECTURE's shell and content tables, and the brand-gradient comment in tokens.css, each saying what the code does now     |
+| `Caption AI layer`                          | The AI layer token carried the Shared foundation caption; it now has its own, in the summary's words                                                 |
+| `Name surfaces panel`                       | The TranspiraFund tabpanel takes `aria-labelledby` from the selected token, as the Experience and Credentials panels already did                     |
+| `Fix contact reveal`                        | The form and the routes card each reveal on their own trigger; the shared one sat below the fold on a phone and held the form invisible              |
+| `Refresh OG card`                           | `tools/og-card.html` in the two families and the current dark tokens; `og-cover.jpg` regenerated from it                                             |
+| `Compact zoom bar`                          | The lightbox bar on a phone: eyebrow hidden below 700px and block padding on the scale, 135px down to 104                                            |
+| `Raise link target`                         | The compact card's Open notebook link is a 44px row, the one target on the page that was still under the floor                                       |
+| `Add fallback faces`                        | Four metric-matched local Arial stand-ins behind Hanken and Sora; the hero no longer moves when the web fonts land                                   |
+| `Add metrics tool`                          | `tools/font-metrics.js`: reads head, hhea, OS/2, cmap and hmtx from a TTF and prints size-adjust and the three overrides                             |
+| `Keep tail upright`                         | `font-style: normal` on the headline tail; Sora has no italic and the `<em>` default was a synthesised slant                                         |
+| `Rename tail class`                         | `serif-tail` is `display-tail`; the serif left in the font consolidation                                                                             |
+| `Format sections`                           | Prettier over the three modules the Phase 2 pass left unformatted                                                                                    |
+| `Update handoff log`                        | The Phase 2 pass entry                                                                                                                               |
+| `Mark visited tabs`                         | A section already read keeps a faint trace of the marker in the phone tab bar                                                                        |
+| `Prune dead code`                           | Card, tab, dot and eyebrow variants with no consumer, two z-index tokens, unread system summaries; the cue keyframes moved to animations.css         |
+| `Consolidate fonts`                         | Two families from Google Fonts instead of four; labels are Hanken in the label recipe; the serif tail is Sora 600; body 16px                         |
+| `Desaturate dark accents`                   | Dark accent, green and red inks about 15 percent less saturated, each still above 8:1 on its ground                                                  |
+| `Group project cards`                       | Both projects in one card shell with a numbered identity line and a hairline footer; a sticky identity strip on phones                               |
+| `Snap spacing scale`                        | Off-scale paddings and gaps moved to tokens; the section gap tighter on phones; eyebrows closer to what they label                                   |
+| `Tidy contact ending`                       | The footer is a contentinfo landmark; on a phone the form comes before the routes; a tighter footer gap                                              |
+| `Tidy microcopy`                            | Sentence case in the data with uppercase kept in CSS; shorter hints and labels; nav labels uppercased by the stylesheet                              |
+| `Add DataCamp card`                         | A compact card for the guided project, second in the list, with its notebook link and a Completed badge                                              |
+| `Add segmented tabs`                        | Experience opens on an Overview token inside the role card; TranspiraFund surfaces use the same control and gain an AI layer token                   |
+| `Tighten nested radii`                      | Chip logos and the certificate thumb no longer rounder than the container they sit in; chip borders one step lighter                                 |
+| `Flatten gradients`                         | The frame wash, section hairline and scroll cue are flat tints; the ambient wash, portrait ring and progress bar remain                              |
+| `Retire pure white`                         | Near-white and near-black tokens where #fff and rgba(0, 0, 0) were, except the white logo ground                                                     |
+| `Add link glyphs`                           | External and download icons as inline SVG, noreferrer on every new-tab link, underlined text links in running copy                                   |
+| `Raise touch targets`                       | Availability chip, tabs, zoom buttons, skip link and primary buttons at or above 44px; full-width submit on a phone; focusable diagram scroller      |
+| `Center phone portrait`                     | The phone hero as a centred circle in the brand ring, portrait first, preloaded from the head, no entrance tween; hero logo chips eager              |
+| `Add thumbnail source`                      | An 800px credential thumbnail behind `srcset`/`sizes`; a client at DPR 2 or less takes 48KB where it used to take 188KB                              |
+| `Fix modal lock`                            | The scroll lock named body and so never reached the viewport; the zoom body now fills its dialog, so the certificate centres on a phone              |
+| `Raise touch targets`                       | Tab buttons and the wordmark to the 44px floor through `.target`; nav links get a 44px hit area without a 44px box, so the underline stays put       |
+| `Shrink landscape portrait`                 | The hero portrait and its grid track sized from viewport height on a phone held sideways, where the frame was taller than the screen                 |
+| `Cap dialog height`                         | `min(88svh, 100%)`, so a dialog cannot be taller than the screen it is centred in once the backdrop's own padding is counted                         |
+| `Inset for cutouts`                         | One rule answering `env(safe-area-inset-left/right)` for the header, tab bar, well and dialogs, via an `--edge-pad` each states for itself           |
+| `Key shell to height`                       | The phone shell keyed to a short touch screen as well as a narrow one, so a landscape phone keeps its tab bar instead of taking the desktop nav      |
+| `Unstick credentials tabs`                  | The Credentials tab strip was sticky underneath the header and never once visible; it sits in normal flow now                                        |
+| `Drop SQL chip`                             | Hero tech stack down to seven; SQL is still claimed in the Credentials data group, where it reads alongside PostgreSQL and DAX                       |
+| `Center frame caption`                      | A caption narrower than its own text centres both lines instead of ragging left inside a centred block                                               |
+| `Stack hero actions`                        | One action per row below 560px, so the hierarchy is carried by weight rather than by width                                                           |
+| `Rebalance hero grid`                       | A third hero arrangement from 440px: portrait beside the headline, body across both columns. Fixes the orphaned portrait and the clipped chips       |
+| `Reserve tab bar`                           | `--tab-bar-space`, reserved once on `.stage`, replacing the bar-aware padding that only Contact had                                                  |
+| `Consolidate colour tokens`                 | 27 ad-hoc colours retired into tokens; 4 text levels folded to 2; 10 dead tokens removed                                                             |
+| `Rebalance contact layout`                  | One grid for the whole section, routes card raised level with the heading                                                                            |
+| `Add header chip`                           | Availability chip in the header from 1080px, reading the contact section's data                                                                      |
+| `Add hCaptcha verification to contact form` | hCaptcha in front of the Web3Forms submit, rendered explicitly and lazily. Longer than the rule allows — kept because it was specified verbatim      |
+| `Readability and contact`                   | Light-theme ink re-tuned to 7:1, 11px type floor, dark by default, Contact routes rebuilt, NDA note added                                            |
+| `Dedupe contact copy`                       | Removed repeated timezone, work arrangement, and contact details inside the Contact section                                                          |
+| `Prune dead code`                           | Removed exports, modules, and CSS orphaned by the redesign; Home's third CTA now scrolls to Contact                                                  |
+| `Optimize images`                           | Logos and the certificate re-encoded to WebP, 1.73 MB down to 235 KB                                                                                 |
+| `Document domain decision`                  | Recorded that the site stays on the vercel.app URL, so it stops reading as unfinished work                                                           |
+| `Phase 2 redesign`                          | Five sliding chapters became one scrolling page: GSAP motion, scroll-drawn diagrams, contact form, new wordmark                                      |
+| `Phase 1 portfolio`                         | The original build                                                                                                                                   |
+| `Initial commit`                            | Repository created                                                                                                                                   |
 
 Verbs that fit the shape: `Add`, `Fix`, `Remove`, `Prune`, `Optimize`,
 `Dedupe`, `Document`, `Rename`, `Restore`. A bare noun phrase is fine too when
