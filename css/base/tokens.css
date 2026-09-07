@@ -15,7 +15,7 @@
    else. Every hue on the page is one of those four.
 
      neutral   bg / surface / raised, line-rgb, text, muted
-     accent    accent-ink (+hover, +dot, +rgb) — eyebrows, links, focus, CTAs
+     accent    accent-ink (+hover, +rgb): eyebrows, links, focus, CTAs
      success   ok-ink / ok-rgb: the "in production" badge and its tints
      error     error-ink / error-rgb — form validation only
 
@@ -52,10 +52,6 @@
      body-sized text on --bg. */
   --accent-ink: #0a5478;
   --accent-ink-hover: #073f5b;
-
-  /* Non-text, so it answers to 1.4.11's 3:1 rather than 4.5:1. Darkened from
-     #0e86a8 (3.60) purely for margin. */
-  --accent-dot: #0c6e8a;
 
   /* Green is semantic only: "in production", "earned". Never decorative. */
   --ok-ink: #06543d;
@@ -94,9 +90,6 @@
   --scrim-ink-rgb: 241, 245, 249;
   --scrim-ink-muted: rgba(var(--scrim-ink-rgb), 0.6);
   --zoom-bg: #080c11;
-
-  /* Halo, derived from the accent channel. */
-  --accent-glow: rgba(var(--accent-rgb), 0.22);
 
   /* The pill behind the current tab's icon in the phone tab bar. */
   --tab-bar-pill: rgba(var(--accent-rgb), 0.14);
@@ -157,7 +150,6 @@
   --z-sticky: 6;
   --z-header: 20;
   --z-modal: 90;
-  --z-zoom: 120;
   --z-preloader: 200;
 
   /* Shell. The phone bar is shorter, and its navigation moves to the bottom. */
@@ -190,7 +182,6 @@
 
   --accent-ink: #83c7e2;
   --accent-ink-hover: #acdaec;
-  --accent-dot: #66b6d6;
 
   --ok-ink: #68caa8;
 
@@ -203,8 +194,6 @@
 
   --on-accent: #06131c;
 
-  /* Dark needs a stronger halo to read against the deep background. */
-  --accent-glow: rgba(var(--accent-rgb), 0.42);
   --tab-bar-pill: rgba(var(--accent-rgb), 0.2);
 
   --header-bg: rgba(11, 18, 25, 0.82);
