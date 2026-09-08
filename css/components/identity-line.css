@@ -92,9 +92,15 @@
 /* At 320 the compact recipe still leaves the longest pair around 12px of rule,
    which is the stub this change exists to remove. The rule carries the least of
    anything in the row, so it goes and the chip and the date hold the two ends
-   on their own. */
+   on their own.
+
+   Only when a date follows it. `:not(:last-child)` is what tells the two cases
+   apart: with a period the rule is a squeezed connector and is worth dropping,
+   but on an undated card it is the whole rest of the row and dropping it would
+   leave a bare chip at 320 and a full rule at 321 — a card changing character
+   across one pixel, to fix a stub that is not there. */
 @media (width <= 320px) {
-  .identity-line__rule {
+  .identity-line__rule:not(:last-child) {
     display: none;
   }
 }

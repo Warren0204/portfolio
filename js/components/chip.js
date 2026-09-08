@@ -22,6 +22,7 @@ const LOGO_SLUG_BY_LABEL = Object.freeze({
   React: 'react',
   Firebase: 'firebase',
   SQL: 'sql',
+  Python: 'python',
 });
 
 /* Internal: createChip is the only thing that needs a mark, and a caller

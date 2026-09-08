@@ -137,7 +137,6 @@ export const projects = Object.freeze([
     id: 'students-mental-health',
     kind: 'compact',
     tag: 'Guided project',
-    period: 'August 2026',
     title: "Analyzing Students' Mental Health",
     summary:
       'PostgreSQL analysis of a 286-record mental health survey from a Japanese international university, testing whether international students show higher depression risk and whether length of stay is a factor. Completed the DataCamp guided project deliverable, then extended it with a data-quality audit, a missing-value investigation, severity and connectedness banding, and a stress comparison.',
@@ -147,6 +146,25 @@ export const projects = Object.freeze([
       Object.freeze({ label: 'Open notebook', href: DATACAMP_NOTEBOOK_URL, external: true }),
     ]),
     status: Object.freeze({ text: 'Completed', tone: 'ok' }),
+  }),
+
+  Object.freeze({
+    id: 'msp-servicedesk-analytics',
+    kind: 'compact',
+    tag: 'Data analytics project',
+    title: 'MSP Service Desk Analytics',
+    summary:
+      'Interactive dashboard on 24,918 support tickets from a real ServiceNow instance, built for a non-technical service delivery audience. Collapsed a 141,712-row event log to one row per ticket, validated the data before charting, and found that SLA attainment falls at every handover between teams. Includes a scope control that separates automated closures from human-handled work.',
+    context: 'Independent work on the UCI incident management event log, licensed CC BY 4.0.',
+    tags: Object.freeze(['Python', 'pandas', 'Plotly', 'Streamlit']),
+    links: Object.freeze([
+      Object.freeze({
+        label: 'Open dashboard',
+        href: 'https://msp-servicedesk-analytics.streamlit.app',
+        external: true,
+      }),
+    ]),
+    status: Object.freeze({ text: 'Live', tone: 'accent' }),
   }),
 ]);
 
